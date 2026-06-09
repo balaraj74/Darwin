@@ -1,0 +1,8 @@
+{
+  "name": "Darwin: Founder Twin",
+  "description": "An AI executive board (CEO, CFO, CTO, CMO, CPO) that debunks, pivots, and builds startups tailored to the founder's actual constraints, formatted for the darwinagent environment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

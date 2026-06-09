@@ -1,0 +1,90 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5] [cursor=pointer]:
+          - generic [ref=e7]: D
+          - generic [ref=e8]:
+            - text: DARWIN
+            - generic [ref=e9]: founder twin • platform
+        - generic [ref=e10]:
+          - button "LAUNCH DARWINTWIN PILOT" [ref=e11] [cursor=pointer]:
+            - img [ref=e12]
+            - generic [ref=e14]: LAUNCH DARWINTWIN PILOT
+          - button "BUILD NEW INSTANCE" [ref=e15] [cursor=pointer]
+    - main [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]:
+            - generic [ref=e20]:
+              - img [ref=e21]
+              - generic [ref=e23]: PRE-RELEASE ALPHA ACCESS
+            - heading "Your AI Executive Board. Built Around You." [level=1] [ref=e24]:
+              - text: Your AI Executive Board.
+              - text: Built Around You.
+            - paragraph [ref=e25]: Darwin creates a digital twin representing your actual skills, budget limits, and quit thresholds — then assembles a 5-member AI board directly debating your startup concept, re-aligning it to fit you specifically. No templates. Instant GitLab issues.
+            - generic [ref=e26]:
+              - button "CONVENE MY DIRECTORS" [ref=e27] [cursor=pointer]:
+                - generic [ref=e28]: CONVENE MY DIRECTORS
+                - img [ref=e29]
+              - button "SEED DARWINAGENT DEMO" [ref=e31] [cursor=pointer]:
+                - generic [ref=e32]: SEED DARWINAGENT DEMO
+          - generic [ref=e34]:
+            - generic [ref=e38]:
+              - img [ref=e40]
+              - img [ref=e44]
+            - generic [ref=e46]:
+              - img [ref=e48]
+              - img [ref=e52]
+            - generic [ref=e56]:
+              - img [ref=e57]
+              - generic [ref=e59]: DARWIN
+              - generic [ref=e60]: twin.active
+            - generic [ref=e64]: "Environment: darwinagent"
+            - generic [ref=e66]: 5 REVOLUTION AGENTS ONLINE
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - heading "PROVE IDEVAL TO SEVERE BUDGET CAPS" [level=2] [ref=e69]
+            - paragraph [ref=e70]: Our structured 3-round debate acts as the validation system against unstable startup variables.
+          - generic [ref=e71]:
+            - generic [ref=e73]:
+              - generic [ref=e74]: "01"
+              - heading "Answer 7 Hard Questions" [level=4] [ref=e75]
+              - paragraph [ref=e76]: Define what you can build, actual limits, quit triggers, and warm networks. We construct your inferred constraints layout profile.
+            - generic [ref=e78]:
+              - generic [ref=e79]: "02"
+              - heading "The AI Board Debates Live" [level=4] [ref=e80]
+              - paragraph [ref=e81]: CEO, CFO, CTO, CMO, and CPO evaluate budget overlays. The CFO can veto high CAC expenditures; the board pivots the model.
+            - generic [ref=e83]:
+              - generic [ref=e84]: "03"
+              - heading "Real GitLab Issuance" [level=4] [ref=e85]
+              - paragraph [ref=e86]: Obtain product specifications maps, 6-month budget ekonomi projection spreadsheets, and a live private GitLab issues backlog.
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - img [ref=e89]
+            - generic [ref=e93]: CEO Agent
+            - text: Market Potential
+          - generic [ref=e94]:
+            - img [ref=e95]
+            - generic [ref=e97]: CFO Agent
+            - text: Runway Limits
+          - generic [ref=e98]:
+            - img [ref=e99]
+            - generic [ref=e102]: CTO Agent
+            - text: Build Speed
+          - generic [ref=e103]:
+            - img [ref=e104]
+            - generic [ref=e106]: CMO Agent
+            - text: Distribution Channels
+          - generic [ref=e107]:
+            - img [ref=e108]
+            - generic [ref=e111]: CPO Agent
+            - text: MVP Scope
+        - generic [ref=e112]:
+          - generic [ref=e113]: FOUNDER TWIN // DEVELOPED BY KAIRON — TEAM ERROR_404_NOT_FOUND
+          - generic [ref=e114]:
+            - generic [ref=e115] [cursor=pointer]: GITHUB
+            - generic [ref=e116] [cursor=pointer]: DEVPOST
+            - generic [ref=e117] [cursor=pointer]: LINKEDIN
+  - button "Open Next.js Dev Tools" [ref=e123] [cursor=pointer]:
+    - img [ref=e124]
