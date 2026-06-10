@@ -309,15 +309,41 @@ function DashboardContent() {
   const [idea, setIdea]           = useState('')
   const [isSubmitting, setSubmit] = useState(false)
 
+  const { userId, twinId: storedTwinId } = useAuthStore()
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
   useEffect(() => {
-    if (!twinId) { setLoading(false); return }
-    fetch(`${apiUrl}/twin/${twinId}`)
-      .then(r => r.json())
-      .then(data => { setTwin(data); if (data.startup_idea) setIdea(data.startup_idea); setLoading(false) })
-      .catch(() => setLoading(false))
-  }, [twinId, apiUrl])
+    const load = async () => {
+      // 1. Try URL param first
+      const idFromUrl = twinId || storedTwinId
+      if (idFromUrl) {
+        try {
+          const r = await fetch(`${apiUrl}/twin/${idFromUrl}`)
+          if (r.ok) {
+            const data = await r.json()
+            setTwin(data)
+            if (data.startup_idea) setIdea(data.startup_idea)
+            setLoading(false)
+            return
+          }
+        } catch { /* fall through */ }
+      }
+      // 2. Fall back to fetching by userId (covers back-navigation from settings page)
+      if (userId) {
+        try {
+          const r = await fetch(`${apiUrl}/twin/by-user/${userId}`)
+          if (r.ok) {
+            const data = await r.json()
+            setTwin(data)
+            if (data.startup_idea) setIdea(data.startup_idea)
+          }
+        } catch { /* noop */ }
+      }
+      setLoading(false)
+    }
+    load()
+  }, [twinId, storedTwinId, userId, apiUrl])
 
   const submitIdea = async () => {
     if (!idea.trim() || !twin) return
