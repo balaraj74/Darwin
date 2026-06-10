@@ -850,9 +850,7 @@ function DashboardContent() {
                     </button>
                   </Card>
                 ) : (
-                  <Card t={t}>
-                    <BoardRoom twin={twin} apiBaseUrl={apiUrl} onDecisionReached={s => { setSession(s); setViewState('execution') }} />
-                  </Card>
+                  <BoardRoom twin={twin} apiBaseUrl={apiUrl} onDecisionReached={s => { setSession(s); setViewState('execution') }} />
                 )}
               </motion.div>
             )}
