@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
@@ -9,9 +9,11 @@ import {
   XCircle, Heart, ChevronRight, LayoutDashboard,
   GitMerge, Map, Lightbulb, BarChart2, Settings,
   Download, RefreshCw, CheckCircle, Shield,
-  Brain, Activity, Clock, SunMedium, Moon, LogOut, UserCircle
+  Brain, Activity, Clock, SunMedium, Moon, LogOut, UserCircle,
+  Camera, Save, Github, Linkedin, Instagram, Globe, Twitter,
+  Sparkles, Loader2, AlertCircle, ExternalLink
 } from 'lucide-react'
-import { DigitalTwin, BoardSession } from '../../types'
+import { DigitalTwin, BoardSession, UserProfile, SocialLinks } from '../../types'
 import BoardRoom from '../../components/BoardRoom'
 import ExecutionTracker from '../../components/ExecutionTracker'
 import { useAuthStore } from '../../hooks/useAuth'
@@ -174,11 +176,12 @@ function BulletItem({ icon, text, muted }: { icon: React.ReactNode; text: string
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
-function Sidebar({ twin, t, view, setView }: {
+function Sidebar({ twin, t, view, setView, profilePhoto }: {
   twin: DigitalTwin | null
   t: ReturnType<typeof tokens>
   view: string
   setView: (v: any) => void
+  profilePhoto?: string | null
 }) {
   const router = useRouter()
   const logout = useAuthStore(state => state.logout)
@@ -188,16 +191,19 @@ function Sidebar({ twin, t, view, setView }: {
     router.push('/auth')
   }
   const nav = [
-    { icon: <User size={15} />, label: 'Founder Twin', id: 'profile', route: null },
-    { icon: <LayoutDashboard size={15} />, label: 'Boardroom', id: 'board', route: null },
-    { icon: <Lightbulb size={15} />, label: 'Opportunities', id: 'opps', route: null },
-    { icon: <GitMerge size={15} />, label: 'Startup Blueprint', id: 'blueprint', route: null },
-    { icon: <Map size={15} />, label: 'Roadmap', id: 'roadmap', route: null },
-    { icon: <Shield size={15} />, label: 'GitLab Workspace', id: 'gitlab', route: null },
-    { icon: <BarChart2 size={15} />, label: 'Reports', id: 'reports', route: null },
-    { icon: <UserCircle size={15} />, label: 'My Profile', id: 'my-profile', route: '/dashboard/settings' },
-    { icon: <Settings size={15} />, label: 'Settings', id: 'settings', route: null },
+    { icon: <User size={15} />, label: 'Founder Twin', id: 'profile' },
+    { icon: <LayoutDashboard size={15} />, label: 'Boardroom', id: 'board' },
+    { icon: <Lightbulb size={15} />, label: 'Opportunities', id: 'opps' },
+    { icon: <GitMerge size={15} />, label: 'Startup Blueprint', id: 'blueprint' },
+    { icon: <Map size={15} />, label: 'Roadmap', id: 'roadmap' },
+    { icon: <Shield size={15} />, label: 'GitLab Workspace', id: 'gitlab' },
+    { icon: <BarChart2 size={15} />, label: 'Reports', id: 'reports' },
+    { icon: <UserCircle size={15} />, label: 'My Profile', id: 'my-profile' },
+    { icon: <Settings size={15} />, label: 'Settings', id: 'settings' },
   ]
+  const handleNavClick = (id: string) => {
+    if (['profile', 'board', 'my-profile'].includes(id)) setView(id as any)
+  }
   return (
     <div style={{
       width: 218, flexShrink: 0,
@@ -227,12 +233,8 @@ function Sidebar({ twin, t, view, setView }: {
       <nav style={{ padding: '10px 8px', flex: 1 }}>
         {nav.map(item => {
           const active = view === item.id
-          const handleClick = () => {
-            if (item.route) { router.push(item.route); return }
-            if (item.id === 'profile' || item.id === 'board') setView(item.id)
-          }
           return (
-            <div key={item.id} onClick={handleClick}
+            <div key={item.id} onClick={() => handleNavClick(item.id)}
               style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 9, marginBottom: 2, cursor: 'pointer', background: active ? `${t.gold}18` : 'transparent', border: `1px solid ${active ? t.gold + '35' : 'transparent'}`, transition: 'all 0.2s' }}>
               <span style={{ color: active ? t.gold : t.muted, display: 'flex' }}>{item.icon}</span>
               <span style={{ fontSize: 12.5, fontWeight: active ? 600 : 400, color: active ? t.gold : t.muted }}>{item.label}</span>
@@ -257,20 +259,30 @@ function Sidebar({ twin, t, view, setView }: {
       )}
 
       {/* Footer */}
-      <div style={{ padding: '12px 14px', borderTop: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', gap: 9 }}>
-        <div style={{ width: 28, height: 28, borderRadius: '50%', background: `linear-gradient(135deg, ${t.gold}70, ${t.purple}70)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          <User size={14} color={t.text} />
+      <div
+        onClick={() => setView('my-profile')}
+        style={{ padding: '12px 14px', borderTop: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
+      >
+        <div style={{
+          width: 30, height: 30, borderRadius: '50%', flexShrink: 0, overflow: 'hidden',
+          background: profilePhoto ? 'transparent' : `linear-gradient(135deg, ${t.gold}70, ${t.purple}70)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          border: `1.5px solid ${t.gold}40`,
+        }}>
+          {profilePhoto
+            ? <img src={profilePhoto} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            : <User size={14} color={t.text} />}
         </div>
-        <div>
-          <div style={{ fontSize: 12, fontWeight: 600, color: t.text }}>{twin?.founder_name || 'Founder'}</div>
-          <div style={{ fontSize: 10, color: t.dim }}>Founder Profile</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: t.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{twin?.founder_name || 'Founder'}</div>
+          <div style={{ fontSize: 10, color: t.dim }}>Edit Profile</div>
         </div>
-        <div 
-          onClick={handleLogout}
-          style={{ marginLeft: 'auto', cursor: 'pointer', color: t.dim, padding: '4px', display: 'flex' }}
+        <div
+          onClick={e => { e.stopPropagation(); handleLogout() }}
+          style={{ cursor: 'pointer', color: t.dim, padding: '4px', display: 'flex', flexShrink: 0 }}
           title="Log Out"
         >
-          <LogOut size={16} />
+          <LogOut size={15} />
         </div>
       </div>
     </div>
@@ -292,8 +304,170 @@ function ThemeBtn({ t }: { t: ReturnType<typeof tokens> }) {
   )
 }
 
+// ─── Inline Profile Settings Panel ──────────────────────────────────────────
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const SOCIAL_FIELDS_CFG: { key: keyof SocialLinks; label: string; icon: React.ReactNode; placeholder: string; color: string }[] = [
+  { key: 'github',    label: 'GitHub',    icon: <Github size={14} />,    placeholder: 'https://github.com/yourusername', color: '#f0f6fc' },
+  { key: 'linkedin',  label: 'LinkedIn',  icon: <Linkedin size={14} />,  placeholder: 'https://linkedin.com/in/yourprofile', color: '#0a66c2' },
+  { key: 'instagram', label: 'Instagram', icon: <Instagram size={14} />, placeholder: 'https://instagram.com/yourhandle', color: '#e1306c' },
+  { key: 'portfolio', label: 'Portfolio', icon: <Globe size={14} />,     placeholder: 'https://yourwebsite.com', color: '#c9a84c' },
+  { key: 'twitter',   label: 'Twitter/X', icon: <Twitter size={14} />,   placeholder: 'https://twitter.com/yourhandle', color: '#1d9bf0' },
+]
+
+function ProfilePanel({ t, token, userId, onPhotoChange }: {
+  t: ReturnType<typeof tokens>
+  token: string | null
+  userId: string | null
+  onPhotoChange: (b64: string) => void
+}) {
+  const [profile, setProfile]         = useState<UserProfile | null>(null)
+  const [displayName, setDisplayName] = useState('')
+  const [bio, setBio]                 = useState('')
+  const [links, setLinks]             = useState<SocialLinks>({})
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [photoFile, setPhotoFile]     = useState<File | null>(null)
+  const [saving, setSaving]           = useState(false)
+  const [crawling, setCrawling]       = useState(false)
+  const [toast, setToast]             = useState<{ msg: string; kind: 'ok' | 'err' } | null>(null)
+  const photoInputRef = useRef<HTMLInputElement>(null)
+
+  const authH = useCallback(() => ({ Authorization: `Bearer ${token}` }), [token])
+  const showToast = (msg: string, kind: 'ok' | 'err') => { setToast({ msg, kind }); setTimeout(() => setToast(null), 3200) }
+
+  useEffect(() => {
+    if (!token || !userId) return
+    fetch(`${API}/profile`, { headers: authH() }).then(r => r.ok ? r.json() : null).then(data => {
+      if (!data) return
+      setProfile(data)
+      setDisplayName(data.display_name || '')
+      setBio(data.bio || '')
+      setLinks(data.social_links || {})
+      if (data.profile_photo_b64) { setPhotoPreview(data.profile_photo_b64); onPhotoChange(data.profile_photo_b64) }
+    })
+  }, [token, userId, authH, onPhotoChange])
+
+  const handlePhotoPick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; if (!file) return
+    setPhotoFile(file)
+    const reader = new FileReader()
+    reader.onload = ev => { const src = ev.target?.result as string; setPhotoPreview(src); onPhotoChange(src) }
+    reader.readAsDataURL(file)
+  }
+
+  const handleSave = async () => {
+    setSaving(true)
+    try {
+      if (photoFile) {
+        const fd = new FormData(); fd.append('file', photoFile)
+        await fetch(`${API}/profile/photo`, { method: 'POST', headers: authH(), body: fd })
+      }
+      const r = await fetch(`${API}/profile`, { method: 'PUT', headers: { ...authH(), 'Content-Type': 'application/json' }, body: JSON.stringify({ display_name: displayName, bio, ...links }) })
+      if (r.ok) { const d = await r.json(); setProfile(d); showToast('Profile saved!', 'ok') }
+      else showToast('Save failed', 'err')
+    } catch { showToast('Save failed', 'err') } finally { setSaving(false) }
+  }
+
+  const handleCrawlNow = async () => {
+    setCrawling(true)
+    try {
+      const r = await fetch(`${API}/profile/crawl-now`, { method: 'POST', headers: authH() })
+      showToast(r.ok ? 'Crawler running! Twin will update shortly.' : 'Crawl failed', r.ok ? 'ok' : 'err')
+    } catch { showToast('Crawl failed', 'err') } finally { setCrawling(false) }
+  }
+
+  const inp = (value: string, onChange: (v: string) => void, placeholder?: string, multiline?: boolean) => {
+    const style: React.CSSProperties = { width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, fontFamily: 'inherit', outline: 'none', padding: '8px 12px', boxSizing: 'border-box', resize: multiline ? 'vertical' : 'none' }
+    return multiline
+      ? <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={style} />
+      : <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} style={{ ...style, height: 38 }} />
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <style>{`input::placeholder,textarea::placeholder{color:#44445a} input:focus,textarea:focus{outline:none}`}</style>
+      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+        {/* Avatar column */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+          <div onClick={() => photoInputRef.current?.click()} style={{ width: 90, height: 90, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${t.gold}40`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', background: photoPreview ? 'transparent' : `linear-gradient(135deg, ${t.gold}40, ${t.purple}40)`, position: 'relative' }}>
+            {photoPreview ? <img src={photoPreview} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={32} color={t.gold} />}
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', opacity: 0, transition: 'opacity 0.2s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '1')} onMouseLeave={e => (e.currentTarget.style.opacity = '0')}>
+              <Camera size={20} color="#fff" />
+            </div>
+          </div>
+          <input ref={photoInputRef} type="file" accept="image/*" onChange={handlePhotoPick} style={{ display: 'none' }} />
+          <span style={{ fontSize: 10, color: t.dim, cursor: 'pointer' }} onClick={() => photoInputRef.current?.click()}>Change Photo</span>
+        </div>
+
+        {/* Identity column */}
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ fontSize: 10, color: t.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5, display: 'block' }}>Display Name</label>
+            {inp(displayName, setDisplayName, 'e.g. Balaraj R')}
+          </div>
+          <div style={{ marginBottom: 8 }}>
+            <label style={{ fontSize: 10, color: t.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5, display: 'block' }}>Bio</label>
+            {inp(bio, setBio, 'I build AI-powered products...', true)}
+          </div>
+          <div style={{ fontSize: 10, color: t.dim }}>Email: <span style={{ color: t.muted }}>{profile?.email || '—'}</span></div>
+        </div>
+      </div>
+
+      {/* Social Links */}
+      <div style={{ marginTop: 20, paddingTop: 18, borderTop: `1px solid ${t.border}` }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: t.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 7 }}>
+          <ExternalLink size={13} color={t.gold} /> Public Social Links
+          <span style={{ fontSize: 9, fontWeight: 400, color: t.dim, textTransform: 'none', letterSpacing: 0 }}>— crawled every 3 days to enrich your Twin</span>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '10px 20px' }}>
+          {SOCIAL_FIELDS_CFG.map(sf => (
+            <div key={sf.key}>
+              <label style={{ fontSize: 10, color: sf.color, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5, display: 'flex', alignItems: 'center', gap: 5 }}>
+                {sf.icon} {sf.label}
+              </label>
+              <input value={links[sf.key] || ''} onChange={e => setLinks(p => ({ ...p, [sf.key]: e.target.value }))} placeholder={sf.placeholder}
+                style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, fontFamily: 'inherit', outline: 'none', padding: '8px 12px', height: 36, boxSizing: 'border-box' }} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Crawler + Actions */}
+      <div style={{ marginTop: 18, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 9, background: `${t.purple}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Cpu size={16} color={t.purple} />
+          </div>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 600, color: t.text }}>Profile Crawler</div>
+            <div style={{ fontSize: 10, color: t.dim, display: 'flex', alignItems: 'center', gap: 5 }}>
+              <Clock size={10} /> Last crawled: {profile?.last_crawled_at ? new Date(profile.last_crawled_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Never'}
+            </div>
+          </div>
+          <button onClick={handleCrawlNow} disabled={crawling} style={{ display: 'flex', alignItems: 'center', gap: 6, background: `${t.purple}18`, border: `1px solid ${t.purple}35`, borderRadius: 8, padding: '7px 14px', color: crawling ? t.dim : t.purple, cursor: crawling ? 'not-allowed' : 'pointer', fontSize: 11, fontWeight: 600 }}>
+            {crawling ? <><Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> Crawling…</> : <><Sparkles size={12} /> Crawl Now</>}
+          </button>
+        </div>
+        <button onClick={handleSave} disabled={saving} style={{ display: 'flex', alignItems: 'center', gap: 8, background: saving ? `${t.gold}25` : `linear-gradient(135deg, ${t.gold}, #e8c96a)`, border: 'none', borderRadius: 10, padding: '10px 24px', color: saving ? t.muted : '#0a0a0c', fontSize: 13, fontWeight: 800, cursor: saving ? 'not-allowed' : 'pointer', boxShadow: saving ? 'none' : `0 4px 20px ${t.gold}35` }}>
+          {saving ? <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> Saving…</> : <><Save size={14} /> Save Profile</>}
+        </button>
+      </div>
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div key="toast" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+            style={{ position: 'fixed', bottom: 24, right: 24, background: toast.kind === 'ok' ? 'rgba(47,201,110,0.15)' : 'rgba(255,69,58,0.15)', border: `1px solid ${toast.kind === 'ok' ? '#2fc96e' : '#ff453a'}50`, backdropFilter: 'blur(20px)', borderRadius: 10, padding: '10px 18px', color: toast.kind === 'ok' ? '#2fc96e' : '#ff453a', fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, zIndex: 9999 }}>
+            {toast.kind === 'ok' ? <CheckCircle size={14} /> : <AlertCircle size={14} />} {toast.msg}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 // ─── Main Content ─────────────────────────────────────────────────────────────
-type ViewState = 'profile' | 'board' | 'execution' | 'report'
+type ViewState = 'profile' | 'board' | 'execution' | 'report' | 'my-profile'
 
 function DashboardContent() {
   const params = useSearchParams()
@@ -308,8 +482,9 @@ function DashboardContent() {
   const [viewState, setViewState] = useState<ViewState>('profile')
   const [idea, setIdea]           = useState('')
   const [isSubmitting, setSubmit] = useState(false)
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
 
-  const { userId, twinId: storedTwinId } = useAuthStore()
+  const { token, userId, twinId: storedTwinId } = useAuthStore()
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -343,7 +518,14 @@ function DashboardContent() {
       setLoading(false)
     }
     load()
-  }, [twinId, storedTwinId, userId, apiUrl])
+    // Also pre-fetch profile photo so sidebar avatar shows immediately
+    if (token && userId) {
+      fetch(`${apiUrl}/profile`, { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => { if (data?.profile_photo_b64) setProfilePhoto(data.profile_photo_b64) })
+        .catch(() => { /* noop */ })
+    }
+  }, [twinId, storedTwinId, token, userId, apiUrl])
 
   const submitIdea = async () => {
     if (!idea.trim() || !twin) return
@@ -395,7 +577,7 @@ function DashboardContent() {
 
         {/* SIDEBAR */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <Sidebar twin={twin} t={t} view={viewState} setView={setViewState} />
+          <Sidebar twin={twin} t={t} view={viewState} setView={setViewState} profilePhoto={profilePhoto} />
         </motion.div>
 
         {/* MAIN */}
@@ -435,6 +617,24 @@ function DashboardContent() {
 
           {/* VIEWS */}
           <AnimatePresence mode="wait">
+
+            {/* ── MY PROFILE (settings) ────────────────────────────────── */}
+            {viewState === 'my-profile' && (
+              <motion.div key="my-profile" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                <Card style={{ padding: 28 }} t={t}>
+                  <div style={{ marginBottom: 22, display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.gold}15`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <UserCircle size={20} color={t.gold} />
+                    </div>
+                    <div>
+                      <div style={{ color: t.text, fontWeight: 800, fontSize: 16 }}>Founder Profile</div>
+                      <div style={{ color: t.dim, fontSize: 11, marginTop: 1 }}>Your public identity & social links — used to enrich your Digital Twin</div>
+                    </div>
+                  </div>
+                  <ProfilePanel t={t} token={token} userId={userId} onPhotoChange={setProfilePhoto} />
+                </Card>
+              </motion.div>
+            )}
 
             {/* ── PROFILE ─────────────────────────────────────────────────── */}
             {viewState === 'profile' && (
