@@ -9,7 +9,7 @@ import {
   XCircle, Heart, ChevronRight, LayoutDashboard,
   GitMerge, Map, Lightbulb, BarChart2, Settings,
   Download, RefreshCw, CheckCircle, Shield,
-  Brain, Activity, Clock, SunMedium, Moon, LogOut
+  Brain, Activity, Clock, SunMedium, Moon, LogOut, UserCircle
 } from 'lucide-react'
 import { DigitalTwin, BoardSession } from '../../types'
 import BoardRoom from '../../components/BoardRoom'
@@ -188,14 +188,15 @@ function Sidebar({ twin, t, view, setView }: {
     router.push('/auth')
   }
   const nav = [
-    { icon: <User size={15} />, label: 'Founder Twin', id: 'profile' },
-    { icon: <LayoutDashboard size={15} />, label: 'Boardroom', id: 'board' },
-    { icon: <Lightbulb size={15} />, label: 'Opportunities', id: 'opps' },
-    { icon: <GitMerge size={15} />, label: 'Startup Blueprint', id: 'blueprint' },
-    { icon: <Map size={15} />, label: 'Roadmap', id: 'roadmap' },
-    { icon: <Shield size={15} />, label: 'GitLab Workspace', id: 'gitlab' },
-    { icon: <BarChart2 size={15} />, label: 'Reports', id: 'reports' },
-    { icon: <Settings size={15} />, label: 'Settings', id: 'settings' },
+    { icon: <User size={15} />, label: 'Founder Twin', id: 'profile', route: null },
+    { icon: <LayoutDashboard size={15} />, label: 'Boardroom', id: 'board', route: null },
+    { icon: <Lightbulb size={15} />, label: 'Opportunities', id: 'opps', route: null },
+    { icon: <GitMerge size={15} />, label: 'Startup Blueprint', id: 'blueprint', route: null },
+    { icon: <Map size={15} />, label: 'Roadmap', id: 'roadmap', route: null },
+    { icon: <Shield size={15} />, label: 'GitLab Workspace', id: 'gitlab', route: null },
+    { icon: <BarChart2 size={15} />, label: 'Reports', id: 'reports', route: null },
+    { icon: <UserCircle size={15} />, label: 'My Profile', id: 'my-profile', route: '/dashboard/settings' },
+    { icon: <Settings size={15} />, label: 'Settings', id: 'settings', route: null },
   ]
   return (
     <div style={{
@@ -226,8 +227,12 @@ function Sidebar({ twin, t, view, setView }: {
       <nav style={{ padding: '10px 8px', flex: 1 }}>
         {nav.map(item => {
           const active = view === item.id
+          const handleClick = () => {
+            if (item.route) { router.push(item.route); return }
+            if (item.id === 'profile' || item.id === 'board') setView(item.id)
+          }
           return (
-            <div key={item.id} onClick={() => (item.id === 'profile' || item.id === 'board') && setView(item.id)}
+            <div key={item.id} onClick={handleClick}
               style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 9, marginBottom: 2, cursor: 'pointer', background: active ? `${t.gold}18` : 'transparent', border: `1px solid ${active ? t.gold + '35' : 'transparent'}`, transition: 'all 0.2s' }}>
               <span style={{ color: active ? t.gold : t.muted, display: 'flex' }}>{item.icon}</span>
               <span style={{ fontSize: 12.5, fontWeight: active ? 600 : 400, color: active ? t.gold : t.muted }}>{item.label}</span>

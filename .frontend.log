@@ -1,0 +1,48 @@
+
+> darwin-founder-twin@1.0.0 dev
+> next dev -p 3000
+
+▲ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.16.55.70:3000
+- Environments: .env.local
+✓ Ready in 425ms
+- Experiments (use with caution):
+  · serverActions
+
+ GET /onboarding 200 in 836ms (next.js: 585ms, application-code: 251ms)
+ GET /auth 200 in 41ms (next.js: 15ms, application-code: 27ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /onboarding 200 in 16ms (next.js: 2ms, application-code: 14ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 54ms (next.js: 35ms, application-code: 19ms)
+ GET /auth 200 in 16ms (next.js: 2ms, application-code: 14ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 17ms (next.js: 2ms, application-code: 15ms)
+✓ Compiled in 68ms
+ GET /dashboard?twin_id=twin_77d993a0 200 in 141ms (next.js: 81ms, application-code: 60ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 51ms (next.js: 1772µs, application-code: 49ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 54ms (next.js: 2ms, application-code: 51ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 61ms (next.js: 1799µs, application-code: 59ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 49ms (next.js: 2ms, application-code: 46ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 47ms (next.js: 2ms, application-code: 45ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 51ms (next.js: 2ms, application-code: 49ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 46ms (next.js: 3ms, application-code: 43ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 56ms (next.js: 3ms, application-code: 54ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 51ms (next.js: 1990µs, application-code: 49ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 50ms (next.js: 2ms, application-code: 48ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 37ms (next.js: 1546µs, application-code: 36ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 37ms (next.js: 1213µs, application-code: 36ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 63ms (next.js: 3ms, application-code: 60ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 63ms (next.js: 1801µs, application-code: 61ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 64ms (next.js: 2ms, application-code: 62ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 50ms (next.js: 1472µs, application-code: 49ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 41ms (next.js: 1339µs, application-code: 40ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 45ms (next.js: 1545µs, application-code: 44ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 67ms (next.js: 1830µs, application-code: 65ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 54ms (next.js: 2ms, application-code: 51ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 54ms (next.js: 3ms, application-code: 51ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 34ms (next.js: 1539µs, application-code: 32ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 20ms (next.js: 3ms, application-code: 17ms)
+✓ Compiled in 104ms
+ GET /dashboard?twin_id=twin_77d993a0 200 in 122ms (next.js: 54ms, application-code: 68ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 42ms (next.js: 2ms, application-code: 39ms)
+ GET /dashboard?twin_id=twin_77d993a0 200 in 26ms (next.js: 1902µs, application-code: 24ms)

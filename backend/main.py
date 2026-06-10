@@ -8,9 +8,10 @@ Created: 2026-06-10
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import onboarding, board, execution, twin, auth
+from routers import onboarding, board, execution, twin, auth, profile
 from config.env import settings
 from utils.logger import get_logger
+from services.job_scheduler import start_scheduler, stop_scheduler
 
 logger = get_logger(__name__)
 
@@ -35,6 +36,7 @@ app.include_router(twin.router)
 app.include_router(board.router)
 app.include_router(execution.router)
 app.include_router(auth.router)
+app.include_router(profile.router)
 
 
 @app.get("/health")
@@ -49,3 +51,10 @@ async def startup():
         "Darwin Agent API starting",
         extra={"env": settings.environment, "gemini_key_set": bool(settings.gemini_api_key)},
     )
+    start_scheduler()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    stop_scheduler()
+    logger.info("Darwin Agent API stopped")

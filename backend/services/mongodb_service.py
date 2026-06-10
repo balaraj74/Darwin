@@ -188,3 +188,18 @@ class MongoDBService:
             return UserInDB(**doc)
         data = _user_store.get(user_id)
         return UserInDB(**data) if data else None
+
+    async def get_all_users(self) -> list[UserInDB]:
+        """Retrieve all users — used by the cron crawler to iterate profiles."""
+        if self._use_mongo:
+            cursor = self._db["users"].find({})
+            docs = await cursor.to_list(length=None)
+            users = []
+            for doc in docs:
+                doc.pop("_id", None)
+                try:
+                    users.append(UserInDB(**doc))
+                except Exception:
+                    pass  # skip malformed docs
+            return users
+        return [UserInDB(**data) for data in _user_store.values()]

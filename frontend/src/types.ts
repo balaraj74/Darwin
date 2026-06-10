@@ -37,12 +37,33 @@ export interface FounderProfile {
 
 export interface DigitalTwin {
   twin_id: string;
+  user_id?: string;
   founder_name?: string;
   raw_intake: OnboardingIntake;
   profile: FounderProfile;
   startup_idea: string;
   session_count: number;
   evolution_log?: string[];
+  last_crawled_at?: string;
+  crawl_insights?: string[];
+}
+
+export interface SocialLinks {
+  github?: string;
+  linkedin?: string;
+  instagram?: string;
+  portfolio?: string;
+  twitter?: string;
+}
+
+export interface UserProfile {
+  user_id: string;
+  email: string;
+  display_name?: string;
+  bio?: string;
+  profile_photo_b64?: string;
+  social_links: SocialLinks;
+  last_crawled_at?: string;
 }
 
 // Board Debate and Decision Types

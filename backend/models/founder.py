@@ -1,16 +1,6 @@
-"""
-Module: founder.py
-Description: Pydantic models for founder profile, digital twin, and onboarding intake.
-
-Author:  KAIRON / Founder Twin
-Created: 2025-06-09
-
-Dependencies: pydantic
-Exports: OnboardingIntake, FounderProfile, DigitalTwin, HardConstraints
-"""
-
 from pydantic import BaseModel, Field
 from typing import Optional
+from datetime import datetime
 
 
 class OnboardingIntake(BaseModel):
@@ -61,4 +51,13 @@ class DigitalTwin(BaseModel):
     evolution_log: list[str] = Field(
         default_factory=list,
         description="How twin changed over sessions",
+    )
+    # Crawl enrichment
+    last_crawled_at: Optional[datetime] = Field(
+        default=None,
+        description="When the public profile crawler last ran for this twin",
+    )
+    crawl_insights: list[str] = Field(
+        default_factory=list,
+        description="Key insights discovered by the profile crawler",
     )
