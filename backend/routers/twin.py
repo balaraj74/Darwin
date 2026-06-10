@@ -24,6 +24,13 @@ class UpdateTwinRequest(BaseModel):
 class StartupIdeaRequest(BaseModel):
     startup_idea: str
 
+@router.get("/by-user/{user_id}", response_model=DigitalTwin)
+async def get_twin_by_user(user_id: str) -> DigitalTwin:
+    twin = await db.get_twin_by_user(user_id)
+    if not twin:
+        raise HTTPException(status_code=404, detail="No twin found for user")
+    return twin
+
 @router.get("/{twin_id}", response_model=DigitalTwin)
 async def get_twin(twin_id: str) -> DigitalTwin:
     twin = await db.get_twin(twin_id)

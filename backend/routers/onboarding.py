@@ -19,7 +19,7 @@ db = MongoDBService()
 
 
 @router.post("/analyze", response_model=DigitalTwin)
-async def analyze_intake(intake: OnboardingIntake) -> DigitalTwin:
+async def analyze_intake(intake: OnboardingIntake, user_id: str | None = None) -> DigitalTwin:
     """
     Build and persist a DigitalTwin from founder intake answers.
 
@@ -33,7 +33,7 @@ async def analyze_intake(intake: OnboardingIntake) -> DigitalTwin:
         HTTPException 422: If twin inference fails.
     """
     try:
-        twin = await build_digital_twin(intake)
+        twin = await build_digital_twin(intake, user_id=user_id)
         await db.save_twin(twin)
         logger.info("Twin built and saved", extra={"twin_id": twin.twin_id})
         return twin

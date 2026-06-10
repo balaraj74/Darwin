@@ -55,7 +55,7 @@ BE PRECISE. If they said ₹50,000, budget_inr is 50000. If they said 5 lakhs, b
 """
 
 
-async def build_digital_twin(intake: OnboardingIntake) -> DigitalTwin:
+async def build_digital_twin(intake: OnboardingIntake, user_id: str | None = None) -> DigitalTwin:
     """
     Infer a structured DigitalTwin from conversational intake answers.
 
@@ -87,6 +87,7 @@ async def build_digital_twin(intake: OnboardingIntake) -> DigitalTwin:
 
         twin = DigitalTwin(
             twin_id=f"twin_{uuid.uuid4().hex[:8]}",
+            user_id=user_id,
             raw_intake=intake,
             profile=profile,
         )

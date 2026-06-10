@@ -140,7 +140,7 @@ function TwinBuildingScreen({ visible }: { visible: boolean }) {
 
 export default function OnboardingFlow() {
   const router = useRouter()
-  const { isAuthenticated } = useAuthStore()
+  const { isAuthenticated, userId, setTwinId } = useAuthStore()
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -176,7 +176,8 @@ export default function OnboardingFlow() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-      const response = await fetch(`${apiUrl}/onboarding/analyze`, {
+      const query = userId ? `?user_id=${userId}` : ''
+      const response = await fetch(`${apiUrl}/onboarding/analyze${query}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newAnswers),
@@ -188,6 +189,7 @@ export default function OnboardingFlow() {
       }
 
       const twin = await response.json()
+      setTwinId(twin.twin_id)
 
       // We don't start the board debate here anymore.
       // Redirect to dashboard where they can see their twin and enter their idea.

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
 }
 
-import { ThemeToggle } from '../components/ThemeToggle'
+import BackgroundSlideshow from '../components/BackgroundSlideshow'
 
 export default function RootLayout({
   children,
@@ -27,8 +27,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>
-        <ThemeToggle />
-        {children}
+        <BackgroundSlideshow />
+        <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh' }}>
+          {children}
+        </div>
       </body>
     </html>
   )

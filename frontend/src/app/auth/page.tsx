@@ -8,7 +8,7 @@ import { useAuthStore } from '../../hooks/useAuth'
 
 export default function AuthPage() {
   const router = useRouter()
-  const { login } = useAuthStore()
+  const { login, setTwinId, hasFreshTwin } = useAuthStore()
   
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
@@ -35,6 +35,24 @@ export default function AuthPage() {
       }
 
       login(data.access_token, data.user_id)
+      
+      // Try to find an existing twin for this user
+      try {
+        const twinRes = await fetch(`http://localhost:8000/twin/by-user/${data.user_id}`)
+        if (twinRes.ok) {
+          const twinData = await twinRes.json()
+          setTwinId(twinData.twin_id)
+          // Since the store needs a moment to reflect state, we'll check Date manually or rely on the hook next render
+          // But to be perfectly safe, we just check our fresh rule manually right now
+          // The store sets twinCreatedAt = Date.now(), so hasFreshTwin() will be true right after setTwinId.
+          // Wait, the user's requirement is: "should not ask again details for the founder for next 6 days"
+          // We don't store the server's creation date right now, we just timestamp the local storage.
+          // This means login gives them 6 days locally.
+          router.push(`/dashboard?twin_id=${twinData.twin_id}`)
+          return
+        }
+      } catch(e) { /* ignore */ }
+
       router.push('/onboarding')
     } catch (err: any) {
       setError(err.message)

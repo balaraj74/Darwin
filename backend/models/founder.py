@@ -52,6 +52,7 @@ class DigitalTwin(BaseModel):
     """The living digital representation of the founder."""
 
     twin_id: str
+    user_id: Optional[str] = None
     founder_name: Optional[str] = None
     raw_intake: OnboardingIntake
     profile: FounderProfile

@@ -84,6 +84,20 @@ class MongoDBService:
         data = _twin_store.get(twin_id)
         return DigitalTwin(**data) if data else None
 
+    async def get_twin_by_user(self, user_id: str) -> Optional[DigitalTwin]:
+        """Retrieve the latest DigitalTwin for a given user ID."""
+        if self._use_mongo:
+            # Sort by _id descending to get the most recently inserted one if multiple
+            doc = await self._db[TWINS_COLLECTION].find_one({"user_id": user_id}, sort=[("_id", -1)])
+            if not doc:
+                return None
+            doc.pop("_id", None)
+            return DigitalTwin(**doc)
+        
+        # In-memory search
+        matches = [DigitalTwin(**data) for data in _twin_store.values() if data.get("user_id") == user_id]
+        return matches[-1] if matches else None
+
     # ------------------------------------------------------------------
     # Session operations
     # ------------------------------------------------------------------

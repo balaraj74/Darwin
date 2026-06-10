@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle2, GitCommit, Play, FileText, Cpu, CheckCircle } from 'lucide-react'
-import { Session, DigitalTwin } from '../types'
+import { BoardSession, DigitalTwin } from '../types'
 
 interface ExecutionTrackerProps {
-  session: Session
+  session: BoardSession
   twin: DigitalTwin
   apiBaseUrl: string
   onComplete: () => void
