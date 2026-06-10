@@ -68,8 +68,8 @@ class GeminiService:
 
         async with self._semaphore:
             for model_id in model_chain:
-                # 1 initial try + 1 retry per model
-                for attempt in range(2):
+                # 1 attempt per model (no retries as requested)
+                for attempt in range(1):
                     try:
                         logger.info(f"Generating content with model {model_id} (attempt {attempt+1})")
                         response = await self.client.aio.models.generate_content(
@@ -92,6 +92,10 @@ class GeminiService:
                         logger.warning(f"Gemini {model_id} attempt {attempt+1} failed", extra={"error": str(e)})
                         
                         if "429" in str(e) or "503" in str(e) or "RESOURCE_EXHAUSTED" in str(e) or "UNAVAILABLE" in str(e):
+                            # Break and use fallbacks on strict rate limits since free tier exhausts instantly
+                            if "free_tier_requests" in str(e) or "free_tier_input_token_count" in str(e):
+                                break
+                            
                             # Exponential backoff on rate limits
                             delay = 5 * (2 ** attempt)
                             logger.info(f"Retrying in {delay}s due to rate limit/unavailability...")
@@ -107,10 +111,21 @@ class GeminiService:
             if use_fast_model:
                 import random
                 models_and_keys = []
+                # User's fallback models for fast execution
+                fast_models = [
+                    "google/gemma-2-9b-it:free",
+                    "meta-llama/llama-3.1-8b-instruct:free",
+                    "mistralai/mistral-7b-instruct:free",
+                    "microsoft/phi-3-mini-128k-instruct:free",
+                    "qwen/qwen-2-7b-instruct:free"
+                ]
+                
                 if getattr(settings, 'openrouter_api_key', None):
-                    models_and_keys.append(("google/gemma-4-31b-it:free", settings.openrouter_api_key))
+                    for m in fast_models:
+                        models_and_keys.append((m, settings.openrouter_api_key))
                 if getattr(settings, 'openrouter_api_key_secondary', None):
-                    models_and_keys.append(("nvidia/nemotron-3-super-120b-a12b:free", settings.openrouter_api_key_secondary))
+                    for m in fast_models:
+                        models_and_keys.append((m, settings.openrouter_api_key_secondary))
                     
                 if models_and_keys:
                     selected_model, selected_key = random.choice(models_and_keys)
@@ -127,13 +142,14 @@ class GeminiService:
                             temperature=GEMINI_TEMPERATURE,
                             max_tokens=GEMINI_MAX_OUTPUT_TOKENS,
                         )
-                        text = completion.choices[0].message.content.strip()
+                        raw_content = completion.choices[0].message.content
+                        text = raw_content.strip() if raw_content else "{}"
                         return self._strip_markdown_fences(text)
                     except Exception as e:
                         last_error = str(e)
                         logger.error("OpenRouter API failed", extra={"error": str(e)})
                         
-            # Try NVIDIA main fallback
+            # Try NVIDIA main fallback OR OpenRouter advanced models
             import random
             keys = []
             if getattr(settings, 'nvidia_api_key', None):
@@ -157,11 +173,52 @@ class GeminiService:
                         temperature=GEMINI_TEMPERATURE,
                         max_tokens=GEMINI_MAX_OUTPUT_TOKENS,
                     )
-                    text = completion.choices[0].message.content.strip()
+                    raw_content = completion.choices[0].message.content
+                    text = raw_content.strip() if raw_content else "{}"
                     return self._strip_markdown_fences(text)
                 except Exception as e:
                     last_error = str(e)
                     logger.error("NVIDIA API failed", extra={"error": str(e)})
+
+            # Fallback to OpenRouter advanced models if NVIDIA fails or isn't available
+            models_and_keys = []
+            advanced_models = [
+                "meta-llama/llama-3.1-70b-instruct:free",
+                "google/gemma-2-27b-it:free",
+                "qwen/qwen-2-72b-instruct:free",
+                "cognitivecomputations/dolphin-2.9.2-qwen2-72b",
+                "nousresearch/hermes-3-llama-3.1-405b",
+                "meta-llama/llama-3.1-405b-instruct:free"
+            ]
+            
+            if getattr(settings, 'openrouter_api_key', None):
+                for m in advanced_models:
+                    models_and_keys.append((m, settings.openrouter_api_key))
+            if getattr(settings, 'openrouter_api_key_secondary', None):
+                for m in advanced_models:
+                    models_and_keys.append((m, settings.openrouter_api_key_secondary))
+
+            if models_and_keys:
+                selected_model, selected_key = random.choice(models_and_keys)
+                logger.info("Using OpenRouter API (Advanced Model Fallback)", extra={"model": selected_model})
+                try:
+                    from openai import AsyncOpenAI
+                    client = AsyncOpenAI(
+                        base_url="https://openrouter.ai/api/v1",
+                        api_key=selected_key
+                    )
+                    completion = await client.chat.completions.create(
+                        model=selected_model,
+                        messages=[{"role": "user", "content": prompt}],
+                        temperature=GEMINI_TEMPERATURE,
+                        max_tokens=GEMINI_MAX_OUTPUT_TOKENS,
+                    )
+                    raw_content = completion.choices[0].message.content
+                    text = raw_content.strip() if raw_content else "{}"
+                    return self._strip_markdown_fences(text)
+                except Exception as e:
+                    last_error = str(e)
+                    logger.error("OpenRouter API advanced fallback failed", extra={"error": str(e)})
 
         raise GeminiError(
             "ALL_AI_FAILED",

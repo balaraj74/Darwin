@@ -124,6 +124,22 @@ class MongoDBService:
         data = _session_store.get(session_id)
         return BoardSession(**data) if data else None
 
+    async def get_sessions_for_twin(self, twin_id: str) -> list[BoardSession]:
+        """Retrieve all BoardSessions for a given twin_id, for the session history panel."""
+        if self._use_mongo:
+            cursor = self._db[SESSIONS_COLLECTION].find({"twin_id": twin_id})
+            docs = await cursor.to_list(length=100)
+            sessions = []
+            for doc in docs:
+                doc.pop("_id", None)
+                try:
+                    sessions.append(BoardSession(**doc))
+                except Exception:
+                    pass
+            return sessions
+        return [BoardSession(**data) for data in _session_store.values() if data.get("twin_id") == twin_id]
+
+
     # ------------------------------------------------------------------
     # Execution package operations
     # ------------------------------------------------------------------

@@ -13,7 +13,7 @@ import {
   Camera, Save, Github, Linkedin, Instagram, Globe, Twitter,
   Sparkles, Loader2, AlertCircle, ExternalLink
 } from 'lucide-react'
-import { DigitalTwin, BoardSession, UserProfile, SocialLinks } from '../../types'
+import { DigitalTwin, BoardSession, UserProfile, SocialLinks, ExecutionPackage } from '../../types'
 import BoardRoom from '../../components/BoardRoom'
 import ExecutionTracker from '../../components/ExecutionTracker'
 import { useAuthStore } from '../../hooks/useAuth'
@@ -176,12 +176,13 @@ function BulletItem({ icon, text, muted }: { icon: React.ReactNode; text: string
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
-function Sidebar({ twin, t, view, setView, profilePhoto }: {
+function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete }: {
   twin: DigitalTwin | null
   t: ReturnType<typeof tokens>
   view: string
   setView: (v: any) => void
   profilePhoto?: string | null
+  debateComplete?: boolean
 }) {
   const router = useRouter()
   const logout = useAuthStore(state => state.logout)
@@ -202,7 +203,7 @@ function Sidebar({ twin, t, view, setView, profilePhoto }: {
     { icon: <Settings size={15} />, label: 'Settings', id: 'settings' },
   ]
   const handleNavClick = (id: string) => {
-    if (['profile', 'board', 'my-profile'].includes(id)) setView(id as any)
+    setView(id as any)
   }
   return (
     <div style={{
@@ -233,12 +234,18 @@ function Sidebar({ twin, t, view, setView, profilePhoto }: {
       <nav style={{ padding: '10px 8px', flex: 1 }}>
         {nav.map(item => {
           const active = view === item.id
+          // Tabs that require a completed debate to be active
+          const requiresDebate = ['opps', 'blueprint', 'roadmap', 'gitlab', 'reports'].includes(item.id)
+          const locked = requiresDebate && !debateComplete
           return (
-            <div key={item.id} onClick={() => handleNavClick(item.id)}
-              style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 9, marginBottom: 2, cursor: 'pointer', background: active ? `${t.gold}18` : 'transparent', border: `1px solid ${active ? t.gold + '35' : 'transparent'}`, transition: 'all 0.2s' }}>
-              <span style={{ color: active ? t.gold : t.muted, display: 'flex' }}>{item.icon}</span>
-              <span style={{ fontSize: 12.5, fontWeight: active ? 600 : 400, color: active ? t.gold : t.muted }}>{item.label}</span>
-              {active && <ChevronRight size={11} color={t.gold} style={{ marginLeft: 'auto' }} />}
+            <div key={item.id} onClick={() => !locked && handleNavClick(item.id)}
+              style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 9, marginBottom: 2, cursor: locked ? 'not-allowed' : 'pointer', background: active ? `${t.gold}18` : 'transparent', border: `1px solid ${active ? t.gold + '35' : 'transparent'}`, transition: 'all 0.2s', opacity: locked ? 0.45 : 1 }}>
+              <span style={{ color: active ? t.gold : locked ? t.dim : t.muted, display: 'flex' }}>{item.icon}</span>
+              <span style={{ fontSize: 12.5, fontWeight: active ? 600 : 400, color: active ? t.gold : locked ? t.dim : t.muted, flex: 1 }}>{item.label}</span>
+              {active && <ChevronRight size={11} color={t.gold} />}
+              {requiresDebate && debateComplete && !active && (
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: t.green, flexShrink: 0 }} />
+              )}
             </div>
           )
         })}
@@ -467,7 +474,7 @@ function ProfilePanel({ t, token, userId, onPhotoChange }: {
 }
 
 // ─── Main Content ─────────────────────────────────────────────────────────────
-type ViewState = 'profile' | 'board' | 'execution' | 'report' | 'my-profile'
+type ViewState = 'profile' | 'board' | 'execution' | 'report' | 'my-profile' | 'opps' | 'blueprint' | 'roadmap' | 'gitlab' | 'reports'
 
 function DashboardContent() {
   const params = useSearchParams()
@@ -478,11 +485,14 @@ function DashboardContent() {
 
   const [twin, setTwin]           = useState<DigitalTwin | null>(null)
   const [session, setSession]     = useState<BoardSession | null>(null)
+  const [execPkg, setExecPkg]     = useState<ExecutionPackage | null>(null)
   const [loading, setLoading]     = useState(true)
   const [viewState, setViewState] = useState<ViewState>('profile')
   const [idea, setIdea]           = useState('')
   const [isSubmitting, setSubmit] = useState(false)
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
+  const [debateComplete, setDebateComplete] = useState(false)
+  const [isGeneratingPkg, setIsGeneratingPkg] = useState(false)
 
   const { token, userId, twinId: storedTwinId } = useAuthStore()
 
@@ -492,29 +502,56 @@ function DashboardContent() {
     const load = async () => {
       // 1. Try URL param first
       const idFromUrl = twinId || storedTwinId
+      let loadedTwin: DigitalTwin | null = null
+
       if (idFromUrl) {
         try {
           const r = await fetch(`${apiUrl}/twin/${idFromUrl}`)
           if (r.ok) {
-            const data = await r.json()
-            setTwin(data)
-            if (data.startup_idea) setIdea(data.startup_idea)
-            setLoading(false)
-            return
+            loadedTwin = await r.json()
+            setTwin(loadedTwin!)
+            if (loadedTwin?.startup_idea) setIdea(loadedTwin.startup_idea)
           }
         } catch { /* fall through */ }
       }
-      // 2. Fall back to fetching by userId (covers back-navigation from settings page)
-      if (userId) {
+
+      // 2. Fall back to fetching by userId
+      if (!loadedTwin && userId) {
         try {
           const r = await fetch(`${apiUrl}/twin/by-user/${userId}`)
           if (r.ok) {
-            const data = await r.json()
-            setTwin(data)
-            if (data.startup_idea) setIdea(data.startup_idea)
+            loadedTwin = await r.json()
+            setTwin(loadedTwin!)
+            if (loadedTwin?.startup_idea) setIdea(loadedTwin.startup_idea)
           }
         } catch { /* noop */ }
       }
+
+      // 3. Auto-restore debateComplete from past sessions
+      if (loadedTwin?.twin_id) {
+        try {
+          const sessionsRes = await fetch(`${apiUrl}/board/sessions/${loadedTwin.twin_id}`)
+          if (sessionsRes.ok) {
+            const sessionsList: Array<{
+              session_id: string; status: string; decision: string | null;
+            }> = await sessionsRes.json()
+            const latest = sessionsList.find(s => s.status === 'decided')
+            if (latest) {
+              // Load the full session so board can show history
+              const detailRes = await fetch(`${apiUrl}/board/session/${latest.session_id}`)
+              if (detailRes.ok) {
+                const detail = await detailRes.json()
+                setSession(detail.session)
+                if (detail.execution_package) {
+                  setExecPkg(detail.execution_package)
+                }
+                setDebateComplete(true)
+              }
+            }
+          }
+        } catch { /* noop — sessions API might not exist yet */ }
+      }
+
       setLoading(false)
     }
     load()
@@ -526,6 +563,7 @@ function DashboardContent() {
         .catch(() => { /* noop */ })
     }
   }, [twinId, storedTwinId, token, userId, apiUrl])
+
 
   const submitIdea = async () => {
     if (!idea.trim() || !twin) return
@@ -577,7 +615,7 @@ function DashboardContent() {
 
         {/* SIDEBAR */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <Sidebar twin={twin} t={t} view={viewState} setView={setViewState} profilePhoto={profilePhoto} />
+          <Sidebar twin={twin} t={t} view={viewState} setView={setViewState} profilePhoto={profilePhoto} debateComplete={debateComplete} />
         </motion.div>
 
         {/* MAIN */}
@@ -850,8 +888,39 @@ function DashboardContent() {
                     </button>
                   </Card>
                 ) : (
-                  <BoardRoom twin={twin} apiBaseUrl={apiUrl} onDecisionReached={s => { setSession(s); setViewState('execution') }} />
+                  <BoardRoom twin={twin} apiBaseUrl={apiUrl} initialSession={session} onDecisionReached={async (s, pkg, isReplay) => {
+                    setSession(s)
+                    setDebateComplete(true)
+                    if (pkg) {
+                      // Called from replay AND package exists — just store data
+                      setExecPkg(pkg)
+                    } else if (!isReplay) {
+                      // Missing package BUT it is NOT a replay (i.e. fresh debate, or user clicked Launch Full Blueprint)
+                      // Trigger the execution engine automatically and switch tabs
+                      setIsGeneratingPkg(true)
+                      setViewState('blueprint')
+                      try {
+                        const r = await fetch(`${apiUrl}/execution/run`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ session_id: s.session_id }),
+                        })
+                        if (r.ok) {
+                          const packageData: ExecutionPackage = await r.json()
+                          setExecPkg(packageData)
+                        }
+                      } catch { /* noop */ } finally {
+                        setIsGeneratingPkg(false)
+                      }
+                    } else {
+                      // It IS a replay, but package is missing. 
+                      // Do nothing, let the user stay on the Board tab. They can click "Launch Full Blueprint Suite" manually.
+                      setExecPkg(null)
+                    }
+                  }} />
+
                 )}
+
               </motion.div>
             )}
 
@@ -861,25 +930,331 @@ function DashboardContent() {
               </motion.div>
             )}
 
-            {viewState === 'report' && (
-              <motion.div key="report" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                <Card t={t} style={{ padding: 30, display: 'flex', flexDirection: 'column', gap: 18 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <Shield size={32} color={t.green} />
+            {/* ── OPPORTUNITIES ───────────────────────────────────────────── */}
+            {viewState === 'opps' && (
+              <motion.div key="opps" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <Card t={t} style={{ padding: '18px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.gold}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Lightbulb size={20} color={t.gold} />
+                    </div>
                     <div>
-                      <h2 style={{ margin: 0, fontSize: 19, fontWeight: 800, color: t.text }}>Final CEO Report</h2>
-                      <p style={{ margin: 0, fontSize: 10.5, color: t.dim, fontFamily: 'monospace' }}>Board session complete</p>
+                      <div style={{ fontSize: 17, fontWeight: 800, color: t.text }}>Opportunities Identified</div>
+                      <div style={{ fontSize: 11, color: t.dim, marginTop: 1 }}>Aggregated from all 5 board agents across 3 rounds of debate</div>
                     </div>
                   </div>
-                  <p style={{ fontSize: 13, color: t.muted, lineHeight: 1.9, margin: 0 }}>The technical team has completed the blueprint suite. Your idea has been validated, debated by the board, and mapped to a production-ready tech stack.</p>
-                  <div style={{ padding: '13px 16px', background: 'rgba(0,0,0,0.25)', border: `1px solid ${t.border}`, borderRadius: 10, fontFamily: 'monospace', fontSize: 12, color: t.dim, lineHeight: 2 }}>
-                    <div>// GitLab repository configured ✓</div>
-                    <div>// PRD and architecture finalized ✓</div>
-                    <div style={{ color: t.green }}>// Handing over keys to Founder ✓</div>
+                  {session?.rounds?.length ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 12 }}>
+                      {session.rounds.flatMap(round => round).map((op, i) => (
+                        op.opportunities.length > 0 ? (
+                          <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 12, padding: 16 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                              <span style={{ fontSize: 9.5, fontFamily: 'monospace', fontWeight: 700, color: t.gold, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{op.agent} · R{op.round}</span>
+                              <span style={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 800, color: op.score >= 7 ? t.green : op.score >= 5 ? t.orange : t.red }}>{op.score.toFixed(1)}/10</span>
+                            </div>
+                            {op.opportunities.map((o, j) => (
+                              <div key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 7, fontSize: 12, color: t.muted }}>
+                                <span style={{ color: t.green, flexShrink: 0, marginTop: 2 }}>▸</span> {o}
+                              </div>
+                            ))}
+                          </div>
+                        ) : null
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>Run a board debate to see opportunities here.</div>
+                  )}
+                  {session?.decision?.recommended_idea && (
+                    <div style={{ marginTop: 16, padding: '14px 18px', background: `${t.blue}10`, border: `1px solid ${t.blue}25`, borderRadius: 12 }}>
+                      <div style={{ fontSize: 10, fontFamily: 'monospace', color: t.blue, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Board Recommended Direction</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: t.text }}>{session.decision.recommended_idea}</div>
+                    </div>
+                  )}
+                </Card>
+              </motion.div>
+            )}
+
+            {/* ── STARTUP BLUEPRINT ──────────────────────────────────────── */}
+            {viewState === 'blueprint' && (
+              <motion.div key="blueprint" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <Card t={t} style={{ padding: '18px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.purple}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <GitMerge size={20} color={t.purple} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 17, fontWeight: 800, color: t.text }}>Startup Blueprint</div>
+                      <div style={{ fontSize: 11, color: t.dim }}>Product Requirements Document generated by your AI board</div>
+                    </div>
                   </div>
-                  <button onClick={() => setViewState('profile')} style={{ alignSelf: 'flex-start', padding: '9px 22px', borderRadius: 999, background: `${t.gold}15`, border: `1px solid ${t.gold}30`, color: t.gold, fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <ChevronRight size={12} style={{ transform: 'rotate(180deg)' }} /> Back to Profile
-                  </button>
+                  {execPkg?.prd ? (
+                    <>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+                        <div style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 10, padding: 14 }}>
+                          <div style={{ fontSize: 9.5, color: t.gold, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Product Name</div>
+                          <div style={{ fontSize: 15, fontWeight: 800, color: t.text }}>{execPkg.prd.product_name}</div>
+                        </div>
+                        <div style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 10, padding: 14 }}>
+                          <div style={{ fontSize: 9.5, color: t.gold, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Target Customer</div>
+                          <div style={{ fontSize: 13, color: t.text }}>{execPkg.prd.target_customer}</div>
+                        </div>
+                      </div>
+                      <div style={{ background: `${t.blue}08`, border: `1px solid ${t.blue}20`, borderRadius: 10, padding: 14, marginBottom: 16 }}>
+                        <div style={{ fontSize: 9.5, color: t.blue, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Problem Statement</div>
+                        <div style={{ fontSize: 13, color: t.muted, lineHeight: 1.7 }}>{execPkg.prd.problem_statement}</div>
+                      </div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: t.text, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <CheckCircle size={14} color={t.green} /> MVP Features ({execPkg.prd.build_weeks}w to build)
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+                        {execPkg.prd.mvp_features.map((f, i) => (
+                          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 9 }}>
+                            <span style={{ padding: '1px 7px', borderRadius: 4, fontSize: 9, fontWeight: 700, fontFamily: 'monospace', background: f.priority === 'must_have' ? `${t.green}20` : `${t.orange}20`, color: f.priority === 'must_have' ? t.green : t.orange, flexShrink: 0, marginTop: 1 }}>
+                              {f.priority.replace('_', ' ').toUpperCase()}
+                            </span>
+                            <div>
+                              <div style={{ fontSize: 13, fontWeight: 600, color: t.text }}>{f.name}</div>
+                              <div style={{ fontSize: 11.5, color: t.dim, marginTop: 2 }}>{f.description}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {execPkg.prd.explicitly_excluded?.length > 0 && (
+                        <div style={{ background: `${t.red}08`, border: `1px solid ${t.red}20`, borderRadius: 10, padding: 14 }}>
+                          <div style={{ fontSize: 9.5, color: t.red, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}><AlertTriangle size={11} /> Explicitly Excluded</div>
+                          {execPkg.prd.explicitly_excluded.map((f, i) => (
+                            <div key={i} style={{ fontSize: 12, color: t.dim, marginBottom: 4, display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+                              <span style={{ color: t.red, flexShrink: 0 }}>✕</span> <span><strong style={{ color: t.muted }}>{f.name}:</strong> {f.exclusion_reason}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : isGeneratingPkg ? (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>
+                      <div style={{ color: t.gold, marginBottom: 12 }}><Loader2 className="animate-spin" size={32} style={{ margin: '0 auto' }} /></div>
+                      <div style={{ fontSize: 16, fontWeight: 800, color: t.text }}>Generating Blueprint...</div>
+                      <div style={{ fontSize: 12, color: t.muted }}>Synthesizing debate into execution architecture...</div>
+                    </div>
+                  ) : (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>Run a board debate to generate your full executive report.</div>
+                  )}
+                </Card>
+              </motion.div>
+            )}
+
+            {/* ── ROADMAP ────────────────────────────────────────────────── */}
+            {viewState === 'roadmap' && (
+              <motion.div key="roadmap" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <Card t={t} style={{ padding: '18px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.blue}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Map size={20} color={t.blue} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 17, fontWeight: 800, color: t.text }}>Execution Roadmap</div>
+                      <div style={{ fontSize: 11, color: t.dim }}>Financial projections & milestone timeline</div>
+                    </div>
+                  </div>
+                  {execPkg?.financial_model ? (
+                    <>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
+                        {[
+                          { label: 'CAC', value: `₹${execPkg.financial_model.cac_inr.toLocaleString()}`, color: t.red },
+                          { label: 'LTV', value: `₹${execPkg.financial_model.ltv_inr.toLocaleString()}`, color: t.green },
+                          { label: 'LTV/CAC', value: execPkg.financial_model.ltv_cac_ratio.toFixed(1) + 'x', color: execPkg.financial_model.ltv_cac_ratio >= 3 ? t.green : t.orange },
+                          { label: 'Break-even', value: `Month ${execPkg.financial_model.break_even_month}`, color: t.blue },
+                        ].map(m => (
+                          <div key={m.label} style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 10, padding: '14px 16px', textAlign: 'center' }}>
+                            <div style={{ fontSize: 9, color: t.dim, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>{m.label}</div>
+                            <div style={{ fontSize: 18, fontWeight: 900, color: m.color, fontFamily: 'monospace' }}>{m.value}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: t.muted, marginBottom: 12, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Monthly Milestones</div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {execPkg.financial_model.monthly_projections.map((m, i) => (
+                          <div key={i} style={{ display: 'grid', gridTemplateColumns: '60px 1fr 120px 120px', gap: 12, alignItems: 'center', padding: '10px 14px', background: 'rgba(255,255,255,0.025)', border: `1px solid ${t.border}`, borderRadius: 9 }}>
+                            <span style={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 800, color: t.gold }}>Mo {m.month}</span>
+                            <span style={{ fontSize: 12, color: t.text }}>{m.milestone}</span>
+                            <div style={{ textAlign: 'right' }}>
+                              <div style={{ fontSize: 9, color: t.dim, marginBottom: 2 }}>BURN</div>
+                              <div style={{ fontSize: 11, fontWeight: 700, color: t.red, fontFamily: 'monospace' }}>₹{m.burn_inr.toLocaleString()}</div>
+                            </div>
+                            <div style={{ textAlign: 'right' }}>
+                              <div style={{ fontSize: 9, color: t.dim, marginBottom: 2 }}>MRR</div>
+                              <div style={{ fontSize: 11, fontWeight: 700, color: m.mrr_inr > 0 ? t.green : t.dim, fontFamily: 'monospace' }}>₹{m.mrr_inr.toLocaleString()}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ marginTop: 14, padding: '12px 16px', background: execPkg.financial_model.verdict === 'Viable' ? `${t.green}10` : `${t.orange}10`, border: `1px solid ${execPkg.financial_model.verdict === 'Viable' ? t.green : t.orange}25`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <CheckCircle size={16} color={execPkg.financial_model.verdict === 'Viable' ? t.green : t.orange} />
+                        <div>
+                          <div style={{ fontSize: 12, fontWeight: 700, color: execPkg.financial_model.verdict === 'Viable' ? t.green : t.orange }}>Financial Verdict: {execPkg.financial_model.verdict}</div>
+                          <div style={{ fontSize: 11, color: t.dim, marginTop: 1 }}>Capital recovered by Month {execPkg.financial_model.capital_recovered_month}</div>
+                        </div>
+                      </div>
+                    </>
+                  ) : isGeneratingPkg ? (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>
+                      <div style={{ color: t.gold, marginBottom: 12 }}><Loader2 className="animate-spin" size={32} style={{ margin: '0 auto' }} /></div>
+                      <div style={{ fontSize: 16, fontWeight: 800, color: t.text }}>Generating Roadmap...</div>
+                      <div style={{ fontSize: 12, color: t.muted }}>Projecting timeline and metrics...</div>
+                    </div>
+                  ) : (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>Run a board debate to generate your full executive report.</div>
+                  )}
+                </Card>
+              </motion.div>
+            )}
+
+            {/* ── GITLAB WORKSPACE ───────────────────────────────────────── */}
+            {viewState === 'gitlab' && (
+              <motion.div key="gitlab" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <Card t={t} style={{ padding: '18px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.orange}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Shield size={20} color={t.orange} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 17, fontWeight: 800, color: t.text }}>GitLab Workspace</div>
+                      <div style={{ fontSize: 11, color: t.dim }}>Auto-generated issues, milestones and epics</div>
+                    </div>
+                    {execPkg?.gitlab_output?.project_url && (
+                      <a href={execPkg.gitlab_output.project_url} target="_blank" rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: `${t.orange}18`, border: `1px solid ${t.orange}35`, color: t.orange, fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
+                        <ExternalLink size={12} /> Open Repository
+                      </a>
+                    )}
+                  </div>
+                  {execPkg?.gitlab_output ? (
+                    <>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 16 }}>
+                        {[
+                          { label: 'Milestones', items: execPkg.gitlab_output.milestones_created, color: t.blue },
+                          { label: 'Epics', items: execPkg.gitlab_output.epics_created, color: t.purple },
+                          { label: 'Total Issues', items: [String(execPkg.gitlab_output.issues_created.length)], color: t.green },
+                        ].map(g => (
+                          <div key={g.label} style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 10, padding: 14 }}>
+                            <div style={{ fontSize: 9.5, color: g.color, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{g.label}</div>
+                            {g.items.map((item, i) => (
+                              <div key={i} style={{ fontSize: 12, color: t.text, marginBottom: 4 }}>{item}</div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: t.muted, marginBottom: 10, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Issues Created</div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        {execPkg.gitlab_output.issues_created.map((issue, i) => (
+                          <div key={i} style={{ padding: '10px 14px', background: 'rgba(255,255,255,0.025)', border: `1px solid ${t.border}`, borderRadius: 9 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                              <span style={{ fontSize: 12, fontWeight: 600, color: t.text }}>{issue.title}</span>
+                              <span style={{ fontSize: 9, fontFamily: 'monospace', color: t.dim, padding: '1px 6px', borderRadius: 4, border: `1px solid ${t.border}` }}>{issue.estimated_hours}h</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: 6 }}>
+                              {issue.labels?.slice(0, 3).map((l, j) => (
+                                <span key={j} style={{ fontSize: 9, padding: '1px 6px', borderRadius: 4, background: `${t.purple}18`, color: t.purple, border: `1px solid ${t.purple}30` }}>{l}</span>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {execPkg.gitlab_output.note && (
+                        <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 9, fontSize: 11, color: t.dim }}>{execPkg.gitlab_output.note}</div>
+                      )}
+                    </>
+                  ) : (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>GitLab workspace requires a GitLab token. Add it in Settings to auto-create your project.</div>
+                  )}
+                </Card>
+              </motion.div>
+            )}
+
+            {/* ── REPORTS ────────────────────────────────────────────────── */}
+            {(viewState === 'reports' || viewState === 'report') && (
+              <motion.div key="reports" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <Card t={t} style={{ padding: '18px 22px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.green}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <BarChart2 size={20} color={t.green} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 17, fontWeight: 800, color: t.text }}>Executive Summary Report</div>
+                      <div style={{ fontSize: 11, color: t.dim }}>Full board session output — shareable with co-founders & investors</div>
+                    </div>
+                  </div>
+
+                  {session?.decision ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                      {/* Verdict section */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                        {[
+                          { label: 'Board Verdict', value: session.decision.decision, color: session.decision.decision === 'PROCEED' ? t.green : session.decision.decision === 'PIVOT' ? t.orange : t.red },
+                          { label: 'Overall Score', value: `${Math.round(session.decision.overall_score)}/100`, color: t.gold },
+                          { label: 'Confidence', value: `${Math.round(session.decision.confidence)}%`, color: t.blue },
+                        ].map(s => (
+                          <div key={s.label} style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 10, padding: '14px 18px', textAlign: 'center' }}>
+                            <div style={{ fontSize: 9, color: t.dim, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>{s.label}</div>
+                            <div style={{ fontSize: 20, fontWeight: 900, color: s.color, fontFamily: 'monospace' }}>{s.value}</div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Key insight */}
+                      <div style={{ padding: '14px 18px', background: `${t.gold}09`, border: `1px solid ${t.gold}25`, borderRadius: 12 }}>
+                        <div style={{ fontSize: 9.5, color: t.gold, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Key Insight</div>
+                        <div style={{ fontSize: 14, color: t.text, lineHeight: 1.7, fontStyle: 'italic' }}>&ldquo;{session.decision.key_insight}&rdquo;</div>
+                      </div>
+
+                      {/* Vote breakdown */}
+                      {session.decision.votes?.length > 0 && (
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: t.muted, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Agent Vote Breakdown</div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {session.decision.votes.map(v => (
+                              <div key={v.agent} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '10px 14px', background: 'rgba(255,255,255,0.025)', border: `1px solid ${t.border}`, borderRadius: 9 }}>
+                                <span style={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 700, color: v.vote === 'PROCEED' ? t.green : v.vote === 'NO' ? t.red : t.orange, minWidth: 80 }}>{v.agent} · {v.vote}</span>
+                                <span style={{ fontSize: 12, color: t.muted, lineHeight: 1.5 }}>{v.vote_reason}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Tech architecture */}
+                      {execPkg?.tech_architecture && (
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: t.muted, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Recommended Tech Architecture</div>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                            {Object.entries({
+                              Frontend: execPkg.tech_architecture.frontend,
+                              Backend: execPkg.tech_architecture.backend,
+                              'AI Layer': execPkg.tech_architecture.ai_layer,
+                              Database: execPkg.tech_architecture.database,
+                              Infrastructure: execPkg.tech_architecture.infra,
+                            }).map(([k, v]) => (
+                              <div key={k} style={{ padding: '8px 12px', background: 'rgba(255,255,255,0.025)', border: `1px solid ${t.border}`, borderRadius: 8 }}>
+                                <span style={{ fontSize: 9.5, color: t.dim, fontFamily: 'monospace', textTransform: 'uppercase' }}>{k}</span>
+                                <div style={{ fontSize: 12, color: t.text, marginTop: 3 }}>{v}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <button onClick={() => setViewState('profile')} style={{ alignSelf: 'flex-start', padding: '9px 22px', borderRadius: 999, background: `${t.gold}15`, border: `1px solid ${t.gold}30`, color: t.gold, fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <ChevronRight size={12} style={{ transform: 'rotate(180deg)' }} /> Back to Profile
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>Run a board debate to generate your full executive report.</div>
+                  )}
                 </Card>
               </motion.div>
             )}

@@ -1,6 +1,7 @@
 """
 Module: board.py
-Description: Board router — starts debate session, streams debate updates via SSE.
+Description: Board router — starts debate session, streams debate updates via SSE,
+             and provides session history for replaying past debates.
 
 Author:  KAIRON / Founder Twin
 Created: 2025-06-09
@@ -9,6 +10,7 @@ Created: 2025-06-09
 import uuid
 import json
 import asyncio
+from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -32,7 +34,6 @@ class StartDebateRequest(BaseModel):
 async def _run_debate_background_task(session: BoardSession, twin: DigitalTwin):
     try:
         session = await run_debate(session, twin)
-        # Update db after debate rounds to ensure it's saved before synthesis
         await db.save_session(session)
         decision = await synthesize_decision(session, twin)
         session.decision = decision
@@ -63,13 +64,56 @@ async def start_debate(request: StartDebateRequest, background_tasks: Background
     session = BoardSession(
         session_id=str(uuid.uuid4()),
         twin_id=request.twin_id,
-        status="debating"
+        status="debating",
+        created_at=datetime.now(timezone.utc).isoformat(),
     )
     await db.save_session(session)
     logger.info("Board session initialized", extra={"session_id": session.session_id})
 
     background_tasks.add_task(_run_debate_background_task, session, twin)
     return session
+
+
+@router.get("/sessions/{twin_id}")
+async def list_sessions(twin_id: str) -> list[dict]:
+    """
+    Return a summary list of all past board sessions for a twin.
+    Used for the session history / replay panel.
+    """
+    sessions = await db.get_sessions_for_twin(twin_id)
+    result = []
+    for s in sessions:
+        result.append({
+            "session_id": s.session_id,
+            "status": s.status,
+            "created_at": getattr(s, "created_at", None),
+            "decision": s.decision.decision if s.decision else None,
+            "overall_score": s.decision.overall_score if s.decision else None,
+            "viability_score": s.decision.viability_score if s.decision else None,
+            "founder_fit_score": s.decision.founder_fit_score if s.decision else None,
+            "key_insight": s.decision.key_insight if s.decision else None,
+            "original_idea": s.decision.original_idea if s.decision else None,
+        })
+    result.sort(key=lambda x: x.get("created_at") or "", reverse=True)
+    return result
+
+
+@router.get("/session/{session_id}")
+async def get_session_detail(session_id: str) -> dict:
+    """
+    Return full session detail including all rounds, opinions, decision, and execution package.
+    Used for replaying a past board session.
+    """
+    session = await db.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    package = await db.get_execution_package(session_id)
+
+    return {
+        "session": session.model_dump(),
+        "execution_package": package.model_dump() if package else None,
+    }
 
 
 @router.get("/{session_id}/stream")
@@ -88,7 +132,7 @@ async def stream_debate(session_id: str) -> StreamingResponse:
     """
     async def event_generator():
         yielded_opinions = set()
-        
+
         while True:
             session: BoardSession | None = await db.get_session(session_id)
             if not session:
@@ -115,7 +159,7 @@ async def stream_debate(session_id: str) -> StreamingResponse:
                     yield f"data: {json.dumps({'type': 'decision', 'data': session.decision.model_dump()})}\n\n"
                 yield "data: [DONE]\n\n"
                 break
-                
+
             if session.status == "failed":
                 yield f"data: {json.dumps({'error': 'Debate failed during execution'})}\n\n"
                 yield "data: [DONE]\n\n"

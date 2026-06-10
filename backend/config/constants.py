@@ -39,8 +39,8 @@ GEMINI_MAX_OUTPUT_TOKENS = 4096
 
 # NVIDIA Fallbacks
 NVIDIA_MODEL_KIMI = "moonshotai/kimi-k2.6"
-NVIDIA_MODEL = "openai/gpt-oss-120b"
-OPENROUTER_MODEL = "google/gemma-4-31b-it:free"
+NVIDIA_MODEL = "meta/llama-3.1-70b-instruct"
+OPENROUTER_MODEL = "google/gemma-2-9b-it:free"
 GEMINI_TEMPERATURE = 0.7
 
 # MongoDB collections

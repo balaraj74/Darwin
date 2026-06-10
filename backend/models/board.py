@@ -12,6 +12,7 @@ Exports: AgentOpinion, DebateRound, VoteResult, BoardDecision, BoardSession
 from pydantic import BaseModel, Field
 from typing import Optional
 from enum import Enum
+from datetime import datetime, timezone
 
 
 class AgentRole(str, Enum):
@@ -82,3 +83,7 @@ class BoardSession(BaseModel):
     rounds: list[list[AgentOpinion]] = Field(default_factory=list)
     decision: Optional[BoardDecision] = None
     status: str = Field(default="pending", description="pending | debating | decided | executed")
+    created_at: Optional[str] = Field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat(),
+        description="ISO 8601 timestamp of when this session was created",
+    )
