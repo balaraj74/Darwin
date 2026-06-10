@@ -103,15 +103,15 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl }: Board
         if (event.data === '[DONE]') { es.close(); finishDebate(activeSession); return; }
         try {
           const parsed = JSON.parse(event.data);
-          if (parsed.type === 'opinion') {
-            const op: AgentOpinion = parsed.data;
-            setOpinions(prev => [...prev, op]);
-            setActiveSpeech(op);
-            setSpeakingAgent(op.agent);
-          } else if (parsed.type === 'decision') {
+          if (parsed.type === 'decision') {
             const dec: BoardDecision = parsed.data;
             setDecision(dec);
             activeSession.decision = dec;
+          } else if (parsed.agent) {
+            const op: AgentOpinion = parsed;
+            setOpinions(prev => [...prev, op]);
+            setActiveSpeech(op);
+            setSpeakingAgent(op.agent);
           }
         } catch { /* parse error noop */ }
       };
