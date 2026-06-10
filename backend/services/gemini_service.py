@@ -100,6 +100,68 @@ class GeminiService:
                         else:
                             # Break and try next model if it's not a rate limit
                             break
+                            
+            # If we get here, all Gemini models failed. Try external fallbacks.
+            logger.warning("All Gemini models failed, trying OpenRouter/NVIDIA fallbacks")
+            
+            if use_fast_model:
+                import random
+                models_and_keys = []
+                if getattr(settings, 'openrouter_api_key', None):
+                    models_and_keys.append(("google/gemma-4-31b-it:free", settings.openrouter_api_key))
+                if getattr(settings, 'openrouter_api_key_secondary', None):
+                    models_and_keys.append(("nvidia/nemotron-3-super-120b-a12b:free", settings.openrouter_api_key_secondary))
+                    
+                if models_and_keys:
+                    selected_model, selected_key = random.choice(models_and_keys)
+                    logger.info("Using OpenRouter API (Fast Model)", extra={"model": selected_model})
+                    try:
+                        from openai import AsyncOpenAI
+                        client = AsyncOpenAI(
+                            base_url="https://openrouter.ai/api/v1",
+                            api_key=selected_key
+                        )
+                        completion = await client.chat.completions.create(
+                            model=selected_model,
+                            messages=[{"role": "user", "content": prompt}],
+                            temperature=GEMINI_TEMPERATURE,
+                            max_tokens=GEMINI_MAX_OUTPUT_TOKENS,
+                        )
+                        text = completion.choices[0].message.content.strip()
+                        return self._strip_markdown_fences(text)
+                    except Exception as e:
+                        last_error = str(e)
+                        logger.error("OpenRouter API failed", extra={"error": str(e)})
+                        
+            # Try NVIDIA main fallback
+            import random
+            keys = []
+            if getattr(settings, 'nvidia_api_key', None):
+                keys.append(settings.nvidia_api_key)
+            if getattr(settings, 'nvidia_api_key_secondary', None):
+                keys.append(settings.nvidia_api_key_secondary)
+                
+            if keys:
+                from config.constants import NVIDIA_MODEL
+                selected_key = random.choice(keys)
+                logger.info("Using NVIDIA API", extra={"model": NVIDIA_MODEL, "key_pool_size": len(keys)})
+                try:
+                    from openai import AsyncOpenAI
+                    client = AsyncOpenAI(
+                        base_url="https://integrate.api.nvidia.com/v1",
+                        api_key=selected_key
+                    )
+                    completion = await client.chat.completions.create(
+                        model=NVIDIA_MODEL,
+                        messages=[{"role": "user", "content": prompt}],
+                        temperature=GEMINI_TEMPERATURE,
+                        max_tokens=GEMINI_MAX_OUTPUT_TOKENS,
+                    )
+                    text = completion.choices[0].message.content.strip()
+                    return self._strip_markdown_fences(text)
+                except Exception as e:
+                    last_error = str(e)
+                    logger.error("NVIDIA API failed", extra={"error": str(e)})
 
         raise GeminiError(
             "ALL_AI_FAILED",
