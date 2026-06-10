@@ -68,8 +68,8 @@ class GeminiService:
 
         async with self._semaphore:
             for model_id in model_chain:
-                # Up to 3 attempts per model
-                for attempt in range(3):
+                # 1 initial try + 1 retry per model
+                for attempt in range(2):
                     try:
                         logger.info(f"Generating content with model {model_id} (attempt {attempt+1})")
                         response = await self.client.aio.models.generate_content(
