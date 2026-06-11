@@ -57,7 +57,7 @@ When you bring a startup idea to the Darwin Boardroom, **5 specialized AI agents
 
 ## 🌐 Live Demo
 
-[![Watch the Live Demo](https://img.youtube.com/vi/WiJDv79-Jas/maxresdefault.jpg)](https://youtu.be/WiJDv79-Jas)
+[![Watch the Live Demo](./frontend/public/youtube-demo.jpg)](https://youtu.be/WiJDv79-Jas)
 
 | Service | URL |
 |---------|-----|
