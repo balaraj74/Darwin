@@ -5,20 +5,36 @@
 *.swp
 *.swo
 
-# Global Environment and Dependencies
-node_modules/
-venv/
-env/
-.venv/
+# Environment files — NEVER commit real secrets
 .env
-.env.*
+.env.local
+.env.*.local
+.env.production
+.env.development
+# Allow .env.example — it contains placeholder values only, safe to commit
+!.env.example
 
-# Python Cache
+# Python
 __pycache__/
 *.pyc
 *.pyo
+venv/
+env/
+.venv/
+
+# Node
+node_modules/
 
 # Build artifacts
 dist/
 build/
 *.egg-info/
+
+# Logs
+*.log
+.backend.log
+.frontend.log
+
+# TypeScript build info (large auto-generated file)
+tsconfig.tsbuildinfo
+frontend/tsconfig.tsbuildinfo
