@@ -15,8 +15,9 @@
 
 **The AI Executive Board that builds startups tailored to the founder — not just the idea.**
 
-[![Production](https://img.shields.io/badge/🌐_App-Live_on_Cloud_Run-4285F4?style=for-the-badge)](https://darwin-43894313888.us-central1.run.app)
-[![API](https://img.shields.io/badge/🔌_API-FastAPI_Docs-009688?style=for-the-badge)](https://darwin-backend-43894313888.us-central1.run.app/docs)
+[![Production](https://img.shields.io/badge/🌐_App-Live_on_Cloud_Run-4285F4?style=for-the-badge)](https://darwin-5dleehg6la-el.a.run.app)
+[![API](https://img.shields.io/badge/🔌_API-FastAPI_Docs-009688?style=for-the-badge)](https://darwin-backend-5dleehg6la-el.a.run.app/docs)
+[![Video](https://img.shields.io/badge/▶️_Demo-YouTube-FF0000?style=for-the-badge)](https://youtu.be/WiJDv79-Jas)
 [![Status](https://img.shields.io/badge/Status-Production-brightgreen?style=for-the-badge)](#)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](./LICENSE)
 
@@ -58,10 +59,11 @@ When you bring a startup idea to the Darwin Boardroom, **5 specialized AI agents
 
 | Service | URL |
 |---------|-----|
-| **Frontend App** | https://darwin-43894313888.us-central1.run.app |
-| **Backend API** | https://darwin-backend-43894313888.us-central1.run.app |
-| **Interactive API Docs** | https://darwin-backend-43894313888.us-central1.run.app/docs |
-| **Health Check** | https://darwin-backend-43894313888.us-central1.run.app/health |
+| **Frontend App** | https://darwin-5dleehg6la-el.a.run.app |
+| **Backend API** | https://darwin-backend-5dleehg6la-el.a.run.app |
+| **Interactive API Docs** | https://darwin-backend-5dleehg6la-el.a.run.app/docs |
+| **Health Check** | https://darwin-backend-5dleehg6la-el.a.run.app/health |
+| **Live Demo Video** | https://youtu.be/WiJDv79-Jas |
 | **GCP Project** | `darwinagent` — `us-central1` |
 
 ---
@@ -427,7 +429,7 @@ All endpoints require `Authorization: Bearer <firebase-id-token>` except `/healt
 | `PUT` | `/profile` | Update profile details |
 | `PUT` | `/profile/photo` | Update profile photo URL |
 
-Full interactive documentation: **https://darwin-backend-43894313888.us-central1.run.app/docs**
+Full interactive documentation: **https://darwin-backend-5dleehg6la-el.a.run.app/docs**
 
 ---
 
@@ -669,6 +671,6 @@ Built with ❤️ and an unhealthy number of Gemini API calls.
 
 *"The best executive board you'll ever have — and it never needs a salary, a flight, or a follow-up email."*
 
-**[Try Darwin Live →](https://darwin-43894313888.us-central1.run.app)**
+**[Try Darwin Live →](https://darwin-5dleehg6la-el.a.run.app)** | **[Watch the Live Demo →](https://youtu.be/WiJDv79-Jas)**
 
 </div>
