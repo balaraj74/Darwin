@@ -9,12 +9,12 @@ Created: 2025-06-09
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from models.founder import DigitalTwin
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/twin", tags=["twin"])
-db = MongoDBService()
+db = FirestoreService()
 
 class UpdateTwinRequest(BaseModel):
     # For now, allow manual updates to critical hard constraints

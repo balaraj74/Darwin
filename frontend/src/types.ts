@@ -62,6 +62,7 @@ export interface UserProfile {
   display_name?: string;
   bio?: string;
   profile_photo_b64?: string;
+  photo_url?: string;
   social_links: SocialLinks;
   gitlab_token?: string;
   gitlab_namespace?: string;
@@ -108,10 +109,14 @@ export interface BoardDecision {
   key_insight: string;
 }
 
+export interface DebateRound {
+  opinions: AgentOpinion[];
+}
+
 export interface BoardSession {
   session_id: string;
   twin_id: string;
-  rounds: AgentOpinion[][];
+  rounds: DebateRound[];
   decision?: BoardDecision;
   status: "pending" | "debating" | "decided" | "executed";
 }
@@ -184,12 +189,14 @@ export interface GitLabIssue {
 }
 
 export interface GitLabOutput {
-  project_url: string;
   project_id: number;
+  project_url: string;
   milestones_created: string[];
   epics_created: string[];
   issues_created: GitLabIssue[];
-  note: string;
+  note?: string;
+  engineering_status?: 'pending' | 'in_progress' | 'completed' | 'failed';
+  engineering_logs?: string[];
 }
 
 export interface ExecutionPackage {

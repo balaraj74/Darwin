@@ -39,6 +39,14 @@ app.include_router(auth.router)
 app.include_router(profile.router)
 
 
+from fastapi.responses import RedirectResponse
+
+@app.get("/")
+async def root_redirect():
+    """Redirect root to API documentation."""
+    return RedirectResponse(url="/docs")
+
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint for Cloud Run and load balancers."""

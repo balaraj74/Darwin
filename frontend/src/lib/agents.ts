@@ -5,7 +5,7 @@
  */
 
 import { GoogleGenAI } from "@google/genai";
-import { DigitalTwin, AgentOpinion, AgentRole, BoardDecision, VoteResult, HardConstraintViolation } from "../types.js";
+import { DigitalTwin, AgentOpinion, AgentRole, BoardDecision, VoteResult, HardConstraintViolation, DebateRound } from "../types.js";
 
 // ─────────────────────────────────────────────
 // Model Selection (per AGENT.md rules)
@@ -257,7 +257,7 @@ const AGENT_CROSS_EXAMINATION_PAIRS: [AgentRole, AgentRole][] = [
 export async function runFullBoardDebate(
   gemini: GoogleGenAI,
   twin: DigitalTwin
-): Promise<{ rounds: AgentOpinion[][]; decision: BoardDecision }> {
+): Promise<{ rounds: DebateRound[]; decision: BoardDecision }> {
   const idea = twin.startup_idea;
   const agents: AgentRole[] = ["CEO", "CFO", "CTO", "CMO", "CPO"];
 
@@ -304,8 +304,14 @@ export async function runFullBoardDebate(
 
   // ── Decision Synthesizer ──
   console.log("[Board] Decision Synthesizer running...");
-  const allRounds = [round1Opinions, round2Opinions, round3Opinions];
-  const decision = await runDecisionSynthesizer(gemini, twin, idea, allRounds);
+  const allRoundsArray = [round1Opinions, round2Opinions, round3Opinions];
+  const decision = await runDecisionSynthesizer(gemini, twin, idea, allRoundsArray);
+
+  const allRounds: DebateRound[] = [
+    { opinions: round1Opinions },
+    { opinions: round2Opinions },
+    { opinions: round3Opinions },
+  ];
 
   return { rounds: allRounds, decision };
 }

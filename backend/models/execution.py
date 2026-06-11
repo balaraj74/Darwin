@@ -87,6 +87,7 @@ class TechArchitecture(BaseModel):
 
 
 class GitLabIssue(BaseModel):
+    iid: Optional[int] = None
     title: str
     description: str
     milestone: str
@@ -104,6 +105,9 @@ class GitLabOutput(BaseModel):
     epics_created: list[str]
     issues_created: list[GitLabIssue]
     note: str = Field(..., description="Explains how GitLab structure reflects founder profile")
+    engineering_status: str = Field("pending", description="pending | in_progress | completed | failed")
+    engineering_error: Optional[str] = None
+    engineering_logs: list[str] = Field(default_factory=list)
 
 
 class ExecutionPackage(BaseModel):

@@ -17,6 +17,8 @@ import { DigitalTwin, BoardSession, UserProfile, SocialLinks, ExecutionPackage }
 import BoardRoom from '../../components/BoardRoom'
 import ExecutionTracker from '../../components/ExecutionTracker'
 import { useAuthStore } from '../../hooks/useAuth'
+import { auth } from '../../lib/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 // ─── Theme Hook ──────────────────────────────────────────────────────────────
 function useTheme() {
@@ -42,10 +44,10 @@ function tokens(theme: 'dark' | 'light') {
   const dark = theme === 'dark'
   return {
     bg:     dark ? '#0a0a0c'                      : '#f4f2ee',
-    bg2:    dark ? 'rgba(14,14,20,0.92)'           : 'rgba(255,255,255,0.88)',
-    card:   dark ? 'rgba(12,12,20,0.55)'           : 'rgba(255,255,255,0.45)',
-    cardBorder: dark ? 'rgba(201,168,76,0.10)'     : 'rgba(201,168,76,0.18)',
-    border: dark ? 'rgba(255,255,255,0.07)'        : 'rgba(0,0,0,0.08)',
+    bg2:    dark ? 'rgba(14,14,20,0.5)'           : 'rgba(255,255,255,0.5)',
+    card:   dark ? 'rgba(255,255,255,0.03)'        : 'rgba(255,255,255,0.35)',
+    cardBorder: dark ? 'rgba(201,168,76,0.2)'      : 'rgba(201,168,76,0.3)',
+    border: dark ? 'rgba(255,255,255,0.08)'        : 'rgba(0,0,0,0.08)',
     text:   dark ? '#eeeef5'                       : '#1a1a2e',
     muted:  dark ? '#7878a0'                       : '#7878a0',
     dim:    dark ? '#44445a'                       : '#aaa',
@@ -61,26 +63,25 @@ function tokens(theme: 'dark' | 'light') {
 
 // ─── Background Slideshow ─────────────────────────────────────────────────────
 function BgSlideshow() {
-  const [idx, setIdx] = useState(0)
-  const images = ['/bg1.png', '/bg2.png', '/bg3.png']
-  useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % images.length), 7000)
-    return () => clearInterval(t)
-  }, [])
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-      <AnimatePresence initial={false}>
-        <motion.div key={idx}
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.8, ease: 'easeInOut' }}
-          style={{ position: 'absolute', inset: 0 }}>
-          <Image src={images[idx]} alt="" fill priority style={{ objectFit: 'cover', opacity: 0.18 }} />
-        </motion.div>
-      </AnimatePresence>
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.6
+        }}
+      >
+        <source src="/bgvideo.mp4" type="video/mp4" />
+      </video>
       {/* Gradient overlay so cards stay legible */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(10,10,12,0.85) 0%, rgba(10,10,12,0.65) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(10,10,12,0.4) 0%, rgba(10,10,12,0.1) 100%)' }} />
     </div>
   )
 }
@@ -176,13 +177,14 @@ function BulletItem({ icon, text, muted }: { icon: React.ReactNode; text: string
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
-function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete }: {
+function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete, userName }: {
   twin: DigitalTwin | null
   t: ReturnType<typeof tokens>
   view: string
   setView: (v: any) => void
   profilePhoto?: string | null
   debateComplete?: boolean
+  userName: string
 }) {
   const router = useRouter()
   const logout = useAuthStore(state => state.logout)
@@ -192,7 +194,7 @@ function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete }: {
     router.push('/auth')
   }
   const nav = [
-    { icon: <User size={15} />, label: 'Founder Twin', id: 'profile' },
+    { icon: <User size={15} />, label: `${userName} Twin`, id: 'profile' },
     { icon: <LayoutDashboard size={15} />, label: 'Boardroom', id: 'board' },
     { icon: <Lightbulb size={15} />, label: 'Opportunities', id: 'opps' },
     { icon: <GitMerge size={15} />, label: 'Startup Blueprint', id: 'blueprint' },
@@ -208,7 +210,7 @@ function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete }: {
   return (
     <div style={{
       width: 218, flexShrink: 0,
-      background: 'rgba(10,10,16,0.6)',
+      background: 'rgba(255,255,255,0.02)',
       backdropFilter: 'blur(40px) saturate(180%)',
       WebkitBackdropFilter: 'blur(40px) saturate(180%)',
       border: `1px solid rgba(201,168,76,0.12)`,
@@ -219,7 +221,7 @@ function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete }: {
       position: 'sticky',
       top: 14,
       height: 'calc(100vh - 28px)',
-      boxShadow: '0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05)',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
     }}>
       {/* Logo */}
       <div style={{ padding: '18px 16px 16px', borderBottom: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -281,7 +283,7 @@ function Sidebar({ twin, t, view, setView, profilePhoto, debateComplete }: {
             : <User size={14} color={t.text} />}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: t.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{twin?.founder_name || 'Founder'}</div>
+          <div style={{ fontSize: 12, fontWeight: 600, color: t.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{userName}</div>
           <div style={{ fontSize: 10, color: t.dim }}>Edit Profile</div>
         </div>
         <div
@@ -353,7 +355,16 @@ function ProfilePanel({ t, token, userId, onPhotoChange }: {
       setGitlabToken(data.gitlab_token || '')
       setGitlabNamespace(data.gitlab_namespace || '')
       setLinks(data.social_links || {})
-      if (data.profile_photo_b64) { setPhotoPreview(data.profile_photo_b64); onPhotoChange(data.profile_photo_b64) }
+      if (data.profile_photo_b64) { 
+        setPhotoPreview(data.profile_photo_b64); 
+        onPhotoChange(data.profile_photo_b64) 
+      } else if (data.photo_url) {
+        setPhotoPreview(data.photo_url);
+        onPhotoChange(data.photo_url);
+      } else if (auth.currentUser?.photoURL) {
+        setPhotoPreview(auth.currentUser.photoURL);
+        onPhotoChange(auth.currentUser.photoURL);
+      }
     })
   }, [token, userId, authH, onPhotoChange])
 
@@ -527,6 +538,15 @@ function DashboardContent() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
   useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user?.photoURL) {
+        setProfilePhoto(prev => prev ? prev : user.photoURL)
+      }
+    })
+    return () => unsub()
+  }, [])
+
+  useEffect(() => {
     const load = async () => {
       // 1. Try URL param first
       const idFromUrl = twinId || storedTwinId
@@ -593,6 +613,8 @@ function DashboardContent() {
           if (data) {
             setProfile(data);
             if (data.profile_photo_b64) setProfilePhoto(data.profile_photo_b64);
+            else if (data.photo_url) setProfilePhoto(data.photo_url);
+            else if (auth.currentUser?.photoURL) setProfilePhoto(auth.currentUser.photoURL);
           }
         })
         .catch(() => { /* noop */ })
@@ -623,7 +645,8 @@ function DashboardContent() {
         const data = await r.json()
         setExecPkg(data)
       } else {
-        alert('Failed to create GitLab repository. Please check your token in Settings.')
+        const err = await r.json().catch(() => ({ detail: 'Unknown error' }));
+        alert(`Failed to create GitLab repository: ${err.detail || err.message || 'Please check your token in Settings.'}`)
       }
     } catch {
       alert('Failed to connect to backend')
@@ -631,6 +654,23 @@ function DashboardContent() {
       setIsCreatingGitlab(false)
     }
   }
+
+  useEffect(() => {
+    if (execPkg?.gitlab_output?.engineering_status === 'in_progress' && session?.session_id) {
+      const interval = setInterval(async () => {
+        try {
+          const detailRes = await fetch(`${apiUrl}/board/session/${session.session_id}`);
+          if (detailRes.ok) {
+            const detail = await detailRes.json();
+            if (detail.execution_package) {
+              setExecPkg(detail.execution_package);
+            }
+          }
+        } catch { /* noop */ }
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [execPkg?.gitlab_output?.engineering_status, session?.session_id, apiUrl]);
 
   if (loading) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: t.bg }}>
@@ -665,6 +705,8 @@ function DashboardContent() {
     { label: 'Marketing', value: mktScore },
   ]
 
+  const userName = profile?.display_name || twin?.founder_name || 'Founder'
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: "'Inter', -apple-system, sans-serif", color: t.text, position: 'relative', zIndex: 1 }}>
       <BgSlideshow />
@@ -673,7 +715,7 @@ function DashboardContent() {
 
         {/* SIDEBAR */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <Sidebar twin={twin} t={t} view={viewState} setView={setViewState} profilePhoto={profilePhoto} debateComplete={debateComplete} />
+          <Sidebar twin={twin} t={t} view={viewState} setView={setViewState} profilePhoto={profilePhoto} debateComplete={debateComplete} userName={userName} />
         </motion.div>
 
         {/* MAIN */}
@@ -684,7 +726,7 @@ function DashboardContent() {
             style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <h1 style={{ margin: 0, fontSize: 20, fontWeight: 800, letterSpacing: '-0.03em', color: t.text }}>Founder Twin</h1>
+                <h1 style={{ margin: 0, fontSize: 20, fontWeight: 800, letterSpacing: '-0.03em', color: t.text }}>{userName} Twin</h1>
                 <span style={{ padding: '2px 9px', borderRadius: 999, fontSize: 9.5, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'monospace', background: `${t.green}18`, color: t.green, border: `1px solid ${t.green}30` }}>ACTIVE</span>
               </div>
               <p style={{ margin: '2px 0 0', fontSize: 12, color: t.dim }}>Your digital twin that guides every strategic decision</p>
@@ -719,11 +761,11 @@ function DashboardContent() {
               <motion.div key="my-profile" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 <Card style={{ padding: 28 }} t={t}>
                   <div style={{ marginBottom: 22, display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.gold}15`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <UserCircle size={20} color={t.gold} />
+                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${t.gold}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                      {profilePhoto ? <img src={profilePhoto} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <UserCircle size={20} color={t.gold} />}
                     </div>
                     <div>
-                      <div style={{ color: t.text, fontWeight: 800, fontSize: 16 }}>Founder Profile</div>
+                      <div style={{ color: t.text, fontWeight: 800, fontSize: 16 }}>{userName}'s Profile</div>
                       <div style={{ color: t.dim, fontSize: 11, marginTop: 1 }}>Your public identity & social links — used to enrich your Digital Twin</div>
                     </div>
                   </div>
@@ -740,11 +782,11 @@ function DashboardContent() {
                 {/* ROW 1: Identity card */}
                 <Card t={t} style={{ display: 'flex', gap: 18, alignItems: 'flex-start', padding: '18px 22px' }}>
                   <div style={{ width: 66, height: 66, borderRadius: '50%', background: profilePhoto ? 'transparent' : `linear-gradient(135deg, ${t.gold}55, ${t.purple}55)`, border: `2px solid ${t.gold}50`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
-                    {profilePhoto ? <img src={profilePhoto} alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={28} color={t.gold} />}
+                    {profilePhoto ? <img src={profilePhoto} alt={userName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={28} color={t.gold} />}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 7 }}>
-                      <h2 style={{ margin: 0, fontSize: 17, fontWeight: 800, letterSpacing: '-0.02em', color: t.text }}>{twin.founder_name || 'Founder'}</h2>
+                      <h2 style={{ margin: 0, fontSize: 17, fontWeight: 800, letterSpacing: '-0.02em', color: t.text }}>{userName}</h2>
                       <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 9, fontWeight: 700, fontFamily: 'monospace', background: `${t.gold}18`, color: t.gold, border: `1px solid ${t.gold}30`, letterSpacing: '0.1em' }}>TWIN ID: {twin.twin_id.toUpperCase().slice(-8)}</span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 28px' }}>
@@ -763,7 +805,7 @@ function DashboardContent() {
                   </div>
                   <div style={{ width: 1, alignSelf: 'stretch', background: t.border, margin: '0 6px' }} />
                   <div style={{ flex: 1.2 }}>
-                    <div style={{ fontSize: 10.5, fontWeight: 700, color: t.gold, fontFamily: 'monospace', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 7 }}>Founder DNA Summary</div>
+                    <div style={{ fontSize: 10.5, fontWeight: 700, color: t.gold, fontFamily: 'monospace', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 7 }}>{userName}'s DNA Summary</div>
                     <p style={{ fontSize: 12.5, color: t.muted, lineHeight: 1.75, margin: 0 }}>{p.competitive_edge}</p>
                   </div>
                   <div style={{ width: 1, alignSelf: 'stretch', background: t.border, margin: '0 6px' }} />
@@ -792,7 +834,7 @@ function DashboardContent() {
                 {/* ROW 2: 4-column grid */}
                 <div style={{ display: 'grid', gridTemplateColumns: '200px 210px 1fr 1fr', gap: 12 }}>
                   <Card t={t} style={{ padding: 14 }}>
-                    <CardTitle icon={<Brain size={13} />} text="Founder DNA" color={t.gold} />
+                    <CardTitle icon={<Brain size={13} />} text={`${userName}'s DNA`} color={t.gold} />
                     <RadarChart data={radar} gold={t.gold} />
                   </Card>
                   <Card t={t} style={{ padding: 14 }}>
@@ -834,7 +876,7 @@ function DashboardContent() {
                 {/* ROW 3: Fit Matrix + Behavioral + Hard Constraints */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 215px 210px', gap: 12 }}>
                   <Card t={t} style={{ padding: 14 }}>
-                    <CardTitle icon={<Target size={13} />} text="Founder Fit Matrix" color={t.red} />
+                    <CardTitle icon={<Target size={13} />} text={`${userName}'s Fit Matrix`} color={t.red} />
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
                       <thead><tr>{['Opportunity', 'Fit Score', 'Why'].map(h => <th key={h} style={{ textAlign: 'left', padding: '4px 6px', color: t.dim, fontWeight: 600, fontFamily: 'monospace', fontSize: 9.5, letterSpacing: '0.08em', borderBottom: `1px solid ${t.border}` }}>{h}</th>)}</tr></thead>
                       <tbody>
@@ -1008,7 +1050,7 @@ function DashboardContent() {
                   </div>
                   {session?.rounds?.length ? (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 12 }}>
-                      {session.rounds.flatMap(round => round).map((op, i) => (
+                      {session.rounds.flatMap(round => round.opinions).map((op, i) => (
                         op.opportunities.length > 0 ? (
                           <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 12, padding: 16 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
@@ -1188,10 +1230,25 @@ function DashboardContent() {
                       <div style={{ fontSize: 11, color: t.dim }}>Auto-generated issues, milestones and epics</div>
                     </div>
                     {execPkg?.gitlab_output?.project_url && execPkg?.gitlab_output?.project_id > 0 && (
-                      <a href={execPkg.gitlab_output.project_url} target="_blank" rel="noopener noreferrer"
-                        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: `${t.orange}18`, border: `1px solid ${t.orange}35`, color: t.orange, fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
-                        <ExternalLink size={12} /> Open Repository
-                      </a>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        {execPkg.gitlab_output.engineering_status !== 'in_progress' && execPkg.gitlab_output.engineering_status !== 'completed' && (
+                          <button onClick={async () => {
+                            try {
+                              const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+                              const res = await fetch(`${API}/board/session/${session?.session_id}/gitlab_workspace`, { method: 'POST' });
+                              const data = await res.json();
+                              setExecPkg(data);
+                            } catch(e) {}
+                          }}
+                            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: `${t.blue}18`, border: `1px solid ${t.blue}35`, color: t.blue, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+                            <Zap size={12} /> Start AI Agent
+                          </button>
+                        )}
+                        <a href={execPkg.gitlab_output.project_url} target="_blank" rel="noopener noreferrer"
+                          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: `${t.orange}18`, border: `1px solid ${t.orange}35`, color: t.orange, fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
+                          <ExternalLink size={12} /> Open Repository
+                        </a>
+                      </div>
                     )}
                   </div>
                   {execPkg?.gitlab_output ? (
@@ -1210,6 +1267,31 @@ function DashboardContent() {
                           </div>
                         ))}
                       </div>
+                      {(execPkg.gitlab_output.engineering_status === 'in_progress' || execPkg.gitlab_output.engineering_status === 'completed') && (
+                        <div style={{ marginBottom: 16 }}>
+                          <div style={{ padding: '16px', background: execPkg.gitlab_output.engineering_status === 'completed' ? `${t.green}15` : `${t.blue}15`, border: `1px solid ${execPkg.gitlab_output.engineering_status === 'completed' ? t.green : t.blue}30`, borderRadius: (execPkg.gitlab_output.engineering_logs?.length || 0) > 0 ? '10px 10px 0 0' : 10, display: 'flex', alignItems: 'center', gap: 12 }}>
+                            {execPkg.gitlab_output.engineering_status === 'completed' ? <CheckCircle size={20} color={t.green} /> : <Loader2 className="animate-spin" size={20} color={t.blue} />}
+                            <div>
+                              <div style={{ fontSize: 14, fontWeight: 700, color: execPkg.gitlab_output.engineering_status === 'completed' ? t.green : t.blue }}>{execPkg.gitlab_output.engineering_status === 'completed' ? 'AI Engineering Completed' : 'AI Engineering Agent Active'}</div>
+                              <div style={{ fontSize: 12, color: execPkg.gitlab_output.engineering_status === 'completed' ? t.green : t.blue }}>{execPkg.gitlab_output.engineering_status === 'completed' ? 'Repository scaffolded and MVP code pushed to main branch!' : 'Scaffolding repository and auto-completing issues...'}</div>
+                            </div>
+                          </div>
+                          {execPkg.gitlab_output.engineering_logs && execPkg.gitlab_output.engineering_logs.length > 0 && (
+                            <div style={{ background: '#0a0a0c', border: `1px solid ${t.border}`, borderTop: 'none', borderRadius: '0 0 10px 10px', padding: 12, maxHeight: 180, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 }}>
+                              {execPkg.gitlab_output.engineering_logs.map((log, i) => (
+                                <div key={i} style={{ fontSize: 11, fontFamily: 'monospace', color: t.dim }}>
+                                  <span style={{ color: t.gold }}>[AGENT]</span> {log}
+                                </div>
+                              ))}
+                              {execPkg.gitlab_output.engineering_status === 'in_progress' && (
+                                <div style={{ fontSize: 11, fontFamily: 'monospace', color: t.dim, opacity: 0.5 }}>
+                                  <span style={{ color: t.gold }}>[AGENT]</span> <span className="animate-pulse">_</span>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
                       <div style={{ fontSize: 12, fontWeight: 700, color: t.muted, marginBottom: 10, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Issues Created</div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                         {execPkg.gitlab_output.issues_created.map((issue, i) => (
@@ -1228,6 +1310,41 @@ function DashboardContent() {
                       </div>
                       {execPkg.gitlab_output.note && (
                         <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 9, fontSize: 11, color: t.dim }}>{execPkg.gitlab_output.note}</div>
+                      )}
+                      {execPkg.gitlab_output.project_id === 0 && (
+                        <div style={{ marginTop: 24, padding: '24px', background: 'rgba(255,140,66,0.05)', border: `1px solid ${t.orange}20`, borderRadius: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+                          <div style={{ fontSize: 14, color: t.text, fontWeight: 700 }}>Create Real GitLab Repository</div>
+                          <div style={{ fontSize: 12, color: t.dim, textAlign: 'center', maxWidth: 420, lineHeight: 1.5 }}>
+                            The above issues are currently simulated. To automatically create the GitLab repository, populate these issues, and attach the AI engineering agent, provide your GitLab token.
+                          </div>
+                          {(!profile?.gitlab_token || !profile?.gitlab_namespace) ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 300, marginTop: 8 }}>
+                              <input type="password" value={gitlabToken} onChange={e => setGitlabToken(e.target.value)} placeholder="GitLab Token (glpat-...)"
+                                style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, outline: 'none', padding: '10px 14px' }} />
+                              <input value={gitlabNamespace} onChange={e => setGitlabNamespace(e.target.value)} placeholder="GitLab Namespace"
+                                style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, outline: 'none', padding: '10px 14px' }} />
+                              <button onClick={async () => {
+                                if (!gitlabToken || !gitlabNamespace) {
+                                  alert("Please enter both token and namespace");
+                                  return;
+                                }
+                                const p = { ...profile, gitlab_token: gitlabToken, gitlab_namespace: gitlabNamespace } as UserProfile;
+                                await fetch(`${apiUrl}/profile`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(p) });
+                                setProfile(p);
+                                handleCreateGitlab();
+                              }} disabled={isCreatingGitlab} style={{ padding: '12px 24px', borderRadius: 8, background: `linear-gradient(135deg, ${t.orange}, #ff8c42)`, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: isCreatingGitlab ? 'not-allowed' : 'pointer', opacity: isCreatingGitlab ? 0.7 : 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8 }}>
+                                {isCreatingGitlab && <Loader2 className="animate-spin" size={16} />}
+                                {isCreatingGitlab ? "Creating..." : "Save & Create Repository"}
+                              </button>
+                            </div>
+                          ) : (
+                            <button onClick={handleCreateGitlab} disabled={isCreatingGitlab}
+                              style={{ padding: '12px 24px', borderRadius: 8, background: `linear-gradient(135deg, ${t.orange}, #ff8c42)`, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: isCreatingGitlab ? 'not-allowed' : 'pointer', marginTop: 8, opacity: isCreatingGitlab ? 0.7 : 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8 }}>
+                              {isCreatingGitlab && <Loader2 className="animate-spin" size={16} />}
+                              {isCreatingGitlab ? "Creating Repository..." : "Create Repository Now"}
+                            </button>
+                          )}
+                        </div>
                       )}
                     </>
                   ) : isCreatingGitlab ? (

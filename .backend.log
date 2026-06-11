@@ -1,145 +1,850 @@
 INFO:     Will watch for changes in these directories: ['/home/balaraj/Darwin/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [31734] using WatchFiles
-{"timestamp": "2026-06-11T06:03:50.223059+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.307784+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.329043+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.411237+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.432264+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.463863+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.642284+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:03:50.821531+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-INFO:     Started server process [31815]
+INFO:     Started reloader process [80385] using WatchFiles
+{"timestamp": "2026-06-11T09:33:43.954453+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/auth/_default.py:113: UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the following page for troubleshooting: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+{"timestamp": "2026-06-11T09:33:44.786205+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.789894+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.790381+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.806664+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.811143+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.817472+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.876485+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:33:44.876595+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:33:44.876799+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [80407]
 INFO:     Waiting for application startup.
-{"timestamp": "2026-06-11T06:03:50.911072+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
-{"timestamp": "2026-06-11T06:03:50.914313+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+{"timestamp": "2026-06-11T09:33:44.904321+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:33:44.906107+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
 INFO:     Application startup complete.
-INFO:     127.0.0.1:46172 - "OPTIONS /auth/login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46174 - "POST /auth/login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46174 - "GET /twin/by-user/29cf5b35-0455-44b0-8226-2568399b94e7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46172 - "OPTIONS /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46186 - "OPTIONS /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46174 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46186 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46188 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46174 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46186 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46188 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46174 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:46188 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53812 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53812 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53812 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53812 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53814 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53812 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53814 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53812 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53814 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54062 - "POST /auth/login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54062 - "GET /twin/by-user/29cf5b35-0455-44b0-8226-2568399b94e7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54062 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54080 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54072 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54062 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54072 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54080 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54062 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54080 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41150 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41154 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41154 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41150 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54248 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54252 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:34870 - "OPTIONS /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:34878 - "OPTIONS /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:34870 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:34878 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52712 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52728 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38312 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38322 - "GET /profile HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'models/user.py'. Reloading...
+INFO:     127.0.0.1:59608 - "POST /auth/login HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/grpc/_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/grpc/_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.NOT_FOUND
+	details = "The database (default) does not exist for project darwinagent Please visit https://console.cloud.google.com/datastore/setup?project=darwinagent to add a Cloud Datastore or Cloud Firestore database. "
+	debug_error_string = "NOT_FOUND:The database (default) does not exist for project darwinagent Please visit https://console.cloud.google.com/datastore/setup?project=darwinagent to add a Cloud Datastore or Cloud Firestore database. "
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/routers/auth.py", line 99, in login
+    user = await db.get_user_by_id(uid)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/services/firestore_service.py", line 219, in get_user_by_id
+    doc = await self._run(self._col("users").document(user_id).get)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/services/firestore_service.py", line 95, in _run
+    return await asyncio.to_thread(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/document.py", line 413, in get
+    response_iter = self._client._firestore_api.batch_get_documents(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/services/firestore/client.py", line 1227, in batch_get_documents
+    response = rpc(
+               ^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 The database (default) does not exist for project darwinagent Please visit https://console.cloud.google.com/datastore/setup?project=darwinagent to add a Cloud Datastore or Cloud Firestore database. 
+INFO:     127.0.0.1:40922 - "GET / HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:40922 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40922 - "GET /openapi.json HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'test_firestore.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
-{"timestamp": "2026-06-11T06:50:17.337284+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-3"}
-{"timestamp": "2026-06-11T06:50:17.337391+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-3"}
+{"timestamp": "2026-06-11T09:35:21.591486+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T09:35:21.591556+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
 INFO:     Application shutdown complete.
-INFO:     Finished server process [31815]
-{"timestamp": "2026-06-11T06:50:19.472604+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.495766+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.515133+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.542000+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.563680+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.591948+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.751962+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:19.842949+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-INFO:     Started server process [39738]
+INFO:     Finished server process [80407]
+{"timestamp": "2026-06-11T09:35:23.253471+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/auth/_default.py:113: UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the following page for troubleshooting: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+{"timestamp": "2026-06-11T09:35:23.785066+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.788333+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.788623+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.807970+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.811049+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.815903+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.867505+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:35:23.867598+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:35:23.867738+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [81108]
 INFO:     Waiting for application startup.
-{"timestamp": "2026-06-11T06:50:19.871555+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
-{"timestamp": "2026-06-11T06:50:19.873546+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+{"timestamp": "2026-06-11T09:35:23.888979+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:35:23.890606+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
 INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'routers/profile.py'. Reloading...
+INFO:     127.0.0.1:41318 - "POST /auth/login HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 149, in error_remapped_callable
+    return _StreamingResponseIterator(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 71, in __init__
+    self._stored_first_result = next(self._wrapped)
+                                ^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/grpc/_channel.py", line 538, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/grpc/_channel.py", line 956, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.NOT_FOUND
+	details = "The database (default) does not exist for project darwinagent Please visit https://console.cloud.google.com/datastore/setup?project=darwinagent to add a Cloud Datastore or Cloud Firestore database. "
+	debug_error_string = "NOT_FOUND:The database (default) does not exist for project darwinagent Please visit https://console.cloud.google.com/datastore/setup?project=darwinagent to add a Cloud Datastore or Cloud Firestore database. "
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/routers/auth.py", line 99, in login
+    user = await db.get_user_by_id(uid)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/services/firestore_service.py", line 219, in get_user_by_id
+    doc = await self._run(self._col("users").document(user_id).get)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/services/firestore_service.py", line 95, in _run
+    return await asyncio.to_thread(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/document.py", line 413, in get
+    response_iter = self._client._firestore_api.batch_get_documents(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/services/firestore/client.py", line 1227, in batch_get_documents
+    response = rpc(
+               ^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 128, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 216, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 153, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 The database (default) does not exist for project darwinagent Please visit https://console.cloud.google.com/datastore/setup?project=darwinagent to add a Cloud Datastore or Cloud Firestore database. 
+WARNING:  WatchFiles detected changes in 'test_firestore2.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
-{"timestamp": "2026-06-11T06:50:43.431347+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-3"}
-{"timestamp": "2026-06-11T06:50:43.431423+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-3"}
+{"timestamp": "2026-06-11T09:36:50.343870+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T09:36:50.343924+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
 INFO:     Application shutdown complete.
-INFO:     Finished server process [39738]
-{"timestamp": "2026-06-11T06:50:45.748267+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:45.772028+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:45.800224+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:45.833975+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:45.857710+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:45.888652+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:45.999998+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:50:46.090592+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-INFO:     Started server process [39819]
+INFO:     Finished server process [81108]
+{"timestamp": "2026-06-11T09:36:51.791388+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/auth/_default.py:113: UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the following page for troubleshooting: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+{"timestamp": "2026-06-11T09:36:52.245555+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.250242+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.250553+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.263207+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.265874+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.270557+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.315122+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:36:52.315213+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:36:52.315338+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [81573]
 INFO:     Waiting for application startup.
-{"timestamp": "2026-06-11T06:50:46.118445+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
-{"timestamp": "2026-06-11T06:50:46.119557+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+{"timestamp": "2026-06-11T09:36:52.335031+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:36:52.336257+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
 INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'routers/execution.py'. Reloading...
+WARNING:  WatchFiles detected changes in 'test_firestore3.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
-{"timestamp": "2026-06-11T06:51:28.740181+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-3"}
-{"timestamp": "2026-06-11T06:51:28.740230+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-3"}
+{"timestamp": "2026-06-11T09:37:29.649478+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T09:37:29.649530+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
 INFO:     Application shutdown complete.
-INFO:     Finished server process [39819]
-{"timestamp": "2026-06-11T06:51:30.355499+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.377853+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.395753+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.427042+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.456319+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.482237+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.622527+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-{"timestamp": "2026-06-11T06:51:30.707886+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
-INFO:     Started server process [40039]
+INFO:     Finished server process [81573]
+{"timestamp": "2026-06-11T09:37:31.169649+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T09:37:31.619617+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.622605+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.622945+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.635035+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.637724+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.643095+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.687509+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:31.687612+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:37:31.687791+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [81806]
 INFO:     Waiting for application startup.
-{"timestamp": "2026-06-11T06:51:30.736134+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
-{"timestamp": "2026-06-11T06:51:30.737140+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+{"timestamp": "2026-06-11T09:37:31.707120+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:37:31.708128+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
 INFO:     Application startup complete.
-INFO:     127.0.0.1:49680 - "OPTIONS /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49680 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57402 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57390 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57390 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57390 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56528 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56538 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56536 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56528 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56536 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56528 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56536 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
-INFO:     127.0.0.1:42926 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:42930 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60590 - "OPTIONS /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60590 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:38264 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:39366 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55898 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55902 - "GET /profile HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55898 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55898 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'services/firestore_service.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T09:37:51.363090+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T09:37:51.363161+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [81806]
+{"timestamp": "2026-06-11T09:37:52.747435+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T09:37:53.207388+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.210872+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.211300+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.229528+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.233310+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.238903+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.287252+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:37:53.287383+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:37:53.287520+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [81908]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T09:37:53.308521+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:37:53.309763+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+{"timestamp": "2026-06-11T09:38:40.104637+00:00", "level": "INFO", "service": "services.firestore_service", "message": "User saved", "taskName": "Task-3", "user_id": "PwbZL2r1WVbaEFi2iEJISj3GyGJ3", "email": "balarajr483@gmail.com"}
+{"timestamp": "2026-06-11T09:38:40.104719+00:00", "level": "INFO", "service": "routers.auth", "message": "User auto-created on first login", "taskName": "Task-3", "uid": "PwbZL2r1WVbaEFi2iEJISj3GyGJ3"}
+INFO:     127.0.0.1:38146 - "POST /auth/login HTTP/1.1" 200 OK
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/base_collection.py:317: UserWarning: Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.
+  return query.where(field_path, op_string, value)
+INFO:     127.0.0.1:38146 - "GET /twin/by-user/PwbZL2r1WVbaEFi2iEJISj3GyGJ3 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49546 - "OPTIONS /onboarding/analyze?user_id=PwbZL2r1WVbaEFi2iEJISj3GyGJ3 HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T09:40:40.682771+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-pro-preview-05-06", "taskName": "Task-6"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/vertexai/generative_models/_generative_models.py:433: UserWarning: This feature is deprecated as of June 24, 2025 and will be removed on June 24, 2026. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+  warning_logs.show_deprecation_warning()
+{"timestamp": "2026-06-11T09:40:41.859311+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-pro-preview-05-06 failed", "taskName": "Task-6", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-pro-preview-05-06` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:40:41.859401+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-6"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/vertexai/generative_models/_generative_models.py:433: UserWarning: This feature is deprecated as of June 24, 2025 and will be removed on June 24, 2026. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+  warning_logs.show_deprecation_warning()
+{"timestamp": "2026-06-11T09:40:58.669276+00:00", "level": "ERROR", "service": "core.digital_twin", "message": "Twin inference schema mismatch", "taskName": "Task-6", "error": "1 validation error for FounderProfile\nquit_triggers\n  Input should be a valid list [type=list_type, input_value='No convincing evidence o... an unvalidated vision.', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.10/v/list_type"}
+{"timestamp": "2026-06-11T09:40:58.669432+00:00", "level": "ERROR", "service": "routers.onboarding", "message": "Onboarding failed", "taskName": "Task-6", "code": "TWIN_SCHEMA_ERROR", "err_msg": "Profile schema mismatch: 1 validation error for FounderProfile\nquit_triggers\n  Input should be a valid list [type=list_type, input_value='No convincing evidence o... an unvalidated vision.', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.10/v/list_type"}
+INFO:     127.0.0.1:49548 - "POST /onboarding/analyze?user_id=PwbZL2r1WVbaEFi2iEJISj3GyGJ3 HTTP/1.1" 422 Unprocessable Entity
+WARNING:  WatchFiles detected changes in 'models/founder.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T09:42:52.522559+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T09:42:52.522613+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [81908]
+{"timestamp": "2026-06-11T09:42:53.888153+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+WARNING:  WatchFiles detected changes in 'models/founder.py'. Reloading...
+{"timestamp": "2026-06-11T09:42:54.363754+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.367066+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.367392+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.379886+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.382863+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.387741+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.433998+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:54.434094+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:42:54.434237+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [82901]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T09:42:54.460793+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:42:54.462246+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+{"timestamp": "2026-06-11T09:42:55.843273+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T09:42:56.284636+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.288836+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.289627+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.305272+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.308919+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.314590+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.363889+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T09:42:56.363999+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T09:42:56.364292+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [82934]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T09:42:56.386858+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T09:42:56.388065+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+{"timestamp": "2026-06-11T09:43:33.361090+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-pro-preview-05-06", "taskName": "Task-3"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/vertexai/generative_models/_generative_models.py:433: UserWarning: This feature is deprecated as of June 24, 2025 and will be removed on June 24, 2026. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+  warning_logs.show_deprecation_warning()
+{"timestamp": "2026-06-11T09:43:34.619978+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-pro-preview-05-06 failed", "taskName": "Task-3", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-pro-preview-05-06` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:43:34.620137+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-3"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/vertexai/generative_models/_generative_models.py:433: UserWarning: This feature is deprecated as of June 24, 2025 and will be removed on June 24, 2026. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+  warning_logs.show_deprecation_warning()
+{"timestamp": "2026-06-11T09:43:47.007295+00:00", "level": "INFO", "service": "core.digital_twin", "message": "Digital twin built", "taskName": "Task-3", "twin_id": "twin_c76f3fef", "edge": "The founder possesses a strong ability to rapidly integrate a diverse set of advanced web, mobile, and AI technologies to build complex, functional products and bring them to market without a steep learning curve."}
+{"timestamp": "2026-06-11T09:43:48.087832+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Twin saved", "taskName": "Task-3", "twin_id": "twin_c76f3fef"}
+{"timestamp": "2026-06-11T09:43:48.087952+00:00", "level": "INFO", "service": "routers.onboarding", "message": "Twin built and saved", "taskName": "Task-3", "twin_id": "twin_c76f3fef"}
+INFO:     127.0.0.1:34350 - "POST /onboarding/analyze?user_id=PwbZL2r1WVbaEFi2iEJISj3GyGJ3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51606 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51622 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34350 - "GET /twin/twin_c76f3fef HTTP/1.1" 200 OK
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/base_collection.py:317: UserWarning: Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.
+  return query.where(field_path, op_string, value)
+INFO:     127.0.0.1:51622 - "GET /twin/twin_c76f3fef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51628 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34350 - "GET /board/sessions/twin_c76f3fef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51628 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34350 - "GET /board/sessions/twin_c76f3fef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34200 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34200 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34110 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34110 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44522 - "OPTIONS /twin/twin_c76f3fef/idea HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T09:48:41.207018+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Twin saved", "taskName": "Task-17", "twin_id": "twin_c76f3fef"}
+INFO:     127.0.0.1:44534 - "POST /twin/twin_c76f3fef/idea HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44534 - "GET /board/sessions/twin_c76f3fef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44534 - "GET /board/sessions/twin_c76f3fef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44534 - "OPTIONS /board/start HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T09:48:44.147162+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-21", "session_id": "3b6f566f-34b0-4d92-a4a1-644ddc441bd5"}
+{"timestamp": "2026-06-11T09:48:44.147277+00:00", "level": "INFO", "service": "routers.board", "message": "Board session initialized", "taskName": "Task-21", "session_id": "3b6f566f-34b0-4d92-a4a1-644ddc441bd5"}
+INFO:     127.0.0.1:44522 - "POST /board/start HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T09:48:44.147674+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 1 starting", "taskName": "Task-21", "session_id": "3b6f566f-34b0-4d92-a4a1-644ddc441bd5"}
+INFO:     127.0.0.1:44522 - "GET /board/3b6f566f-34b0-4d92-a4a1-644ddc441bd5/stream HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T09:48:44.287171+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-21", "session_id": "3b6f566f-34b0-4d92-a4a1-644ddc441bd5"}
+{"timestamp": "2026-06-11T09:48:44.287380+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash-preview-05-20", "taskName": "Task-24"}
+{"timestamp": "2026-06-11T09:48:44.287774+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash-preview-05-20", "taskName": "Task-25"}
+{"timestamp": "2026-06-11T09:48:44.291149+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash-preview-05-20", "taskName": "Task-26"}
+{"timestamp": "2026-06-11T09:48:44.719169+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-flash-preview-05-20 failed", "taskName": "Task-24", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-flash-preview-05-20` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:48:44.719294+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-24"}
+{"timestamp": "2026-06-11T09:48:44.784645+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-flash-preview-05-20 failed", "taskName": "Task-26", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-flash-preview-05-20` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:48:44.784786+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-26"}
+{"timestamp": "2026-06-11T09:48:44.789174+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-flash-preview-05-20 failed", "taskName": "Task-25", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-flash-preview-05-20` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:48:44.790083+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-25"}
+{"timestamp": "2026-06-11T09:49:06.902863+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-24", "round": 1, "score": 7.5}
+{"timestamp": "2026-06-11T09:49:06.903013+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash-preview-05-20", "taskName": "Task-27"}
+{"timestamp": "2026-06-11T09:49:07.446963+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-flash-preview-05-20 failed", "taskName": "Task-27", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-flash-preview-05-20` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:49:07.447280+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-27"}
+{"timestamp": "2026-06-11T09:49:12.767441+00:00", "level": "ERROR", "service": "services.gemini_service", "message": "JSON parse failed", "taskName": "Task-25", "error": "Unterminated string starting at: line 2 column 16 (char 17)", "raw": "{\n  \"reasoning\": \"The founder's hard constraints are a budget of 20,000 INR and a target of 6 months to first revenue. To assess the financial viability, we must calculate a realistic burn rate and customer acquisition cost (CAC) for this period.\\n\\n1.  **Burn Rate Calculation:** The founder emphasizes keeping costs 'extremely low' using free tiers and open-source tools. A conservative estimate for essential operational costs (domain, minimal hosting, initial AI API usage, and a small buffer for"}
+{"timestamp": "2026-06-11T09:49:12.767542+00:00", "level": "ERROR", "service": "agents.cfo_agent", "message": "CFO agent failed", "taskName": "Task-25", "round": 1, "error": "[JSON_DECODE_ERROR] Failed to parse JSON: Unterminated string starting at: line 2 column 16 (char 17)"}
+{"timestamp": "2026-06-11T09:49:12.767590+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash-preview-05-20", "taskName": "Task-28"}
+{"timestamp": "2026-06-11T09:49:12.767851+00:00", "level": "ERROR", "service": "core.debate_engine", "message": "Debate engine failed", "taskName": "Task-21", "error": "[CFO_AGENT_ERROR] CFO Round 1: [JSON_DECODE_ERROR] Failed to parse JSON: Unterminated string starting at: line 2 column 16 (char 17)", "session_id": "3b6f566f-34b0-4d92-a4a1-644ddc441bd5"}
+{"timestamp": "2026-06-11T09:49:12.771112+00:00", "level": "ERROR", "service": "routers.board", "message": "Background board session failed", "taskName": "Task-21", "error": "[DEBATE_FAILED] Board debate interrupted: [CFO_AGENT_ERROR] CFO Round 1: [JSON_DECODE_ERROR] Failed to parse JSON: Unterminated string starting at: line 2 column 16 (char 17)"}
+{"timestamp": "2026-06-11T09:49:12.876032+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-21", "session_id": "3b6f566f-34b0-4d92-a4a1-644ddc441bd5"}
+{"timestamp": "2026-06-11T09:49:13.201283+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-2.5-flash-preview-05-20 failed", "taskName": "Task-28", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-2.5-flash-preview-05-20` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T09:49:13.201370+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-28"}
+{"timestamp": "2026-06-11T09:49:15.767346+00:00", "level": "INFO", "service": "agents.cto_agent", "message": "CTO agent completed", "taskName": "Task-26", "round": 1, "score": 7.0}
+{"timestamp": "2026-06-11T09:49:30.865316+00:00", "level": "INFO", "service": "agents.cpo_agent", "message": "CPO agent completed", "taskName": "Task-28", "round": 1, "score": 3.0}
+{"timestamp": "2026-06-11T09:49:39.800921+00:00", "level": "INFO", "service": "agents.cmo_agent", "message": "CMO agent completed", "taskName": "Task-27", "round": 1, "score": 4.0}
+INFO:     127.0.0.1:57458 - "POST /board/start HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58540 - "POST /board/start HTTP/1.1" 404 Not Found
+WARNING:  WatchFiles detected changes in 'test_debate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:08:38.472930+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:08:38.473005+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [82934]
+{"timestamp": "2026-06-11T10:08:40.289372+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:08:40.906414+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.911757+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.912278+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.928536+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.931731+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.937573+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.990562+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:08:40.990686+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:08:40.990818+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [87620]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:08:41.014732+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:08:41.019254+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_debate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:09:04.879812+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:09:04.879928+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87620]
+{"timestamp": "2026-06-11T10:09:06.598890+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:09:07.177854+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.184010+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.184752+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.201595+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.204796+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.211119+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.262252+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:07.262366+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:09:07.262494+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [87708]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:09:07.283821+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:09:07.285222+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_debate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:09:50.494903+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:09:50.495025+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87708]
+{"timestamp": "2026-06-11T10:09:52.119247+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:09:52.687131+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.691418+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.691724+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.705762+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.709020+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.714240+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.761708+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:09:52.761811+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:09:52.761960+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [87880]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:09:52.783526+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:09:52.784676+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'config/constants.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:11:25.010806+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:11:25.010888+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87880]
+{"timestamp": "2026-06-11T10:11:26.709600+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:11:27.306353+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.310017+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.310330+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.325384+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.328936+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.334703+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.388196+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:27.388377+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:11:27.388652+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [88254]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:11:27.412492+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:11:27.413824+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'services/gemini_service.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:11:37.141059+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:11:37.141144+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88254]
+{"timestamp": "2026-06-11T10:11:38.773689+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:11:39.351978+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.356179+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.356561+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.372579+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.376386+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.382603+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.431759+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:11:39.431965+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:11:39.432237+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [88304]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:11:39.455381+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:11:39.456689+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'models/board.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:13:50.764056+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:13:50.764112+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88304]
+{"timestamp": "2026-06-11T10:13:52.457537+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:13:53.089243+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.094327+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.094782+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.110368+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.114451+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.120254+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.175730+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:13:53.175850+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:13:53.176035+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [88794]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:13:53.198026+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:13:53.199158+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'core/debate_engine.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:14:00.417850+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:14:00.418044+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88794]
+{"timestamp": "2026-06-11T10:14:02.137829+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:14:02.802408+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.807370+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.807792+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.823062+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.826690+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.831917+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.884056+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:14:02.884176+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:14:02.884374+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [88842]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:14:02.906272+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:14:02.907888+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'core/decision_synthesizer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:15:40.935096+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:15:40.935366+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88842]
+{"timestamp": "2026-06-11T10:15:43.258315+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:15:43.989470+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:43.996868+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:43.998872+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:44.019560+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:44.022772+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:44.029022+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:44.094787+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:44.094890+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:15:44.095027+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [90888]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:15:44.117603+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:15:44.119489+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routers/board.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:15:57.268510+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:15:57.268595+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [90888]
+{"timestamp": "2026-06-11T10:15:59.311895+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Firebase Admin initialized", "taskName": "Task-1", "project": "darwinagent"}
+{"timestamp": "2026-06-11T10:15:59.869756+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.879499+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.879925+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.894704+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.897800+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.903443+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.958509+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+{"timestamp": "2026-06-11T10:15:59.958619+00:00", "level": "INFO", "service": "services.gemini_service", "message": "Vertex AI initialized", "taskName": "Task-1", "project": "darwinagent", "location": "asia-south1"}
+{"timestamp": "2026-06-11T10:15:59.958764+00:00", "level": "INFO", "service": "services.firestore_service", "message": "FirestoreService ready", "taskName": "Task-1"}
+INFO:     Started server process [90966]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T10:15:59.982506+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-2", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T10:15:59.984419+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-2", "interval_days": 3}
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52284 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:22:21.159320+00:00", "level": "INFO", "service": "services.firestore_service", "message": "User saved", "taskName": "Task-4", "user_id": "Bv0iGn26BQROrUoYUIhOCY7iWvo1", "email": "balaraj.pesu@gmail.com"}
+{"timestamp": "2026-06-11T10:22:21.159409+00:00", "level": "INFO", "service": "routers.auth", "message": "User auto-created on first login", "taskName": "Task-4", "uid": "Bv0iGn26BQROrUoYUIhOCY7iWvo1"}
+INFO:     127.0.0.1:52290 - "POST /auth/login HTTP/1.1" 200 OK
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/base_collection.py:317: UserWarning: Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.
+  return query.where(field_path, op_string, value)
+INFO:     127.0.0.1:52290 - "GET /twin/by-user/Bv0iGn26BQROrUoYUIhOCY7iWvo1 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:40854 - "OPTIONS /onboarding/analyze?user_id=Bv0iGn26BQROrUoYUIhOCY7iWvo1 HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:23:31.544811+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-pro-preview", "taskName": "Task-7"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/vertexai/generative_models/_generative_models.py:433: UserWarning: This feature is deprecated as of June 24, 2025 and will be removed on June 24, 2026. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+  warning_logs.show_deprecation_warning()
+{"timestamp": "2026-06-11T10:23:32.762208+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-pro-preview failed", "taskName": "Task-7", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-pro-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:23:32.762296+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-7"}
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/vertexai/generative_models/_generative_models.py:433: UserWarning: This feature is deprecated as of June 24, 2025 and will be removed on June 24, 2026. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+  warning_logs.show_deprecation_warning()
+{"timestamp": "2026-06-11T10:23:48.449525+00:00", "level": "INFO", "service": "core.digital_twin", "message": "Digital twin built", "taskName": "Task-7", "twin_id": "twin_f7ac4913", "edge": "This founder's competitive edge lies in their ability to rapidly build and sustain complex, AI-powered web and mobile products using their established technical stack, focusing on immediate problem-solving and user delivery."}
+{"timestamp": "2026-06-11T10:23:48.654577+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Twin saved", "taskName": "Task-7", "twin_id": "twin_f7ac4913"}
+{"timestamp": "2026-06-11T10:23:48.654698+00:00", "level": "INFO", "service": "routers.onboarding", "message": "Twin built and saved", "taskName": "Task-7", "twin_id": "twin_f7ac4913"}
+INFO:     127.0.0.1:40860 - "POST /onboarding/analyze?user_id=Bv0iGn26BQROrUoYUIhOCY7iWvo1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37874 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37888 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40860 - "GET /twin/twin_f7ac4913 HTTP/1.1" 200 OK
+/home/balaraj/Darwin/backend/venv/lib/python3.12/site-packages/google/cloud/firestore_v1/base_collection.py:317: UserWarning: Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.
+  return query.where(field_path, op_string, value)
+INFO:     127.0.0.1:37896 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37888 - "GET /twin/twin_f7ac4913 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40860 - "GET /board/sessions/twin_f7ac4913 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37874 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37888 - "GET /board/sessions/twin_f7ac4913 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37902 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37910 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38874 - "OPTIONS /twin/twin_f7ac4913/idea HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:24:46.845701+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Twin saved", "taskName": "Task-19", "twin_id": "twin_f7ac4913"}
+INFO:     127.0.0.1:38882 - "POST /twin/twin_f7ac4913/idea HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38882 - "GET /board/sessions/twin_f7ac4913 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38874 - "GET /board/sessions/twin_f7ac4913 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38874 - "OPTIONS /board/start HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:24:48.676210+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:24:48.676414+00:00", "level": "INFO", "service": "routers.board", "message": "Board session initialized", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+INFO:     127.0.0.1:38882 - "POST /board/start HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:24:48.676817+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 1 starting", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+INFO:     127.0.0.1:38882 - "GET /board/df5ba410-c191-4f6b-adab-2a5dce49265c/stream HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:24:48.813528+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:24:48.813959+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-26"}
+{"timestamp": "2026-06-11T10:24:48.814278+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-27"}
+{"timestamp": "2026-06-11T10:24:48.819718+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-28"}
+{"timestamp": "2026-06-11T10:24:49.307108+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-26", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:24:49.307213+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-26"}
+{"timestamp": "2026-06-11T10:24:49.307614+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-27", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:24:49.312830+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-27"}
+{"timestamp": "2026-06-11T10:24:49.318012+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-28", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:24:49.318101+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-28"}
+{"timestamp": "2026-06-11T10:25:06.217626+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-26", "round": 1, "score": 6.8}
+{"timestamp": "2026-06-11T10:25:06.217821+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-29"}
+{"timestamp": "2026-06-11T10:25:06.638563+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-29", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:25:06.638715+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-29"}
+{"timestamp": "2026-06-11T10:25:11.240055+00:00", "level": "INFO", "service": "agents.cto_agent", "message": "CTO agent completed", "taskName": "Task-28", "round": 1, "score": 6.5}
+{"timestamp": "2026-06-11T10:25:11.240300+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-30"}
+{"timestamp": "2026-06-11T10:25:11.624144+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-30", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:25:11.624242+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-30"}
+{"timestamp": "2026-06-11T10:25:18.079168+00:00", "level": "INFO", "service": "agents.cfo_agent", "message": "CFO agent completed", "taskName": "Task-27", "round": 1, "score": 0.0}
+{"timestamp": "2026-06-11T10:25:30.836745+00:00", "level": "INFO", "service": "agents.cpo_agent", "message": "CPO agent completed", "taskName": "Task-30", "round": 1, "score": 4.0}
+{"timestamp": "2026-06-11T10:25:31.062352+00:00", "level": "INFO", "service": "agents.cmo_agent", "message": "CMO agent completed", "taskName": "Task-29", "round": 1, "score": 6.5}
+{"timestamp": "2026-06-11T10:25:31.215493+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:25:31.215601+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Round 1 complete", "taskName": "Task-23", "count": 5}
+{"timestamp": "2026-06-11T10:25:31.215651+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 2 starting", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:25:31.218825+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:25:31.662486+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-23", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:25:31.662601+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:25:47.888407+00:00", "level": "INFO", "service": "agents.cfo_agent", "message": "CFO agent completed", "taskName": "Task-23", "round": 2, "score": 0.0}
+{"timestamp": "2026-06-11T10:25:47.889163+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:25:48.241308+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-23", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:25:48.241403+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:26:07.426189+00:00", "level": "INFO", "service": "agents.cto_agent", "message": "CTO agent completed", "taskName": "Task-23", "round": 2, "score": 7.5}
+{"timestamp": "2026-06-11T10:26:07.426988+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:26:07.843842+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-23", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:26:07.844005+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:26:24.199627+00:00", "level": "INFO", "service": "agents.cmo_agent", "message": "CMO agent completed", "taskName": "Task-23", "round": 2, "score": 8.5}
+{"timestamp": "2026-06-11T10:26:24.201166+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:26:24.624431+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-23", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:26:24.624627+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:26:42.993513+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-23", "round": 2, "score": 6.0}
+{"timestamp": "2026-06-11T10:26:42.993875+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:26:43.487478+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-23", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:26:43.487724+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:27:01.915547+00:00", "level": "INFO", "service": "agents.cpo_agent", "message": "CPO agent completed", "taskName": "Task-23", "round": 2, "score": 5.5}
+{"timestamp": "2026-06-11T10:27:02.229496+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:27:02.229686+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Round 2 complete", "taskName": "Task-23", "count": 5}
+{"timestamp": "2026-06-11T10:27:02.229720+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 3 \u2014 voting", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:27:02.230413+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-31"}
+{"timestamp": "2026-06-11T10:27:02.230963+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-32"}
+{"timestamp": "2026-06-11T10:27:02.236625+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-33"}
+{"timestamp": "2026-06-11T10:27:02.751099+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-32", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:27:02.751328+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-32"}
+{"timestamp": "2026-06-11T10:27:02.766205+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-33", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:27:02.766297+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-33"}
+{"timestamp": "2026-06-11T10:27:02.790383+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-31", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:27:02.790596+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-31"}
+{"timestamp": "2026-06-11T10:27:20.151483+00:00", "level": "INFO", "service": "agents.cto_agent", "message": "CTO agent completed", "taskName": "Task-33", "round": 3, "score": 7.8}
+{"timestamp": "2026-06-11T10:27:20.151662+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-34"}
+{"timestamp": "2026-06-11T10:27:20.567349+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-34", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:27:20.567572+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-34"}
+{"timestamp": "2026-06-11T10:27:27.598287+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-31", "round": 3, "score": 8.0}
+{"timestamp": "2026-06-11T10:27:27.598564+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-35"}
+{"timestamp": "2026-06-11T10:27:27.951103+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-35", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:27:27.951218+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-35"}
+{"timestamp": "2026-06-11T10:27:32.182852+00:00", "level": "INFO", "service": "agents.cfo_agent", "message": "CFO agent completed", "taskName": "Task-32", "round": 3, "score": 1.5}
+{"timestamp": "2026-06-11T10:27:41.557016+00:00", "level": "INFO", "service": "agents.cmo_agent", "message": "CMO agent completed", "taskName": "Task-34", "round": 3, "score": 9.0}
+{"timestamp": "2026-06-11T10:27:51.563802+00:00", "level": "INFO", "service": "agents.cpo_agent", "message": "CPO agent completed", "taskName": "Task-35", "round": 3, "score": 8.0}
+{"timestamp": "2026-06-11T10:27:51.722347+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:27:51.722465+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Round 3 complete \u2014 debate finished", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:27:51.858546+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:27:51.859028+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-pro-preview", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:27:52.328113+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-pro-preview failed", "taskName": "Task-23", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-pro-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:27:52.328368+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-23"}
+{"timestamp": "2026-06-11T10:28:15.436712+00:00", "level": "INFO", "service": "core.decision_synthesizer", "message": "Decision synthesized", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c", "decision": "PROCEED", "overall_score": 62.0}
+{"timestamp": "2026-06-11T10:28:15.654875+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:28:15.655071+00:00", "level": "INFO", "service": "routers.board", "message": "Background board session complete", "taskName": "Task-23", "session_id": "df5ba410-c191-4f6b-adab-2a5dce49265c"}
+{"timestamp": "2026-06-11T10:28:34.644909+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+{"timestamp": "2026-06-11T10:28:34.645032+00:00", "level": "INFO", "service": "routers.board", "message": "Board session initialized", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+INFO:     127.0.0.1:34368 - "POST /board/start HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:28:34.645377+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 1 starting", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+INFO:     127.0.0.1:34368 - "GET /board/3d17f79f-eb84-430f-9f08-77d632b6e3b5/stream HTTP/1.1" 200 OK
+{"timestamp": "2026-06-11T10:28:34.725217+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+{"timestamp": "2026-06-11T10:28:34.725758+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-39"}
+{"timestamp": "2026-06-11T10:28:34.726288+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-40"}
+{"timestamp": "2026-06-11T10:28:34.730291+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-41"}
+{"timestamp": "2026-06-11T10:28:35.181097+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-41", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:28:35.181202+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-41"}
+{"timestamp": "2026-06-11T10:28:35.186829+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-40", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:28:35.187175+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-40"}
+{"timestamp": "2026-06-11T10:28:35.187666+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-39", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:28:35.191546+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-39"}
+INFO:     Shutting down
+INFO:     Waiting for connections to close. (CTRL+C to force quit)
+INFO:     Waiting for background tasks to complete. (CTRL+C to force quit)
+{"timestamp": "2026-06-11T10:28:57.048256+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-39", "round": 1, "score": 8.5}
+{"timestamp": "2026-06-11T10:28:57.048387+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-42"}
+{"timestamp": "2026-06-11T10:28:57.481254+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-42", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:28:57.481356+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-42"}
+{"timestamp": "2026-06-11T10:28:58.479800+00:00", "level": "INFO", "service": "agents.cto_agent", "message": "CTO agent completed", "taskName": "Task-41", "round": 1, "score": 5.5}
+{"timestamp": "2026-06-11T10:28:58.479913+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-43"}
+{"timestamp": "2026-06-11T10:28:58.921507+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-43", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:28:58.921624+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-43"}
+{"timestamp": "2026-06-11T10:29:06.905754+00:00", "level": "INFO", "service": "agents.cfo_agent", "message": "CFO agent completed", "taskName": "Task-40", "round": 1, "score": 0.0}
+{"timestamp": "2026-06-11T10:29:14.379516+00:00", "level": "INFO", "service": "agents.cpo_agent", "message": "CPO agent completed", "taskName": "Task-43", "round": 1, "score": 3.5}
+{"timestamp": "2026-06-11T10:29:18.310963+00:00", "level": "INFO", "service": "agents.cmo_agent", "message": "CMO agent completed", "taskName": "Task-42", "round": 1, "score": 3.0}
+{"timestamp": "2026-06-11T10:29:18.499417+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+{"timestamp": "2026-06-11T10:29:18.499530+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Round 1 complete", "taskName": "Task-36", "count": 5}
+{"timestamp": "2026-06-11T10:29:18.499591+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 2 starting", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:29:18.500209+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:29:18.898016+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-36", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:29:18.898092+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:29:32.060541+00:00", "level": "INFO", "service": "agents.cfo_agent", "message": "CFO agent completed", "taskName": "Task-36", "round": 2, "score": 0.0}
+{"timestamp": "2026-06-11T10:29:32.060982+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:29:32.419441+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-36", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:29:32.419529+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:29:51.903221+00:00", "level": "INFO", "service": "agents.cto_agent", "message": "CTO agent completed", "taskName": "Task-36", "round": 2, "score": 9.0}
+{"timestamp": "2026-06-11T10:29:51.903709+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:29:52.427451+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-36", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:29:52.427532+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:30:09.878129+00:00", "level": "INFO", "service": "agents.cmo_agent", "message": "CMO agent completed", "taskName": "Task-36", "round": 2, "score": 9.0}
+{"timestamp": "2026-06-11T10:30:09.878600+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:30:10.353916+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-36", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:30:10.354049+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:30:33.694591+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-36", "round": 2, "score": 7.5}
+{"timestamp": "2026-06-11T10:30:33.695267+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:30:34.094305+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-36", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:30:34.094400+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:30:55.150316+00:00", "level": "INFO", "service": "agents.cpo_agent", "message": "CPO agent completed", "taskName": "Task-36", "round": 2, "score": 6.5}
+{"timestamp": "2026-06-11T10:30:55.381060+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+{"timestamp": "2026-06-11T10:30:55.381135+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Round 2 complete", "taskName": "Task-36", "count": 5}
+{"timestamp": "2026-06-11T10:30:55.381159+00:00", "level": "INFO", "service": "core.debate_engine", "message": "Debate Round 3 \u2014 voting", "taskName": "Task-36"}
+{"timestamp": "2026-06-11T10:30:55.381521+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-44"}
+{"timestamp": "2026-06-11T10:30:55.381911+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-45"}
+{"timestamp": "2026-06-11T10:30:55.382260+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-46"}
+{"timestamp": "2026-06-11T10:30:55.829871+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-45", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:30:55.829951+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-45"}
+{"timestamp": "2026-06-11T10:30:55.874548+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-44", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:30:55.874625+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-44"}
+{"timestamp": "2026-06-11T10:30:55.909402+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-46", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:30:55.909482+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-46"}
+{"timestamp": "2026-06-11T10:31:18.948373+00:00", "level": "INFO", "service": "agents.ceo_agent", "message": "CEO agent completed", "taskName": "Task-44", "round": 3, "score": 6.5}
+{"timestamp": "2026-06-11T10:31:18.948495+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-47"}
+{"timestamp": "2026-06-11T10:31:19.427083+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-47", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:31:19.427182+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-47"}
+{"timestamp": "2026-06-11T10:31:20.088170+00:00", "level": "INFO", "service": "agents.cfo_agent", "message": "CFO agent completed", "taskName": "Task-45", "round": 3, "score": 0.0}
+{"timestamp": "2026-06-11T10:31:20.088317+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-3.1-flash-lite-preview", "taskName": "Task-48"}
+{"timestamp": "2026-06-11T10:31:20.605581+00:00", "level": "WARNING", "service": "services.gemini_service", "message": "[VertexAI] gemini-3.1-flash-lite-preview failed", "taskName": "Task-48", "error": "404 Publisher Model `projects/darwinagent/locations/asia-south1/publishers/google/models/gemini-3.1-flash-lite-preview` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions"}
+{"timestamp": "2026-06-11T10:31:20.605682+00:00", "level": "INFO", "service": "services.gemini_service", "message": "[VertexAI] Calling gemini-2.5-flash", "taskName": "Task-48"}
+{"timestamp": "2026-06-11T10:31:23.347294+00:00", "level": "ERROR", "service": "services.gemini_service", "message": "JSON parse failed", "taskName": "Task-46", "error": "Invalid control character at: line 2 column 3308 (char 3309)", "raw": "{\n  \"reasoning\": \"The core technical recommendation pivots significantly based on the collective debate, particularly the CFO's budget constraints, the CMO's proposed Product-Led Growth (PLG) strategy, and the CPO's insistence on hyper-focused customer validation. The initial idea's scope for 'context-aware security vulnerabilities, database performance regressions, or architectural drift' across an 'entire repository' is **technically unfeasible for a solo founder MVP within 10 weeks and a near"}
+{"timestamp": "2026-06-11T10:31:23.347421+00:00", "level": "ERROR", "service": "agents.cto_agent", "message": "CTO agent failed", "taskName": "Task-46", "round": 3, "error": "[JSON_DECODE_ERROR] Failed to parse JSON: Invalid control character at: line 2 column 3308 (char 3309)"}
+{"timestamp": "2026-06-11T10:31:23.347535+00:00", "level": "ERROR", "service": "core.debate_engine", "message": "Debate engine failed", "taskName": "Task-36", "error": "[CTO_AGENT_ERROR] CTO Round 3: [JSON_DECODE_ERROR] Failed to parse JSON: Invalid control character at: line 2 column 3308 (char 3309)", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+{"timestamp": "2026-06-11T10:31:23.347608+00:00", "level": "ERROR", "service": "routers.board", "message": "Background board session failed", "taskName": "Task-36", "error": "[DEBATE_FAILED] Board debate interrupted: [CTO_AGENT_ERROR] CTO Round 3: [JSON_DECODE_ERROR] Failed to parse JSON: Invalid control character at: line 2 column 3308 (char 3309)"}
+{"timestamp": "2026-06-11T10:31:23.602596+00:00", "level": "INFO", "service": "services.firestore_service", "message": "Session saved", "taskName": "Task-36", "session_id": "3d17f79f-eb84-430f-9f08-77d632b6e3b5"}
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T10:31:23.697135+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-2"}
+{"timestamp": "2026-06-11T10:31:23.697223+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-2"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [90966]
+INFO:     Stopping reloader process [80385]

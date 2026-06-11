@@ -38,7 +38,7 @@ class AgentOpinion(BaseModel):
     score: float = Field(..., ge=0, le=10)
     concerns: list[str] = Field(default_factory=list)
     opportunities: list[str] = Field(default_factory=list)
-    responding_to: Optional[AgentRole] = Field(
+    responding_to: Optional[str] = Field(
         None, description="For Round 2: which agent this responds to"
     )
 
@@ -75,12 +75,16 @@ class BoardDecision(BaseModel):
     key_insight: str = Field(..., description="One memorable sentence summarizing the board's conclusion")
 
 
+class DebateRound(BaseModel):
+    opinions: list[AgentOpinion] = Field(default_factory=list)
+
+
 class BoardSession(BaseModel):
     """Complete board meeting session."""
 
     session_id: str
     twin_id: str
-    rounds: list[list[AgentOpinion]] = Field(default_factory=list)
+    rounds: list[DebateRound] = Field(default_factory=list)
     decision: Optional[BoardDecision] = None
     status: str = Field(default="pending", description="pending | debating | decided | executed")
     created_at: Optional[str] = Field(

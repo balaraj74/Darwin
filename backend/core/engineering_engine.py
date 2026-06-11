@@ -54,6 +54,7 @@ RULES:
 """
 
 async def run_engineering_team(
+    session_id: str,
     project_id: int,
     prd: PRD,
     tech_arch: TechArchitecture,
@@ -63,7 +64,25 @@ async def run_engineering_team(
     """
     Runs the engineering team pipeline and commits to GitLab.
     """
-    logger.info("Starting AI Engineering Team", extra={"project_id": project_id})
+    from services.firestore_service import FirestoreService
+    db = FirestoreService()
+    
+    # Update status to in_progress
+    package = await db.get_execution_package(session_id)
+    if package and package.gitlab_output:
+        package.gitlab_output.engineering_status = "in_progress"
+        await db.save_execution_package(package)
+        
+    async def _log(msg: str):
+        logger.info(msg, extra={"project_id": project_id})
+        pkg = await db.get_execution_package(session_id)
+        if pkg and pkg.gitlab_output:
+            if getattr(pkg.gitlab_output, "engineering_logs", None) is None:
+                pkg.gitlab_output.engineering_logs = []
+            pkg.gitlab_output.engineering_logs.append(msg)
+            await db.save_execution_package(pkg)
+        
+    await _log("Starting AI Engineering Team...")
     gemini = GeminiService()
     
     try:
@@ -77,16 +96,22 @@ async def run_engineering_team(
         ))
         
         file_tree = FileTree(**tree_raw)
-        logger.info("Lead Engineer completed file tree", extra={"files": len(file_tree.files)})
+        await _log(f"Lead Engineer finalized architecture with {len(file_tree.files)} essential MVP files.")
         
         # 2. Developers generate code concurrently
-        tasks = []
-        for file_path in file_tree.files:
-            tasks.append(gemini.generate_json(DEVELOPER_PROMPT.format(
+        await _log("Assigning files to AI Developers for concurrent implementation...")
+        async def _generate_file(f_path: str):
+            res = await gemini.generate_json(DEVELOPER_PROMPT.format(
                 prd_json=prd_json,
                 arch_json=arch_json,
-                file_path=file_path
-            )))
+                file_path=f_path
+            ))
+            await _log(f"Developer finished implementing: {f_path}")
+            return res
+
+        tasks = []
+        for file_path in file_tree.files:
+            tasks.append(_generate_file(file_path))
             
         code_results = await asyncio.gather(*tasks)
         
@@ -102,12 +127,29 @@ async def run_engineering_team(
         # 3. Commit to GitLab
         if code_files:
             gitlab_svc = GitLabService(token=gitlab_token, namespace=gitlab_namespace)
+            
+            # Auto-close issues
+            closes_text = ""
+            if package and package.gitlab_output:
+                issue_iids = [i.iid for i in package.gitlab_output.issues_created if i.iid is not None]
+                if issue_iids:
+                    closes_text = "\n\n" + ", ".join([f"Closes #{iid}" for iid in issue_iids])
+                    
             await gitlab_svc.commit_files(
                 project_id=project_id,
                 files=code_files,
-                commit_message="Initial MVP Scaffolding by Darwin AI Engineering Team"
+                commit_message=f"Initial MVP Scaffolding by Darwin AI Engineering Team{closes_text}"
             )
-            logger.info("Engineering Team committed code to GitLab", extra={"files_committed": len(code_files)})
+            await _log(f"Committed {len(code_files)} files to GitLab main branch.")
+            
+        if package and package.gitlab_output:
+            package.gitlab_output.engineering_status = "completed"
+            await db.save_execution_package(package)
+            await _log("AI Engineering fully complete!")
             
     except Exception as e:
-        logger.error("Engineering Team failed", extra={"error": str(e)})
+        await _log(f"Engineering Team encountered an error: {str(e)}")
+        if package and package.gitlab_output:
+            package.gitlab_output.engineering_status = "failed"
+            package.gitlab_output.engineering_error = str(e)
+            await db.save_execution_package(package)

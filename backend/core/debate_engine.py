@@ -14,7 +14,7 @@ Exports: run_debate
 
 import asyncio
 from models.founder import DigitalTwin
-from models.board import AgentOpinion, AgentRole, BoardSession
+from models.board import AgentOpinion, AgentRole, BoardSession, DebateRound
 from agents.ceo_agent import run_ceo_agent
 from agents.cfo_agent import run_cfo_agent
 from agents.cto_agent import run_cto_agent
@@ -23,10 +23,10 @@ from agents.cpo_agent import run_cpo_agent
 from config.constants import CROSS_EXAMINATION_PAIRS
 from utils.logger import get_logger
 from utils.errors import DebateError
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
 
 logger = get_logger(__name__)
-db = MongoDBService()
+db = FirestoreService()
 
 AGENT_RUNNERS = {
     AgentRole.CEO: run_ceo_agent,
@@ -67,7 +67,7 @@ async def run_debate(session: BoardSession, twin: DigitalTwin) -> BoardSession:
             for runner in AGENT_RUNNERS.values()
         ]
         round_1_opinions: list[AgentOpinion] = list(await asyncio.gather(*round_1_tasks))
-        session.rounds.append(round_1_opinions)
+        session.rounds.append(DebateRound(opinions=round_1_opinions))
         await db.save_session(session)
         logger.info("Round 1 complete", extra={"count": len(round_1_opinions)})
 
@@ -92,7 +92,7 @@ async def run_debate(session: BoardSession, twin: DigitalTwin) -> BoardSession:
             )
             round_2_opinions.append(opinion)
 
-        session.rounds.append(round_2_opinions)
+        session.rounds.append(DebateRound(opinions=round_2_opinions))
         await db.save_session(session)
         logger.info("Round 2 complete", extra={"count": len(round_2_opinions)})
 
@@ -104,7 +104,7 @@ async def run_debate(session: BoardSession, twin: DigitalTwin) -> BoardSession:
             for runner in AGENT_RUNNERS.values()
         ]
         round_3_opinions: list[AgentOpinion] = list(await asyncio.gather(*round_3_tasks))
-        session.rounds.append(round_3_opinions)
+        session.rounds.append(DebateRound(opinions=round_3_opinions))
         await db.save_session(session)
         logger.info("Round 3 complete — debate finished")
 

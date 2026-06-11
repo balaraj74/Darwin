@@ -2,8 +2,8 @@
 Module: env.py
 Description: Pydantic Settings — validates all required environment variables at startup.
 
-Author:  KAIRON / Founder Twin
-Created: 2025-06-09
+Author:  Balaraj
+Updated: 2026-06-11 — Migrated to Firebase Auth + Firestore (MongoDB + JWT removed)
 """
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -13,8 +13,16 @@ from typing import Optional
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    # Gemini
-    gemini_api_key: str
+    # Google Cloud / Vertex AI (uses Application Default Credentials — no API key)
+    gcp_project: str = "darwinagent"
+    gcp_location: str = "asia-south1"
+
+    # Firebase project (same as GCP project — ADC handles auth automatically on Cloud Run)
+    firebase_project_id: str = "darwinagent"
+    firebase_storage_bucket: str = "darwinagent.firebasestorage.app"
+
+    # Legacy Google AI Studio key — kept optional so local .env doesn't break
+    gemini_api_key: Optional[str] = None
 
     # NVIDIA Fallbacks
     nvidia_api_key_kimi: Optional[str] = None
@@ -22,10 +30,6 @@ class Settings(BaseSettings):
     nvidia_api_key_secondary: Optional[str] = None
     openrouter_api_key: Optional[str] = None
     openrouter_api_key_secondary: Optional[str] = None
-
-    # MongoDB (optional — in-memory fallback used if not set)
-    mongodb_uri: Optional[str] = None
-    mongodb_db_name: str = "founder_twin"
 
     # GitLab (optional — user provides at runtime)
     gitlab_default_token: Optional[str] = None

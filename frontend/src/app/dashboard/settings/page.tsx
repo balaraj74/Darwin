@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { useAuthStore } from '../../../hooks/useAuth'
 import { UserProfile, SocialLinks } from '../../../types'
+import { auth } from '../../../lib/firebase'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -177,7 +178,13 @@ export default function ProfileSettingsPage() {
           setDisplayName(data.display_name || '')
           setBio(data.bio || '')
           setLinks(data.social_links || {})
-          if (data.profile_photo_b64) setPhotoPreview(data.profile_photo_b64)
+          if (data.profile_photo_b64) {
+            setPhotoPreview(data.profile_photo_b64)
+          } else if (data.photo_url) {
+            setPhotoPreview(data.photo_url)
+          } else if (auth.currentUser?.photoURL) {
+            setPhotoPreview(auth.currentUser.photoURL)
+          }
         }
       } finally {
         setLoading(false)

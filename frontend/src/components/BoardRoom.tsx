@@ -439,7 +439,7 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
   // Compute initial states from initialSession
   const initialOpinions: AgentOpinion[] = [];
   if (initialSession && initialSession.rounds) {
-    initialSession.rounds.forEach(r => r.forEach(op => initialOpinions.push(op)));
+    initialSession.rounds.forEach(r => r.opinions.forEach(op => initialOpinions.push(op)));
   }
   
   const [opinions,       setOpinions]       = useState<AgentOpinion[]>(initialOpinions);
@@ -519,7 +519,7 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
 
   const finishDebate = (activeSession: BoardSession) => {
     const all: AgentOpinion[] = [];
-    activeSession.rounds.forEach(r => r.forEach(op => all.push(op)));
+    activeSession.rounds.forEach(r => r.opinions.forEach(op => all.push(op)));
     setOpinions(all);
     setCompletedRounds(new Set([1, 2, 3]));
     if (activeSession.decision) {
@@ -537,7 +537,7 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
     setSession(replayedSession);
     sessionRef.current = replayedSession;
     const all: AgentOpinion[] = [];
-    replayedSession.rounds.forEach(r => r.forEach(op => all.push(op)));
+    replayedSession.rounds.forEach(r => r.opinions.forEach(op => all.push(op)));
     setOpinions(all);
     setActiveSpeech(all[all.length - 1] || null);
     setSpeakingAgent(null);

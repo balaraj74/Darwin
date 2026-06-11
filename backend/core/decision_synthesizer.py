@@ -84,7 +84,8 @@ def _format_debate_transcript(session: BoardSession) -> str:
         2: "ROUND 2 — CROSS-EXAMINATION",
         3: "ROUND 3 — FINAL VOTE",
     }
-    for round_idx, round_opinions in enumerate(session.rounds, start=1):
+    for round_idx, debate_round in enumerate(session.rounds, start=1):
+        round_opinions = debate_round.opinions
         lines.append(f"\n=== {labels.get(round_idx, f'ROUND {round_idx}')} ===")
         for opinion in round_opinions:
             prefix = f"[Responding to {opinion.responding_to}] " if opinion.responding_to else ""

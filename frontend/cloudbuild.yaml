@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_API_URL=${_NEXT_PUBLIC_API_URL}'
+      - '-t'
+      - '${_IMAGE}'
+      - '.'
+images:
+  - '${_IMAGE}'
+substitutions:
+  _IMAGE: 'asia-south1-docker.pkg.dev/darwinagent/darwin-repo/darwin-frontend:latest'
+  _NEXT_PUBLIC_API_URL: 'https://darwin-backend-43894313888.asia-south1.run.app'
+options:
+  logging: CLOUD_LOGGING_ONLY
+timeout: '1200s'

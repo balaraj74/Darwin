@@ -21,8 +21,8 @@ export async function GET(
   }
 
   const flattenedOpinions: AgentOpinion[] = [];
-  session.rounds.forEach((roundOpinions) => {
-    roundOpinions.forEach((opinion) => {
+  session.rounds.forEach((round) => {
+    round.opinions.forEach((opinion) => {
       flattenedOpinions.push(opinion);
     });
   });

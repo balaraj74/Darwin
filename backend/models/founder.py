@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, field_validator
+from typing import Optional, Any
 from datetime import datetime
 
 
@@ -23,6 +23,14 @@ class HardConstraints(BaseModel):
     technical_skills: list[str] = Field(default_factory=list)
     no_go_domains: list[str] = Field(default_factory=list, description="Domains founder refuses")
 
+    @field_validator('technical_skills', 'no_go_domains', mode='before')
+    @classmethod
+    def ensure_list(cls, v: Any) -> list[str]:
+        if isinstance(v, str):
+            return [v]
+        return v
+
+
 
 class FounderProfile(BaseModel):
     """Inferred founder profile — derived from intake answers, not stored directly."""
@@ -36,6 +44,13 @@ class FounderProfile(BaseModel):
     blind_spots: list[str] = Field(default_factory=list)
     quit_triggers: list[str] = Field(default_factory=list)
     hard_constraints: HardConstraints
+
+    @field_validator('blind_spots', 'quit_triggers', mode='before')
+    @classmethod
+    def ensure_list(cls, v: Any) -> list[str]:
+        if isinstance(v, str):
+            return [v]
+        return v
 
 
 class DigitalTwin(BaseModel):

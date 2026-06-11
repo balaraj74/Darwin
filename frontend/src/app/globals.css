@@ -5,7 +5,7 @@
 :root {
   --bg:             #000000;
   --bg-surface:     #0a0a0a;
-  --bg-card:        rgba(14, 14, 22, 0.80);
+  --bg-card:        rgba(14, 14, 22, 0.35);
   --border:         rgba(255, 255, 255, 0.10);
   --border-bright:  rgba(255, 255, 255, 0.22);
   --accent:         #c9a84c;

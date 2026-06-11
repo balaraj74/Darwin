@@ -11,35 +11,24 @@ const BG_IMAGES = [
 ]
 
 export default function BackgroundSlideshow() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % BG_IMAGES.length)
-    }, 6000) // Change image every 6 seconds
-    return () => clearInterval(timer)
-  }, [])
-
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 0, overflow: 'hidden' }}>
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: 'easeInOut' }}
-          style={{ position: 'absolute', inset: 0 }}
-        >
-          <Image
-            src={BG_IMAGES[currentIndex]}
-            alt="AI Background"
-            fill
-            priority
-            style={{ objectFit: 'cover', opacity: 0.6 }}
-          />
-        </motion.div>
-      </AnimatePresence>
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.28
+        }}
+      >
+        <source src="/bgvideo.mp4" type="video/mp4" />
+      </video>
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(10,10,12,0.7) 0%, rgba(10,10,12,0.4) 100%)' }} />
     </div>
   )
 }

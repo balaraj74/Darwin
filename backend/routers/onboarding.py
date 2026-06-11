@@ -9,13 +9,13 @@ Created: 2025-06-09
 from fastapi import APIRouter, HTTPException
 from models.founder import OnboardingIntake, DigitalTwin
 from core.digital_twin import build_digital_twin
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
 from utils.logger import get_logger
 from utils.errors import TwinBuildError
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
-db = MongoDBService()
+db = FirestoreService()
 
 
 @router.post("/analyze", response_model=DigitalTwin)

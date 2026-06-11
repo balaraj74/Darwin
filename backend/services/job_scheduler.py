@@ -16,14 +16,14 @@ from datetime import datetime, timedelta, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
 from services.crawler_service import crawl_social_links, build_crawl_summary_prompt
 from services.gemini_service import GeminiService
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-_db = MongoDBService()
+_db = FirestoreService()
 _gemini = GeminiService()
 
 CRAWL_INTERVAL_DAYS = 3

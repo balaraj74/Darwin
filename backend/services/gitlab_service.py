@@ -96,7 +96,7 @@ class GitLabService:
                 if epic:
                     labels.append(epic)
 
-                await self._create_issue(
+                issue_res = await self._create_issue(
                     client=client,
                     project_id=project_id,
                     title=issue_data["title"],
@@ -107,6 +107,7 @@ class GitLabService:
                 )
                 created_issues.append(
                     GitLabIssue(
+                        iid=issue_res.get("iid"),
                         title=issue_data["title"],
                         description=issue_data["description"],
                         milestone=issue_data.get("milestone", ""),
@@ -152,12 +153,24 @@ class GitLabService:
             headers=self._headers,
             params={"search": self._namespace},
         )
+        if response.status_code != 200:
+            raise GitLabError(
+                "NAMESPACE_API_FAILED",
+                f"Failed to fetch namespace ({response.status_code}): {response.text}"
+            )
+            
         namespaces = response.json()
-        if not namespaces:
+        if not namespaces or not isinstance(namespaces, list):
             raise GitLabError(
                 "NAMESPACE_NOT_FOUND",
-                f"GitLab namespace '{self._namespace}' not found.",
+                f"GitLab namespace '{self._namespace}' not found. Please check if your token has 'api' scope and the namespace is correct.",
             )
+            
+        # Try to match the exact path, otherwise fallback to the first result
+        for ns in namespaces:
+            if ns.get("path") == self._namespace:
+                return ns["id"]
+                
         return namespaces[0]["id"]
 
     async def _create_milestone(
@@ -224,13 +237,15 @@ class GitLabService:
             files: list of dicts with 'file_path' and 'content'
             commit_message: Commit message
         """
-        actions = [
-            {
-                "action": "create",
-                "file_path": f["file_path"],
+        actions = []
+        for f in files:
+            path = f["file_path"]
+            action = "update" if path.lower() == "readme.md" else "create"
+            actions.append({
+                "action": action,
+                "file_path": path,
                 "content": f["content"]
-            } for f in files
-        ]
+            })
         
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.post(

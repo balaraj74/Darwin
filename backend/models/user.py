@@ -1,14 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
-from typing import Optional, Dict
+from typing import Optional
 
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str = Field(..., min_length=6)
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
 
 class SocialLinks(BaseModel):
     """Public profile links for the founder."""
@@ -18,24 +11,41 @@ class SocialLinks(BaseModel):
     portfolio: Optional[str] = None
     twitter: Optional[str] = None
 
+
 class UserProfile(BaseModel):
-    """Extended user profile stored alongside auth credentials."""
+    """Extended user profile stored alongside Firebase Auth identity."""
     display_name: Optional[str] = None
     bio: Optional[str] = None
-    profile_photo_b64: Optional[str] = None  # base64-encoded image stored in MongoDB
+    photo_url: Optional[str] = None           # Firebase Storage URL (replaces base64)
     social_links: SocialLinks = Field(default_factory=SocialLinks)
     gitlab_token: Optional[str] = None
     gitlab_namespace: Optional[str] = None
     last_crawled_at: Optional[datetime] = None
 
+
 class UserInDB(BaseModel):
-    id: str
+    """User record stored in Firestore. Firebase Auth manages password/identity."""
+    id: str                                   # Firebase UID
     email: EmailStr
-    hashed_password: str
     created_at: datetime
     profile: UserProfile = Field(default_factory=UserProfile)
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
+
+class UserRegisterRequest(BaseModel):
+    """Body for /auth/register — client sends Firebase ID token after sign-up."""
+    id_token: str
+    display_name: Optional[str] = None
+
+
+class UserLoginRequest(BaseModel):
+    """Body for /auth/login — client sends Firebase ID token after sign-in."""
+    id_token: str
+
+
+class AuthResponse(BaseModel):
+    """Returned after successful auth — frontend uses Firebase token directly."""
     user_id: str
+    email: str
+    display_name: Optional[str] = None
+    photo_url: Optional[str] = None
+    is_new_user: bool = False

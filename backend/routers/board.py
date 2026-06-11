@@ -18,13 +18,13 @@ from models.board import BoardSession, BoardDecision
 from models.founder import DigitalTwin
 from core.debate_engine import run_debate
 from core.decision_synthesizer import synthesize_decision
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
 from utils.logger import get_logger
 from utils.errors import DebateError, SynthesisError
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/board", tags=["board"])
-db = MongoDBService()
+db = FirestoreService()
 
 
 class StartDebateRequest(BaseModel):
@@ -140,7 +140,8 @@ async def stream_debate(session_id: str) -> StreamingResponse:
                 return
 
             # Yield any new opinions
-            for round_idx, round_opinions in enumerate(session.rounds, start=1):
+            for round_idx, debate_round in enumerate(session.rounds, start=1):
+                round_opinions = debate_round.opinions
                 for opinion in round_opinions:
                     op_id = f"{round_idx}-{opinion.agent.value}"
                     if op_id not in yielded_opinions:

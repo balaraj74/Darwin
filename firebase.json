@@ -1,0 +1,14 @@
+{
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Darwin Agent",
+        "supportEmail": "balarajr483@gmail.com",
+        "authorizedRedirectUris": [
+          "https://darwinagent.firebaseapp.com"
+        ]
+      }
+    }
+  }
+}

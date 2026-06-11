@@ -104,9 +104,10 @@ const SEED_SESSION: BoardSession = {
   twin_id: "darwinagent",
   status: "decided",
   rounds: [
-    [
-      {
-        agent: "CEO",
+    {
+      opinions: [
+        {
+          agent: "CEO",
         round: 1,
         reasoning: "Agri supply-chains lose up to 35% of crop value in transit. A simple supply chain alert platform leverages the founder's direct channel to 12 major supply coordinators.",
         score: 9,
@@ -145,11 +146,13 @@ const SEED_SESSION: BoardSession = {
         concerns: ["Scope creep in maps rendering"],
         opportunities: ["SMS alerts have a 98% open rate in South Indian agrarian hubs"]
       }
-    ],
-    [
-      {
-        agent: "CFO",
-        round: 2,
+      ]
+    },
+    {
+      opinions: [
+        {
+          agent: "CFO",
+          round: 2,
         reasoning: "We must enforce a strict alert cap. I veto any proposal from the CEO that includes deploying multi-agent sensor boxes. Keep costs focused strictly on software alert delivery.",
         score: 8.8,
         concerns: ["Ensure no hardware investment"],
@@ -192,11 +195,13 @@ const SEED_SESSION: BoardSession = {
         opportunities: ["Offline cellular fallback works in deep transit corridors"],
         responding_to: "CTO"
       }
-    ],
-    [
-      {
-        agent: "CEO",
-        round: 3,
+      ]
+    },
+    {
+      opinions: [
+        {
+          agent: "CEO",
+          round: 3,
         reasoning: "My final vote is PROCEED with the pivoted 'Darwin alerts SaaS' model. It targets high-value logistics bottlenecks.",
         score: 9.5,
         concerns: [],
@@ -234,7 +239,8 @@ const SEED_SESSION: BoardSession = {
         concerns: [],
         opportunities: ["Extreme user engagement with simple, high-signal alerts"]
       }
-    ]
+      ]
+    }
   ],
   decision: SEED_DECISION
 };

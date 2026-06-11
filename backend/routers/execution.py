@@ -12,15 +12,14 @@ from typing import Optional
 from models.execution import ExecutionPackage
 from core.execution_engine import run_execution_engine
 from core.engineering_engine import run_engineering_team
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
 from services.gitlab_service import GitLabService
-from services.mongodb_service import MongoDBService
 from utils.logger import get_logger
 from utils.errors import ExecutionError
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/execution", tags=["execution"])
-db = MongoDBService()
+db = FirestoreService()
 
 
 class RunExecutionRequest(BaseModel):
@@ -115,6 +114,18 @@ async def create_gitlab_project(session_id: str, background_tasks: BackgroundTas
         raise HTTPException(status_code=404, detail="Execution package not found")
         
     if package.gitlab_output and package.gitlab_output.project_id > 0:
+        if package.gitlab_output.engineering_status not in ["in_progress", "completed"]:
+            package.gitlab_output.engineering_status = "in_progress"
+            await db.save_execution_package(package)
+            background_tasks.add_task(
+                run_engineering_team,
+                session_id=session_id,
+                project_id=package.gitlab_output.project_id,
+                prd=package.prd,
+                tech_arch=package.tech_architecture,
+                gitlab_token=user.profile.gitlab_token,
+                gitlab_namespace=user.profile.gitlab_namespace
+            )
         return package # Already created
         
     gitlab_token = user.profile.gitlab_token
@@ -145,6 +156,7 @@ async def create_gitlab_project(session_id: str, background_tasks: BackgroundTas
         if gitlab_output.project_id > 0:
             background_tasks.add_task(
                 run_engineering_team,
+                session_id=session_id,
                 project_id=gitlab_output.project_id,
                 prd=package.prd,
                 tech_arch=package.tech_architecture,

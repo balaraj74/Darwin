@@ -1,29 +1,30 @@
 """
 Module: profile.py
 Description: Profile router — get/update user profile, social links, and profile photo.
-             Profile photos are stored as base64 in MongoDB (no external storage needed).
+             Profile photos now stored in Firebase Storage (replaces base64 in DB).
 
 Author:  Balaraj
-Created: 2026-06-10
+Updated: 2026-06-11 — Migrated to FirestoreService + Firebase Storage + Firebase Auth
 """
 
 from __future__ import annotations
 
-import base64
 from typing import Optional
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, Header
+
 from pydantic import BaseModel
 
 from models.user import SocialLinks, UserProfile
-from services.mongodb_service import MongoDBService
+from services.firestore_service import FirestoreService
+from services.storage_service import upload_profile_photo
 from services.job_scheduler import run_crawl_job
-from utils.auth import decode_access_token
+from utils.auth import verify_firebase_token
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/profile", tags=["profile"])
-db = MongoDBService()
+db = FirestoreService()
 
 _ALLOWED_PHOTO_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
 _MAX_PHOTO_BYTES = 5 * 1024 * 1024  # 5 MB
@@ -37,10 +38,10 @@ async def _get_current_user_id(authorization: Optional[str] = Header(default=Non
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or invalid Authorization header")
     token = authorization.removeprefix("Bearer ").strip()
-    payload = decode_access_token(token)
-    if not payload or "sub" not in payload:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
-    return payload["sub"]
+    decoded = await verify_firebase_token(token)
+    if not decoded or "uid" not in decoded:
+        raise HTTPException(status_code=401, detail="Invalid or expired Firebase token")
+    return decoded["uid"]
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -64,11 +65,11 @@ class ProfileResponse(BaseModel):
     email: str
     display_name: Optional[str] = None
     bio: Optional[str] = None
-    profile_photo_b64: Optional[str] = None
+    photo_url: Optional[str] = None           # Firebase Storage URL
     social_links: SocialLinks
     gitlab_token: Optional[str] = None
     gitlab_namespace: Optional[str] = None
-    last_crawled_at: Optional[str] = None  # ISO string for JSON friendliness
+    last_crawled_at: Optional[str] = None
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -87,7 +88,7 @@ async def get_profile(user_id: str = Depends(_get_current_user_id)) -> ProfileRe
         email=user.email,
         display_name=user.profile.display_name,
         bio=user.profile.bio,
-        profile_photo_b64=user.profile.profile_photo_b64,
+        photo_url=user.profile.photo_url,
         social_links=user.profile.social_links,
         gitlab_token=user.profile.gitlab_token,
         gitlab_namespace=user.profile.gitlab_namespace,
@@ -105,13 +106,11 @@ async def update_profile(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Update mutable fields
     if body.display_name is not None:
         user.profile.display_name = body.display_name
     if body.bio is not None:
         user.profile.bio = body.bio
 
-    # Update social links (only overwrite fields that were supplied)
     links = user.profile.social_links
     if body.github is not None:
         links.github = body.github or None
@@ -137,7 +136,7 @@ async def update_profile(
         email=user.email,
         display_name=user.profile.display_name,
         bio=user.profile.bio,
-        profile_photo_b64=user.profile.profile_photo_b64,
+        photo_url=user.profile.photo_url,
         social_links=user.profile.social_links,
         gitlab_token=user.profile.gitlab_token,
         gitlab_namespace=user.profile.gitlab_namespace,
@@ -146,14 +145,11 @@ async def update_profile(
 
 
 @router.post("/photo", response_model=dict)
-async def upload_profile_photo(
+async def upload_photo(
     file: UploadFile = File(...),
     user_id: str = Depends(_get_current_user_id),
 ) -> dict:
-    """
-    Upload and store a profile photo as base64 in MongoDB.
-    Max size: 5 MB. Accepted: JPEG, PNG, WebP, GIF.
-    """
+    """Upload a profile photo to Firebase Storage. Returns the public URL."""
     if file.content_type not in _ALLOWED_PHOTO_TYPES:
         raise HTTPException(
             status_code=422,
@@ -164,26 +160,21 @@ async def upload_profile_photo(
     if len(raw) > _MAX_PHOTO_BYTES:
         raise HTTPException(status_code=413, detail="Photo must be under 5 MB")
 
-    b64 = base64.b64encode(raw).decode("utf-8")
-    data_uri = f"data:{file.content_type};base64,{b64}"
-
     user = await db.get_user_by_id(user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    user.profile.profile_photo_b64 = data_uri
+    photo_url = await upload_profile_photo(user_id, raw, file.content_type)
+    user.profile.photo_url = photo_url
     await db.save_user(user)
-    logger.info("Profile photo updated", extra={"user_id": user_id, "bytes": len(raw)})
+    logger.info("Profile photo updated", extra={"user_id": user_id, "url": photo_url})
 
-    return {"success": True, "message": "Profile photo updated"}
+    return {"success": True, "photo_url": photo_url}
 
 
 @router.post("/crawl-now", response_model=dict)
 async def trigger_crawl_now(user_id: str = Depends(_get_current_user_id)) -> dict:
-    """
-    Manually trigger the profile crawler for the current user right now.
-    Useful for immediately enriching the twin after saving social links.
-    """
+    """Manually trigger the profile crawler for the current user right now."""
     from services.job_scheduler import _enrich_twin_for_user
     await _enrich_twin_for_user(user_id)
     return {"success": True, "message": "Profile crawl triggered. Twin will be updated shortly."}
