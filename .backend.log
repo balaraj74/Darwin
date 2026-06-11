@@ -1,0 +1,145 @@
+INFO:     Will watch for changes in these directories: ['/home/balaraj/Darwin/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [31734] using WatchFiles
+{"timestamp": "2026-06-11T06:03:50.223059+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.307784+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.329043+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.411237+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.432264+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.463863+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.642284+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:03:50.821531+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+INFO:     Started server process [31815]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T06:03:50.911072+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T06:03:50.914313+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+INFO:     Application startup complete.
+INFO:     127.0.0.1:46172 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46174 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46174 - "GET /twin/by-user/29cf5b35-0455-44b0-8226-2568399b94e7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46172 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46186 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46174 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46186 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46188 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46174 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46186 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46188 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46174 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46188 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53812 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53812 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53812 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53812 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53814 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53812 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53814 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53812 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53814 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54062 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54062 - "GET /twin/by-user/29cf5b35-0455-44b0-8226-2568399b94e7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54062 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54080 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54072 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54062 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54072 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54080 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54062 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54080 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41150 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41154 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41154 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41150 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54248 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54252 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34870 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34878 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34870 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34878 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52712 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52728 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38312 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38322 - "GET /profile HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'models/user.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T06:50:17.337284+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-3"}
+{"timestamp": "2026-06-11T06:50:17.337391+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-3"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31815]
+{"timestamp": "2026-06-11T06:50:19.472604+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.495766+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.515133+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.542000+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.563680+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.591948+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.751962+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:19.842949+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+INFO:     Started server process [39738]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T06:50:19.871555+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T06:50:19.873546+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routers/profile.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T06:50:43.431347+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-3"}
+{"timestamp": "2026-06-11T06:50:43.431423+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-3"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39738]
+{"timestamp": "2026-06-11T06:50:45.748267+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:45.772028+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:45.800224+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:45.833975+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:45.857710+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:45.888652+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:45.999998+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:50:46.090592+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+INFO:     Started server process [39819]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T06:50:46.118445+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T06:50:46.119557+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routers/execution.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+{"timestamp": "2026-06-11T06:51:28.740181+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler stopped", "taskName": "Task-3"}
+{"timestamp": "2026-06-11T06:51:28.740230+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API stopped", "taskName": "Task-3"}
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39819]
+{"timestamp": "2026-06-11T06:51:30.355499+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.377853+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.395753+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.427042+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.456319+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.482237+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.622527+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+{"timestamp": "2026-06-11T06:51:30.707886+00:00", "level": "INFO", "service": "services.mongodb_service", "message": "MongoDB connected", "taskName": "Task-1", "db": "founder_twin"}
+INFO:     Started server process [40039]
+INFO:     Waiting for application startup.
+{"timestamp": "2026-06-11T06:51:30.736134+00:00", "level": "INFO", "service": "main", "message": "Darwin Agent API starting", "taskName": "Task-3", "env": "development", "gemini_key_set": true}
+{"timestamp": "2026-06-11T06:51:30.737140+00:00", "level": "INFO", "service": "services.job_scheduler", "message": "APScheduler started", "taskName": "Task-3", "interval_days": 3}
+INFO:     Application startup complete.
+INFO:     127.0.0.1:49680 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49680 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57402 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57390 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57390 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57390 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56528 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56538 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56536 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56528 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56536 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56528 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56536 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42926 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42930 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60590 - "OPTIONS /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60590 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38264 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39366 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55898 - "GET /twin/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55902 - "GET /profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55898 - "GET /board/sessions/twin_77d993a0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55898 - "GET /board/session/95a8cd78-4f23-400f-adc4-ddff3f85fc2f HTTP/1.1" 200 OK

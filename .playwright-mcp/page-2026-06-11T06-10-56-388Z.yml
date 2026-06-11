@@ -1,0 +1,141 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - navigation [ref=e6]:
+        - generic [ref=e8]: d
+        - generic [ref=e9]:
+          - link "How It Works" [ref=e10] [cursor=pointer]:
+            - /url: "#how-it-works"
+          - link "The Board" [ref=e11] [cursor=pointer]:
+            - /url: "#the-board"
+          - link "Execution" [ref=e12] [cursor=pointer]:
+            - /url: "#execution"
+          - link "Pricing" [ref=e13] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Build My Twin" [ref=e14] [cursor=pointer]:
+            - /url: /onboarding
+            - text: Build My Twin
+            - img [ref=e15]
+      - generic [ref=e18]:
+        - generic [ref=e20]:
+          - generic [ref=e21]: New
+          - generic [ref=e22]: v2 Board — 5 Agents, Hard Vetoes, Full Execution
+        - generic [ref=e23]:
+          - generic [ref=e24]: Your
+          - generic [ref=e25]: AI
+          - generic [ref=e26]: Executive
+          - generic [ref=e27]: Board
+          - generic [ref=e28]: Built
+          - generic [ref=e29]: Around
+          - generic [ref=e30]: You
+        - paragraph [ref=e31]: Darwin creates a digital model of your skills and constraints — then opens your boardroom. Pitch your idea. Watch five AI executives debate, veto, and pivot until the right startup survives.
+        - generic [ref=e32]:
+          - link "Start Your Debate" [ref=e33] [cursor=pointer]:
+            - /url: /onboarding
+            - button "Start Your Debate" [ref=e34]:
+              - text: Start Your Debate
+              - img [ref=e35]
+          - link "See How It Works" [ref=e38] [cursor=pointer]:
+            - /url: "#how-it-works"
+            - img [ref=e39]
+            - text: See How It Works
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - img [ref=e44]
+            - generic [ref=e47]: "3"
+            - generic [ref=e48]: Debate Rounds Per Startup Idea
+          - generic [ref=e49]:
+            - img [ref=e51]
+            - generic [ref=e56]: "5"
+            - generic [ref=e57]: AI Agents In Your Boardroom
+      - generic [ref=e58]:
+        - generic [ref=e59]: Your Boardroom Agents
+        - generic [ref=e60]:
+          - generic [ref=e61]: CEO
+          - generic [ref=e62]: CFO
+          - generic [ref=e63]: CTO
+          - generic [ref=e64]: CMO
+          - generic [ref=e65]: Office
+    - generic [ref=e68]:
+      - generic [ref=e70]:
+        - paragraph [ref=e71]: // Capabilities
+        - generic [ref=e72]:
+          - text: Survival
+          - text: of the fittest
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]:
+            - img [ref=e77]
+            - generic [ref=e79]:
+              - generic [ref=e80]: Skill Mapping
+              - generic [ref=e81]: Budget Reality
+              - generic [ref=e82]: Network Fit
+              - generic [ref=e83]: Constraint-First
+          - generic [ref=e85]:
+            - heading "Digital Twin" [level=3] [ref=e86]
+            - paragraph [ref=e87]: Your constraints, skills, and runway are modeled precisely. Every board decision is filtered through your actual founder profile — not a generic template.
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - img [ref=e91]
+            - generic [ref=e93]:
+              - generic [ref=e94]: 5 AI Agents
+              - generic [ref=e95]: Hard Vetoes
+              - generic [ref=e96]: Live Debate
+              - generic [ref=e97]: Pivot Engine
+          - generic [ref=e99]:
+            - heading "Board Debate" [level=3] [ref=e100]
+            - paragraph [ref=e101]: CEO, CFO, CTO, CMO and an Office agent debate your idea across 3 structured rounds. Vetoes are hard — if capital doesn't reach revenue, the board pivots.
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - img [ref=e105]
+            - generic [ref=e107]:
+              - generic [ref=e108]: PRD Generator
+              - generic [ref=e109]: Financial Model
+              - generic [ref=e110]: Pitch Deck
+              - generic [ref=e111]: GitLab Issues
+          - generic [ref=e113]:
+            - heading "Full Execution" [level=3] [ref=e114]
+            - paragraph [ref=e115]: After the board decides, agents generate your PRD, financial model, pitch deck, and GitLab issues — then hand over the complete execution package.
+    - generic [ref=e117]:
+      - generic [ref=e118]:
+        - paragraph [ref=e119]: // Process
+        - generic [ref=e120]:
+          - text: Three steps.
+          - text: Built for your reality.
+      - generic [ref=e121]:
+        - generic [ref=e123]:
+          - generic [ref=e124]: "01"
+          - heading "Build Your Twin" [level=3] [ref=e125]
+          - paragraph [ref=e126]: Answer 7 questions — budget, skills, risk appetite, network. Your DigitalTwin becomes the constraint layer for every board decision.
+        - generic [ref=e128]:
+          - generic [ref=e129]: "02"
+          - heading "Pitch to the Board" [level=3] [ref=e130]
+          - paragraph [ref=e131]: Enter your idea in the boardroom. Five AI executives debate across three structured rounds — questioning, cross-examining, and stress-testing your concept.
+        - generic [ref=e133]:
+          - generic [ref=e134]: "03"
+          - heading "Execution Handoff" [level=3] [ref=e135]
+          - paragraph [ref=e136]: "The board reaches a verdict: Proceed, Pivot, or Reject. If green-lit, the execution engine generates your full startup package in minutes."
+    - generic [ref=e138]:
+      - generic [ref=e139]:
+        - text: The Board Will Overrule You.
+        - text: That's the Point.
+      - paragraph [ref=e140]: Darwin doesn't validate your idea. It pressure-tests it against your actual constraints until only the right startup survives.
+      - link "Build My Twin" [ref=e141] [cursor=pointer]:
+        - /url: /onboarding
+        - button "Build My Twin" [ref=e142]:
+          - text: Build My Twin
+          - img [ref=e143]
+    - generic [ref=e147]:
+      - generic [ref=e148]:
+        - paragraph [ref=e149]: Darwin
+        - paragraph [ref=e150]: Survival of the fittest startup. An AI board that builds around the founder, not just the idea.
+      - generic [ref=e151]:
+        - link "GitHub" [ref=e152] [cursor=pointer]:
+          - /url: "#"
+        - link "Devpost" [ref=e153] [cursor=pointer]:
+          - /url: "#"
+        - link "LinkedIn" [ref=e154] [cursor=pointer]:
+          - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e160] [cursor=pointer]:
+    - img [ref=e161]
+  - alert [ref=e164]

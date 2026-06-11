@@ -55,6 +55,8 @@ class ProfileUpdateRequest(BaseModel):
     instagram: Optional[str] = None
     portfolio: Optional[str] = None
     twitter: Optional[str] = None
+    gitlab_token: Optional[str] = None
+    gitlab_namespace: Optional[str] = None
 
 
 class ProfileResponse(BaseModel):
@@ -64,6 +66,8 @@ class ProfileResponse(BaseModel):
     bio: Optional[str] = None
     profile_photo_b64: Optional[str] = None
     social_links: SocialLinks
+    gitlab_token: Optional[str] = None
+    gitlab_namespace: Optional[str] = None
     last_crawled_at: Optional[str] = None  # ISO string for JSON friendliness
 
 
@@ -85,6 +89,8 @@ async def get_profile(user_id: str = Depends(_get_current_user_id)) -> ProfileRe
         bio=user.profile.bio,
         profile_photo_b64=user.profile.profile_photo_b64,
         social_links=user.profile.social_links,
+        gitlab_token=user.profile.gitlab_token,
+        gitlab_namespace=user.profile.gitlab_namespace,
         last_crawled_at=user.profile.last_crawled_at.isoformat() if user.profile.last_crawled_at else None,
     )
 
@@ -118,6 +124,11 @@ async def update_profile(
     if body.twitter is not None:
         links.twitter = body.twitter or None
 
+    if body.gitlab_token is not None:
+        user.profile.gitlab_token = body.gitlab_token or None
+    if body.gitlab_namespace is not None:
+        user.profile.gitlab_namespace = body.gitlab_namespace or None
+
     await db.save_user(user)
     logger.info("Profile updated", extra={"user_id": user_id})
 
@@ -128,6 +139,8 @@ async def update_profile(
         bio=user.profile.bio,
         profile_photo_b64=user.profile.profile_photo_b64,
         social_links=user.profile.social_links,
+        gitlab_token=user.profile.gitlab_token,
+        gitlab_namespace=user.profile.gitlab_namespace,
         last_crawled_at=user.profile.last_crawled_at.isoformat() if user.profile.last_crawled_at else None,
     )
 

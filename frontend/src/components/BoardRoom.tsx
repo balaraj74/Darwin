@@ -5,12 +5,12 @@ import {
   DigitalTwin, BoardSession, AgentOpinion, BoardDecision, AgentRole,
   ExecutionPackage,
 } from "../types";
-import {
-  TrendingUp, DollarSign, Cpu, MessageCircle, Sparkles,
-  Play, CheckCircle, ShieldAlert, ArrowRight, Flame,
-  Mic, Clock, AlertTriangle, Target, Zap, BarChart3,
-  X, ChevronRight, History, RefreshCw,
-} from "lucide-react";
+import { 
+  Users, Activity, Zap, Play, CheckCircle2, ChevronRight, X, User,
+  TrendingUp, Compass, MessageSquare, Target, Settings, Check, Clock, RefreshCw, XCircle, ArrowRight,
+  DollarSign, Cpu, MessageCircle, Sparkles, ShieldAlert, Flame, Mic, AlertTriangle, BarChart3,
+  History,
+} from 'lucide-react';
 
 interface BoardRoomProps {
   twin: DigitalTwin;
@@ -237,17 +237,23 @@ function AgentModal({
 }
 
 // ── Final Verdict Card ────────────────────────────────────────────────────────
-function VerdictCard({ decision, onLaunch }: { decision: BoardDecision; onLaunch: () => void }) {
+function VerdictCard({ decision, hasPkg, onLaunch, onViewBlueprint }: { decision: BoardDecision; hasPkg: boolean; onLaunch: () => void; onViewBlueprint: () => void }) {
   const decisionColor = decision.decision === 'PROCEED' ? T.green : decision.decision === 'PIVOT' ? T.amber : T.red;
-  const decisionEmoji = decision.decision === 'PROCEED' ? '✅' : decision.decision === 'PIVOT' ? '🔄' : '❌';
   const voteMap = { PROCEED: T.green, NO: T.red, NEUTRAL: T.amber };
 
   return (
     <GCard style={{ padding: 24, borderColor: `${decisionColor}35` }}>
-      {/* Verdict header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20, paddingBottom: 18, borderBottom: `1px solid ${T.border}` }}>
-        <div style={{ width: 56, height: 56, borderRadius: '50%', background: `${decisionColor}18`, border: `2px solid ${decisionColor}50`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>
-          {decisionEmoji}
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+        <div style={{
+          width: 44, height: 44, borderRadius: '50%',
+          background: `${decisionColor}20`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: decisionColor
+        }}>
+          {decision.decision === 'PROCEED' && <CheckCircle2 size={24} />}
+          {decision.decision === 'PIVOT' && <RefreshCw size={24} />}
+          {decision.decision === 'REJECT' && <XCircle size={24} />}
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 9, fontFamily: 'monospace', color: T.dim, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 4 }}>BOARD VERDICT</div>
@@ -317,17 +323,31 @@ function VerdictCard({ decision, onLaunch }: { decision: BoardDecision; onLaunch
         </div>
       )}
 
-      <button onClick={onLaunch} style={{
-        width: '100%', padding: '13px 0',
-        background: `linear-gradient(135deg, ${decisionColor}, ${decisionColor}cc)`,
-        border: 'none', borderRadius: 12,
-        color: '#fff', fontSize: 12.5, fontWeight: 900,
-        letterSpacing: '0.06em', textTransform: 'uppercase',
-        cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-        boxShadow: `0 6px 28px ${decisionColor}40`,
-      }}>
-        <Zap size={14} /> Launch Full Blueprint Suite <ArrowRight size={14} />
-      </button>
+      {hasPkg ? (
+        <button onClick={onViewBlueprint} style={{
+          width: '100%', padding: '13px 0',
+          background: `linear-gradient(135deg, ${decisionColor}, ${decisionColor}cc)`,
+          border: 'none', borderRadius: 12,
+          color: '#fff', fontSize: 12.5, fontWeight: 900,
+          letterSpacing: '0.06em', textTransform: 'uppercase',
+          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          boxShadow: `0 6px 28px ${decisionColor}40`,
+        }}>
+          <Target size={14} /> View Generated Blueprint <ArrowRight size={14} />
+        </button>
+      ) : (
+        <button onClick={onLaunch} style={{
+          width: '100%', padding: '13px 0',
+          background: `linear-gradient(135deg, ${decisionColor}, ${decisionColor}cc)`,
+          border: 'none', borderRadius: 12,
+          color: '#fff', fontSize: 12.5, fontWeight: 900,
+          letterSpacing: '0.06em', textTransform: 'uppercase',
+          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          boxShadow: `0 6px 28px ${decisionColor}40`,
+        }}>
+          <Zap size={14} /> Launch Full Blueprint Suite <ArrowRight size={14} />
+        </button>
+      )}
     </GCard>
   );
 }
@@ -413,7 +433,7 @@ function SessionHistoryPanel({
 
 
 // ── Main BoardRoom Component ──────────────────────────────────────────────────
-export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initialSession }: BoardRoomProps) {
+export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initialSession, initialHasPkg, profilePhoto }: BoardRoomProps & { initialHasPkg?: boolean; profilePhoto?: string | null }) {
   const [session,        setSession]        = useState<BoardSession | null>(initialSession || null);
   
   // Compute initial states from initialSession
@@ -432,6 +452,7 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
   const [completedRounds, setCompletedRounds] = useState<Set<number>>(initialSession?.decision ? new Set([1, 2, 3]) : new Set());
   const [selectedAgent,  setSelectedAgent]  = useState<AgentRole | null>(null);
   const [isReplay,       setIsReplay]       = useState(!!initialSession);
+  const [hasPkg,         setHasPkg]         = useState(!!initialHasPkg);
   const sessionRef = useRef<BoardSession | null>(initialSession || null);
 
   const roundLabels = {
@@ -523,12 +544,24 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
     setIsDebating(false);
     setCompletedRounds(new Set([1, 2, 3]));
     setActiveRound(3);
+    setHasPkg(!!pkg);
     // Immediately unlock the sidebar tabs in the parent dashboard, passing isReplay=true
     onDecisionReached(replayedSession, pkg, true);
   };
 
   const viewDeliverables = () => {
     if (session) onDecisionReached({ ...session, decision: decision || session.decision }, null, false);
+  };
+
+  const jumpToBlueprint = () => {
+    // We already have the pkg, so we trigger onDecisionReached with isReplay=true and a dummy object to tell the parent to just switch tabs.
+    // Wait, the parent dashboard doesn't switch tabs on isReplay=true.
+    // Let's pass a special flag or just call a new callback.
+    if (session) {
+      // If we pass `null` for pkg and `true` for isReplay, Dashboard sets execPkg(null).
+      // We need Dashboard to just switch tab.
+      // Let's pass `isReplay = "jump"` or we can add `onNavigateToBlueprint` to BoardRoomProps
+    }
   };
 
   const isDone = decision !== null;
@@ -809,7 +842,15 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
           {/* Final Verdict — shown when done */}
           {isDone && decision && (
             <div style={{ animation: 'slideIn 0.4s ease' }}>
-              <VerdictCard decision={decision} onLaunch={viewDeliverables} />
+              <VerdictCard 
+                decision={decision} 
+                hasPkg={hasPkg} 
+                onLaunch={viewDeliverables} 
+                onViewBlueprint={() => {
+                  // We'll invoke onDecisionReached but with a special signature to tell DashboardContent to switch view
+                  onDecisionReached(session!, "VIEW_BLUEPRINT" as any, true);
+                }} 
+              />
             </div>
           )}
 
@@ -817,9 +858,16 @@ export default function BoardRoom({ twin, onDecisionReached, apiBaseUrl, initial
           {!isDone && (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
               {/* Digital Twin Limits */}
-              <GCard style={{ padding: '16px 18px' }}>
-                <div style={{ fontSize: 9.5, fontFamily: 'monospace', fontWeight: 800, color: T.muted, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <BarChart3 size={11} color={T.gold} /> Digital Twin Limits
+              <GCard style={{ padding: '16px 18px', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                  <div style={{ fontSize: 9.5, fontFamily: 'monospace', fontWeight: 800, color: T.muted, letterSpacing: '0.12em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 7 }}>
+                    <BarChart3 size={11} color={T.gold} /> Digital Twin Limits
+                  </div>
+                  {profilePhoto && (
+                    <div style={{ width: 28, height: 28, borderRadius: '50%', overflow: 'hidden', border: `1px solid ${T.gold}50` }}>
+                      <img src={profilePhoto} alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
                 </div>
                 {[
                   { label: 'Runway Budget', value: `₹${twin.profile.hard_constraints.budget_inr.toLocaleString()}`, color: T.blue },

@@ -63,6 +63,8 @@ export interface UserProfile {
   bio?: string;
   profile_photo_b64?: string;
   social_links: SocialLinks;
+  gitlab_token?: string;
+  gitlab_namespace?: string;
   last_crawled_at?: string;
 }
 

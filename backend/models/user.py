@@ -24,6 +24,8 @@ class UserProfile(BaseModel):
     bio: Optional[str] = None
     profile_photo_b64: Optional[str] = None  # base64-encoded image stored in MongoDB
     social_links: SocialLinks = Field(default_factory=SocialLinks)
+    gitlab_token: Optional[str] = None
+    gitlab_namespace: Optional[str] = None
     last_crawled_at: Optional[datetime] = None
 
 class UserInDB(BaseModel):

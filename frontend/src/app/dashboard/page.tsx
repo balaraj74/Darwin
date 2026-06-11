@@ -330,6 +330,8 @@ function ProfilePanel({ t, token, userId, onPhotoChange }: {
   const [profile, setProfile]         = useState<UserProfile | null>(null)
   const [displayName, setDisplayName] = useState('')
   const [bio, setBio]                 = useState('')
+  const [gitlabToken, setGitlabToken] = useState('')
+  const [gitlabNamespace, setGitlabNamespace] = useState('')
   const [links, setLinks]             = useState<SocialLinks>({})
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [photoFile, setPhotoFile]     = useState<File | null>(null)
@@ -348,6 +350,8 @@ function ProfilePanel({ t, token, userId, onPhotoChange }: {
       setProfile(data)
       setDisplayName(data.display_name || '')
       setBio(data.bio || '')
+      setGitlabToken(data.gitlab_token || '')
+      setGitlabNamespace(data.gitlab_namespace || '')
       setLinks(data.social_links || {})
       if (data.profile_photo_b64) { setPhotoPreview(data.profile_photo_b64); onPhotoChange(data.profile_photo_b64) }
     })
@@ -368,7 +372,7 @@ function ProfilePanel({ t, token, userId, onPhotoChange }: {
         const fd = new FormData(); fd.append('file', photoFile)
         await fetch(`${API}/profile/photo`, { method: 'POST', headers: authH(), body: fd })
       }
-      const r = await fetch(`${API}/profile`, { method: 'PUT', headers: { ...authH(), 'Content-Type': 'application/json' }, body: JSON.stringify({ display_name: displayName, bio, ...links }) })
+      const r = await fetch(`${API}/profile`, { method: 'PUT', headers: { ...authH(), 'Content-Type': 'application/json' }, body: JSON.stringify({ display_name: displayName, bio, gitlab_token: gitlabToken, gitlab_namespace: gitlabNamespace, ...links }) })
       if (r.ok) { const d = await r.json(); setProfile(d); showToast('Profile saved!', 'ok') }
       else showToast('Save failed', 'err')
     } catch { showToast('Save failed', 'err') } finally { setSaving(false) }
@@ -439,6 +443,26 @@ function ProfilePanel({ t, token, userId, onPhotoChange }: {
         </div>
       </div>
 
+      {/* Engineering Tools */}
+      <div style={{ marginTop: 20, paddingTop: 18, borderTop: `1px solid ${t.border}` }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: t.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 7 }}>
+          <Cpu size={13} color={t.gold} /> Engineering Integrations
+          <span style={{ fontSize: 9, fontWeight: 400, color: t.dim, textTransform: 'none', letterSpacing: 0 }}>— used by AI agents to scaffold your startup</span>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '10px 20px' }}>
+          <div>
+            <label style={{ fontSize: 10, color: '#fc6d26', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5, display: 'flex', alignItems: 'center', gap: 5 }}>GitLab Access Token</label>
+            <input type="password" value={gitlabToken} onChange={e => setGitlabToken(e.target.value)} placeholder="glpat-..."
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, fontFamily: 'inherit', outline: 'none', padding: '8px 12px', height: 36, boxSizing: 'border-box' }} />
+          </div>
+          <div>
+            <label style={{ fontSize: 10, color: '#fc6d26', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 5, display: 'flex', alignItems: 'center', gap: 5 }}>GitLab Namespace (User/Group)</label>
+            <input value={gitlabNamespace} onChange={e => setGitlabNamespace(e.target.value)} placeholder="your_username"
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, fontFamily: 'inherit', outline: 'none', padding: '8px 12px', height: 36, boxSizing: 'border-box' }} />
+          </div>
+        </div>
+      </div>
+
       {/* Crawler + Actions */}
       <div style={{ marginTop: 18, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -493,6 +517,10 @@ function DashboardContent() {
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
   const [debateComplete, setDebateComplete] = useState(false)
   const [isGeneratingPkg, setIsGeneratingPkg] = useState(false)
+  const [isCreatingGitlab, setIsCreatingGitlab] = useState(false)
+  const [profile, setProfile] = useState<any>(null)
+  const [gitlabToken, setGitlabToken] = useState('')
+  const [gitlabNamespace, setGitlabNamespace] = useState('')
 
   const { token, userId, twinId: storedTwinId } = useAuthStore()
 
@@ -543,6 +571,8 @@ function DashboardContent() {
                 const detail = await detailRes.json()
                 setSession(detail.session)
                 if (detail.execution_package) {
+                  // Always prefer the freshest execution package from the DB,
+                  // which may have a real GitLab URL if /gitlab was called previously
                   setExecPkg(detail.execution_package)
                 }
                 setDebateComplete(true)
@@ -559,7 +589,12 @@ function DashboardContent() {
     if (token && userId) {
       fetch(`${apiUrl}/profile`, { headers: { Authorization: `Bearer ${token}` } })
         .then(r => r.ok ? r.json() : null)
-        .then(data => { if (data?.profile_photo_b64) setProfilePhoto(data.profile_photo_b64) })
+        .then(data => { 
+          if (data) {
+            setProfile(data);
+            if (data.profile_photo_b64) setProfilePhoto(data.profile_photo_b64);
+          }
+        })
         .catch(() => { /* noop */ })
     }
   }, [twinId, storedTwinId, token, userId, apiUrl])
@@ -572,6 +607,29 @@ function DashboardContent() {
       const r = await fetch(`${apiUrl}/twin/${twin.twin_id}/idea`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ startup_idea: idea }) })
       setTwin(await r.json()); setViewState('board')
     } catch { /* noop */ } finally { setSubmit(false) }
+  }
+
+  const handleCreateGitlab = async () => {
+    if (!session?.session_id) return
+    setIsCreatingGitlab(true)
+    try {
+      const headers: Record<string, string> = {}
+      if (token) headers['Authorization'] = `Bearer ${token}`
+      const r = await fetch(`${apiUrl}/execution/${session.session_id}/gitlab`, {
+        method: 'POST',
+        headers
+      })
+      if (r.ok) {
+        const data = await r.json()
+        setExecPkg(data)
+      } else {
+        alert('Failed to create GitLab repository. Please check your token in Settings.')
+      }
+    } catch {
+      alert('Failed to connect to backend')
+    } finally {
+      setIsCreatingGitlab(false)
+    }
   }
 
   if (loading) return (
@@ -888,9 +946,13 @@ function DashboardContent() {
                     </button>
                   </Card>
                 ) : (
-                  <BoardRoom twin={twin} apiBaseUrl={apiUrl} initialSession={session} onDecisionReached={async (s, pkg, isReplay) => {
+                  <BoardRoom twin={twin} apiBaseUrl={apiUrl} initialSession={session} initialHasPkg={!!execPkg} profilePhoto={profilePhoto} onDecisionReached={async (s, pkg, isReplay) => {
                     setSession(s)
                     setDebateComplete(true)
+                    if (pkg === "VIEW_BLUEPRINT" as any) {
+                      setViewState('blueprint')
+                      return;
+                    }
                     if (pkg) {
                       // Called from replay AND package exists — just store data
                       setExecPkg(pkg)
@@ -1125,7 +1187,7 @@ function DashboardContent() {
                       <div style={{ fontSize: 17, fontWeight: 800, color: t.text }}>GitLab Workspace</div>
                       <div style={{ fontSize: 11, color: t.dim }}>Auto-generated issues, milestones and epics</div>
                     </div>
-                    {execPkg?.gitlab_output?.project_url && (
+                    {execPkg?.gitlab_output?.project_url && execPkg?.gitlab_output?.project_id > 0 && (
                       <a href={execPkg.gitlab_output.project_url} target="_blank" rel="noopener noreferrer"
                         style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: `${t.orange}18`, border: `1px solid ${t.orange}35`, color: t.orange, fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
                         <ExternalLink size={12} /> Open Repository
@@ -1168,8 +1230,42 @@ function DashboardContent() {
                         <div style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: `1px solid ${t.border}`, borderRadius: 9, fontSize: 11, color: t.dim }}>{execPkg.gitlab_output.note}</div>
                       )}
                     </>
+                  ) : isCreatingGitlab ? (
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>
+                      <div style={{ color: t.orange, marginBottom: 12 }}><Loader2 className="animate-spin" size={32} style={{ margin: '0 auto' }} /></div>
+                      <div style={{ fontSize: 16, fontWeight: 800, color: t.text }}>Creating Repository...</div>
+                      <div style={{ fontSize: 12, color: t.muted }}>Setting up GitLab project, epics, and milestones...</div>
+                    </div>
                   ) : (
-                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13 }}>GitLab workspace requires a GitLab token. Add it in Settings to auto-create your project.</div>
+                    <div style={{ padding: 32, textAlign: 'center', color: t.dim, fontSize: 13, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+                      <div>GitLab workspace requires a GitLab token. Add it in Settings, then click below to create your project.</div>
+                      {(!profile?.gitlab_token || !profile?.gitlab_namespace) && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 300 }}>
+                          <input type="password" value={gitlabToken} onChange={e => setGitlabToken(e.target.value)} placeholder="GitLab Token (glpat-...)"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, outline: 'none', padding: '8px 12px' }} />
+                          <input value={gitlabNamespace} onChange={e => setGitlabNamespace(e.target.value)} placeholder="GitLab Namespace"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 8, color: t.text, fontSize: 12, outline: 'none', padding: '8px 12px' }} />
+                          <button onClick={async () => {
+                            if (!gitlabToken || !gitlabNamespace) {
+                              alert("Please enter both token and namespace");
+                              return;
+                            }
+                            // Save to profile first
+                            const p = { ...profile, gitlab_token: gitlabToken, gitlab_namespace: gitlabNamespace } as UserProfile;
+                            await fetch('/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) });
+                            setProfile(p);
+                            handleCreateGitlab();
+                          }} style={{ padding: '10px 24px', borderRadius: 8, background: `linear-gradient(135deg, ${t.orange}, #ff8c42)`, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer', marginTop: 10 }}>
+                            Save & Create Repository
+                          </button>
+                        </div>
+                      )}
+                      {(profile?.gitlab_token && profile?.gitlab_namespace) ? (
+                        <button onClick={handleCreateGitlab} style={{ padding: '10px 24px', borderRadius: 8, background: `linear-gradient(135deg, ${t.orange}, #ff8c42)`, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer' }}>
+                          Create Repository
+                        </button>
+                      ) : null}
+                    </div>
                   )}
                 </Card>
               </motion.div>
