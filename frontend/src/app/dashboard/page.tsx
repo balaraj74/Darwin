@@ -681,8 +681,8 @@ function DashboardContent() {
 
                 {/* ROW 1: Identity card */}
                 <Card t={t} style={{ display: 'flex', gap: 18, alignItems: 'flex-start', padding: '18px 22px' }}>
-                  <div style={{ width: 66, height: 66, borderRadius: '50%', background: `linear-gradient(135deg, ${t.gold}55, ${t.purple}55)`, border: `2px solid ${t.gold}50`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <User size={28} color={t.gold} />
+                  <div style={{ width: 66, height: 66, borderRadius: '50%', background: profilePhoto ? 'transparent' : `linear-gradient(135deg, ${t.gold}55, ${t.purple}55)`, border: `2px solid ${t.gold}50`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+                    {profilePhoto ? <img src={profilePhoto} alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <User size={28} color={t.gold} />}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 7 }}>
