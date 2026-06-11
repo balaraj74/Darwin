@@ -1,39 +1,56 @@
-# IDEs and OS Files
+# ── IDEs and OS ──────────────────────────────────────────────────────────────
 .vscode/
 .idea/
 .DS_Store
 *.swp
 *.swo
 
-# Environment files — NEVER commit real secrets
+# ── Environment files — NEVER commit real secrets ─────────────────────────────
 .env
 .env.local
 .env.*.local
 .env.production
 .env.development
-# Allow .env.example — it contains placeholder values only, safe to commit
+# Allow .env.example — placeholder values only, safe to commit
 !.env.example
 
-# Python
+# ── Python ───────────────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
 venv/
 env/
 .venv/
+backend/venv/
 
-# Node
+# ── Node / Next.js ────────────────────────────────────────────────────────────
 node_modules/
+.next/
 
-# Build artifacts
+# ── Build artifacts ───────────────────────────────────────────────────────────
 dist/
 build/
 *.egg-info/
 
-# Logs
+# ── Logs ──────────────────────────────────────────────────────────────────────
 *.log
 .backend.log
 .frontend.log
+
+# ── TypeScript build cache ────────────────────────────────────────────────────
+tsconfig.tsbuildinfo
+frontend/tsconfig.tsbuildinfo
+
+# ── Playwright MCP session artifacts ─────────────────────────────────────────
+.playwright-mcp/
+
+# ── Debug / one-off scripts (not part of the project) ────────────────────────
+previous_*.py
+backend/check_*.py
+backend/run_test.py
+backend/test_aio.py
+backend/test_board.py
+
 
 # TypeScript build info (large auto-generated file)
 tsconfig.tsbuildinfo
