@@ -77,9 +77,29 @@ const CAPABILITIES = [
   },
 ]
 
+// Stat card SVG icons — clean 24px outline strokes
+function IconRounds() {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  )
+}
+function IconAgents() {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  )
+}
+
 const STATS = [
-  { icon: '⚡', number: '3', label: 'Debate Rounds\nPer Startup Idea' },
-  { icon: '🧠', number: '5', label: 'AI Agents\nIn Your Boardroom' },
+  { Icon: IconRounds, number: '3', label: 'Debate Rounds\nPer Startup Idea' },
+  { Icon: IconAgents, number: '5', label: 'AI Agents\nIn Your Boardroom' },
 ]
 
 const PARTNERS = ['CEO', 'CFO', 'CTO', 'CMO', 'Office']
@@ -175,8 +195,8 @@ function Hero() {
 
           {/* Subheading */}
           <motion.p {...fadeUp(0.8)} style={{
-            marginTop: 20, fontSize: 16, color: '#fff',
-            maxWidth: 540, lineHeight: 1.55,
+            marginTop: 20, fontSize: 15, color: 'rgba(255,255,255,0.70)',
+            maxWidth: 500, lineHeight: 1.65,
             fontFamily: "'Barlow', sans-serif", fontWeight: 300,
           }}>
             Darwin creates a digital model of your skills and constraints — then opens your boardroom. Pitch your idea. Watch five AI executives debate, veto, and pivot until the right startup survives.
@@ -207,15 +227,25 @@ function Hero() {
           <motion.div {...fadeUp(1.3)} style={{ display: 'flex', alignItems: 'stretch', gap: 16, marginTop: 40, flexWrap: 'wrap', justifyContent: 'center' }}>
             {STATS.map((s, i) => (
               <div key={i} className="liquid-glass" style={{
-                padding: 20, width: 210, borderRadius: '1.25rem',
-                display: 'flex', flexDirection: 'column', gap: 10,
+                padding: '20px 22px', width: 200, borderRadius: '1.25rem',
+                display: 'flex', flexDirection: 'column',
               }}>
-                <div style={{ fontSize: 26 }}>{s.icon}</div>
+                {/* Icon top-left */}
+                <div style={{ marginBottom: 'auto', paddingBottom: 16 }}>
+                  <s.Icon />
+                </div>
+                {/* Number */}
                 <div style={{
                   fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
-                  fontSize: 40, color: '#fff', lineHeight: 1, letterSpacing: '-1px',
+                  fontSize: 42, color: '#fff', lineHeight: 1, letterSpacing: '-1.5px',
                 }}>{s.number}</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontFamily: "'Barlow', sans-serif", fontWeight: 300, lineHeight: 1.4, whiteSpace: 'pre-line' }}>{s.label}</div>
+                {/* Label */}
+                <div style={{
+                  fontSize: 11, color: 'rgba(255,255,255,0.50)',
+                  fontFamily: "'Barlow', sans-serif", fontWeight: 400,
+                  lineHeight: 1.5, whiteSpace: 'pre-line', marginTop: 6,
+                  letterSpacing: '0.02em',
+                }}>{s.label}</div>
               </div>
             ))}
           </motion.div>
@@ -291,45 +321,63 @@ function BlurTextStyled({ text }: { text: string }) {
 // ── Capabilities Section ───────────────────────────────────────────────────────
 function Capabilities() {
   return (
-    <section id="the-board" style={{ position: 'relative', minHeight: '100vh', background: '#000', overflow: 'hidden' }}>
-      {/* Background video — full bleed */}
+    <section id="the-board" style={{ position: 'relative', height: '100vh', background: '#000', overflow: 'hidden' }}>
+      {/* Background video — full bleed, center-center */}
       <FadingVideo
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4"
         style={{
           position: 'absolute', inset: 0,
           width: '100%', height: '100%',
-          objectFit: 'cover', zIndex: 0,
+          objectFit: 'cover', objectPosition: 'center center', zIndex: 0,
         }}
       />
 
-      {/* Content z-10 */}
+      {/* Top-edge scrim — so heading is readable */}
       <div style={{
-        position: 'relative', zIndex: 10,
-        padding: '100px 40px 48px',
-        display: 'flex', flexDirection: 'column', minHeight: '100vh',
-      }}>
-        {/* Header */}
-        <div style={{ marginBottom: 'auto' }}>
-          <motion.div {...fadeUpView(0)}>
-            <p style={{ fontSize: 13, fontFamily: "'Barlow', sans-serif", color: 'rgba(255,255,255,0.75)', marginBottom: 20, letterSpacing: '0.05em' }}>
-              // Capabilities
-            </p>
-            <div style={{
-              fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
-              color: '#fff',
-              fontSize: 'clamp(3.5rem, 7vw, 6rem)',
-              lineHeight: 0.9, letterSpacing: '-0.03em',
-            }}>
-              Survival<br />of the fittest
-            </div>
-          </motion.div>
-        </div>
+        position: 'absolute', top: 0, left: 0, right: 0, height: 260, zIndex: 1,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, transparent 100%)',
+        pointerEvents: 'none',
+      }} />
 
-        {/* Cards */}
+      {/* Bottom-edge scrim — so cards are readable */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: '52%', zIndex: 1,
+        background: 'linear-gradient(to top, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.60) 50%, transparent 100%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Heading — top-left ── */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10, padding: '80px 48px 0' }}>
+        <motion.div {...fadeUpView(0)}>
+          <p style={{
+            fontSize: 12, fontFamily: "'Barlow', sans-serif",
+            color: 'rgba(255,255,255,0.55)', marginBottom: 14,
+            letterSpacing: '0.12em', textTransform: 'uppercase',
+          }}>
+            // Capabilities
+          </p>
+          <div style={{
+            fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
+            color: '#fff',
+            fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+            lineHeight: 0.92, letterSpacing: '-0.03em',
+          }}>
+            Survival<br />of the fittest
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ── Cards — anchored to bottom ── */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 10,
+        padding: '0 32px 36px',
+      }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 24, marginTop: 64,
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 20,
+          maxWidth: 1200,
+          margin: '0 auto',
         }}>
           {CAPABILITIES.map((cap, i) => (
             <motion.div
@@ -337,48 +385,45 @@ function Capabilities() {
               {...fadeUpView(i * 0.12)}
               className="liquid-glass"
               style={{
-                borderRadius: '1.25rem', padding: 24,
-                minHeight: 360, display: 'flex', flexDirection: 'column',
+                borderRadius: '1.25rem', padding: '20px 22px',
+                display: 'flex', flexDirection: 'column', gap: 0,
               }}
             >
-              {/* Top row: icon + tags */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16 }}>
+              {/* Top row: icon left, tags right */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 20 }}>
                 {/* Icon */}
                 <div className="liquid-glass" style={{
-                  width: 44, height: 44, borderRadius: '0.75rem', flexShrink: 0,
+                  width: 40, height: 40, borderRadius: '0.6rem', flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   {cap.icon}
                 </div>
 
-                {/* Tags */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', gap: 6, maxWidth: '70%' }}>
+                {/* Tags — wrap in their own column on the right */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', gap: 5 }}>
                   {cap.tags.map(tag => (
                     <span key={tag} className="liquid-glass" style={{
-                      borderRadius: 9999, padding: '4px 12px',
-                      fontSize: 11, color: 'rgba(255,255,255,0.88)',
+                      borderRadius: 9999, padding: '3px 10px',
+                      fontSize: 10.5, color: 'rgba(255,255,255,0.80)',
                       fontFamily: "'Barlow', sans-serif", whiteSpace: 'nowrap',
                     }}>{tag}</span>
                   ))}
                 </div>
               </div>
 
-              {/* Spacer */}
-              <div style={{ flex: 1 }} />
+              {/* Title */}
+              <h3 style={{
+                fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
+                color: '#fff', fontSize: 'clamp(1.4rem, 2.2vw, 1.9rem)',
+                letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 10,
+              }}>{cap.title}</h3>
 
-              {/* Bottom: title + description */}
-              <div style={{ marginTop: 24 }}>
-                <h3 style={{
-                  fontFamily: "'Instrument Serif', serif", fontStyle: 'italic',
-                  color: '#fff', fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
-                  letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 0,
-                }}>{cap.title}</h3>
-                <p style={{
-                  marginTop: 12, fontSize: 13, color: 'rgba(255,255,255,0.85)',
-                  fontFamily: "'Barlow', sans-serif", fontWeight: 300,
-                  lineHeight: 1.55, maxWidth: '32ch',
-                }}>{cap.body}</p>
-              </div>
+              {/* Body */}
+              <p style={{
+                fontSize: 12.5, color: 'rgba(255,255,255,0.70)',
+                fontFamily: "'Barlow', sans-serif", fontWeight: 300,
+                lineHeight: 1.6,
+              }}>{cap.body}</p>
             </motion.div>
           ))}
         </div>
@@ -386,6 +431,7 @@ function Capabilities() {
     </section>
   )
 }
+
 
 // ── How It Works ───────────────────────────────────────────────────────────────
 function HowItWorks() {
