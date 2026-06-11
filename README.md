@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./frontend/public/darwin-logo.png" alt="Darwin Logo" width="200" />
+
 <br/>
 
 ```
