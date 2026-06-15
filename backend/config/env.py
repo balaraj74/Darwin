@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     # Legacy Google AI Studio key — kept optional so local .env doesn't break
     gemini_api_key: Optional[str] = None
 
+    # Aerolink Anthropic proxy (primary model)
+    aerolink_api_key: Optional[str] = None
+    aerolink_base_url: str = "https://capi.aerolink.lat/"
+
     # NVIDIA Fallbacks
     nvidia_api_key_kimi: Optional[str] = None
     nvidia_api_key: Optional[str] = None
