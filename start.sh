@@ -33,6 +33,9 @@ touch .backend.log .frontend.log
 # 🧠 Start Backend (FastAPI)
 echo -e "🚀 ${PURPLE}Booting AI Core (FastAPI on Port 8000)...${NC}"
 if [ -d "backend/venv" ]; then
+    # Sync dependencies into venv before starting (catches any new packages)
+    echo -e "   ${YELLOW}⚙ Syncing Python dependencies...${NC}"
+    (cd backend && venv/bin/pip install -r requirements.txt --quiet 2>&1 | grep -v "already satisfied" | head -5)
     (cd backend && source venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port 8000 --reload) > .backend.log 2>&1 &
 else
     # Fallback if running globally or managed externally
