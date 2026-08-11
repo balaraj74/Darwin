@@ -11,5 +11,5 @@ email-validator>=2.0.0
 beautifulsoup4==4.15.0
 apscheduler==3.11.2
 python-multipart==0.0.32
-json-repair==0.30.0
+json-repair==0.60.1
 anthropic>=0.40.0
